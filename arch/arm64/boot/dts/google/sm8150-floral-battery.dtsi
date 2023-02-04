@@ -1,0 +1,251 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&pm8150b_fg {
+	qcom,hold-soc-while-full;
+	qcom,linearize-soc;
+	google,fg-soc-irq-disable;
+};
+
+&pm8150b_charger {
+
+	io-channels = <&pm8150b_vadc ADC_MID_CHG_DIV6>,
+		      <&pm8150b_vadc ADC_USB_IN_I>,
+		      <&pm8150b_vadc ADC_SBUx>,
+		      <&pm8150b_vadc ADC_VPH_PWR>,
+		      <&pm8150b_vadc ADC_CHG_TEMP>;
+	io-channel-names = "mid_voltage",
+			   "usb_in_current",
+			   "sbux_res",
+			   "vph_voltage",
+			   "chg_temp";
+
+	google,batt_psy_disable;
+	qcom,hvdcp-disable;
+	google,usb-port-tz-name = "usbc-therm-adc";
+	google,wdog_snarl_disable;
+	qcom,dc-icl-ua = <1100000>;
+
+	qcom,chgr@1000 {
+		/delete-property/ interrupts;
+		/delete-property/ interrupt-names;
+	};
+
+	qcom,batif@1200 {
+		/delete-property/ interrupts;
+		/delete-property/ interrupt-names;
+	};
+};
+
+&pm8150b_gpios {
+	fg_int_default: fg_int_default {
+		pins = "gpio8";
+		function = "normal";
+		bias-pull-up;
+		input-enable;
+		drive-open-drain;
+		power-source = <0>;
+	};
+};
+
+&max1720x_fg {
+	compatible = "maxim,max1720x";
+	reg-names = "m5db", "nvram";
+	reg = <0x36 0x0b>;
+
+	maxim,r_regval_1730x = /bits/ 16 <
+		0x29 0x0EB4 /* FilterCfg */
+	>;
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&fg_int_default>;
+
+	interrupt-parent = <&spmi_bus>;
+	interrupt-names = "max1720x_fg";
+	interrupts = <0x2 0xc7 0x0 IRQ_TYPE_LEVEL_LOW>;
+
+	maxim,psy-type-unknown;
+
+	/* enable max1730x support */
+	maxim,max1730x-compat;
+	/* check for NV integrity */
+	maxim,enable-nv-check;
+
+	maxim,batt-id-range-pct = <15>;
+
+	maxim,nconvgcfg-temp-hysteresis = <10>;
+	maxim,nconvgcfg-temp-limits = /bits/ 16
+		<(-70) (-45) (-20) (-3) 14 30 55 80
+		96 113 130 155 180 230>;
+	maxim,nconvgcfg-values = /bits/ 16
+		<0xe7c0 0xd7c0 0xc7c0 0xb7c0 0xa740 0x9740 0x86c0 0x7640
+		0x65c0 0x54c0 0x4440 0x3340 0x2240 0x1140>;
+	maxim,empty-voltage = /bits/ 16
+		<3200 3250 3300 3300
+		3200 3240 3290 3290
+		3200 3240 3280 3290
+		3200 3230 3270 3280
+		3200 3230 3260 3280
+		3200 3220 3250 3270
+		3200 3220 3240 3270
+		3200 3210 3230 3260
+		3200 3210 3220 3260
+		3200 3200 3210 3250
+		3200 3200 3200 3250>;
+
+	maxim,capacity-filtercfg = <0x0eb4>;
+};
+
+&spmi_bus {
+	qcom,pm8150b@2 {
+		google_bms: google,bms {
+			compatible = "google,sm8150_bms";
+			google,psy-name = "charger";
+
+			sm8150_bms,chgr@1000 {
+				reg = <0x1000 0x100>;
+				interrupts =
+					<0x2 0x10 0x0 IRQ_TYPE_EDGE_RISING>,
+					<0x2 0x10 0x1 IRQ_TYPE_EDGE_RISING>;
+				interrupt-names =
+					"chgr-error",
+					"chg-state-change";
+			};
+
+			sm8150_bms,batif@1200 {
+				reg = <0x1200 0x100>;
+				interrupts =
+					<0x2 0x12 0x0 IRQ_TYPE_EDGE_RISING>,
+					<0x2 0x12 0x2 IRQ_TYPE_EDGE_BOTH>,
+					<0x2 0x12 0x3 IRQ_TYPE_EDGE_BOTH>,
+					<0x2 0x12 0x4 IRQ_TYPE_EDGE_BOTH>,
+					<0x2 0x12 0x5 IRQ_TYPE_EDGE_BOTH>;
+				interrupt-names =
+						"bat-temp",
+						"bat-ov",
+						"bat-low",
+						"bat-therm-or-id-missing",
+						"bat-terminal-missing";
+			};
+
+		};
+	};
+};
+
+&soc {
+	google_battery: google,battery {
+		compatible = "google,battery";
+		google,fg-psy-name = "maxfg";
+		power-supplies = <&max1720x_fg>, <&google_bms>;
+
+		/* chg-battery-capacity = <0> -> read FULL_DESIGN from FG */
+		google,chg-battery-capacity = <0>;
+
+		/* charge table for floral */
+		google,chg-temp-limits = <0 100 200 420 460 480 550>;
+		google,chg-cv-limits = <4200000 4300000 4400000>;
+		google,chg-cc-limits = <
+			 30  10   0
+			 50  30  30
+			100  70  50
+			 80  50  50
+			 50  50   0
+			 30   0   0
+		>;
+
+		/* battery poll rate */
+		google,update-interval = <30000>;
+		/* IRDrop Compensation */
+		google,fv-uv-resolution = <25000>;
+		google,fv-uv-margin-dpct = <1020>;
+		/* tier switch */
+		google,cv-range-accuracy = <10000>;
+		google,cv-otv-margin = <12000>;
+		google,cv-debounce-cnt = <3>;
+		google,cv-tier-ov-cnt = <1>;
+		google,cv-tier-switch-cnt = <3>;
+		/* resistance estimation */
+		google,res-temp-hi = <390>;
+		google,res-temp-lo = <350>;
+		google,res-soc-thresh = <75>;
+		google,res-filt-length = <10>;
+		/* enable cycle counts */
+		google,cycle-counts;
+		/* rest charging */
+		google,chg-rest-rate = <15>;
+		google,chg-rest-soc = <80>;
+		/* battery high temperature update threshold */
+		google,update-high-temp-threshold = <550>;
+		/* TRICKLE-DEFEND threshold */
+		google,bd-trickle-recharge-soc = <80>;
+		/* Enable TRICKLE-DEFEND */
+		google,bd-trickle-enable;
+
+		#thermal-sensor-cells = <0>;
+	};
+
+	google_charger: google,charger {
+		compatible = "google,charger";
+		#cooling-cells = <2>;
+		google,chg-power-supply = "charger";
+		google,bat-power-supply = "battery";
+		google,wlc-power-supply = "wireless";
+		google,tcpm-power-supply = "tcpm-source-psy-usbpd0";
+
+		google,thermal-mitigation = <3700000 1850000 925000 500000>;
+		google,wlc-thermal-mitigation = <1100000 500000 250000 110000>;
+		google,therm-wlc-overrides-fcc;
+
+		google,fv-max-uv = <4400000>;
+
+		/* TODO: remove when using proper "charger" */
+		google,chg-cc-tolerance = <25>;
+
+		google,pps-cc-tolerance-pct = <5>;
+		google,pps-awake;
+		google,usbc-connector = <&usb_con>;
+
+		/* b/170700459 thresholds */
+		google,bd-resume-abs-temp = <280>;
+		google,bd-resume-soc = <50>;
+		google,bd-resume-time = <14400>;  /* 4 hours */
+		google,bd-resume-temp = <290>;
+		google,bd-trigger-time = <21600>; /* 6 hours */
+		google,bd-trigger-temp = <350>;
+		google,bd-trigger-voltage = <4270000>;
+		google,bd-recharge-voltage = <4250000>;
+		google,bd-drainto-soc = <80>;
+		google,bd-recharge-soc = <79>;
+		/* Enable TEMP-DEFEND */
+		google,bd-temp-enable;
+		google,bd-temp-dry-run;
+	};
+
+	google_wlc_charger: google,wlc_charger {
+		#cooling-cells = <2>;
+	};
+
+	google_overheat_mitigation: google,overheat_mitigation {
+		compatible = "google,overheat_mitigation";
+		google,port-overheat-work-interval = <2000>;
+		/* Must maintain < 1/15 duty cycle */
+		google,polling-freq = <3>;
+		#cooling-cells = <2>;
+	};
+
+	google_bms {
+		google,gbms-providers = "pmic";
+	};
+
+};
+
+/* FIXME: bcl sensor */

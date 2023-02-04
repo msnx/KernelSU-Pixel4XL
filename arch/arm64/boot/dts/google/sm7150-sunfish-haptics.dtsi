@@ -1,0 +1,59 @@
+// SPDX-License-Identifier: GPL-2.0
+/* Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ */
+
+&tlmm {
+	drv2624_rst: drv2624_rst {
+		mux {
+			pins = "gpio11";
+			function = "gpio";
+		};
+		config {
+			pins = "gpio11";
+			drive-strength = <2>;
+			output-low;
+			bias-disable;
+		};
+	};
+};
+
+&pm6150_vib {
+	status = "disabled";
+};
+
+&qupv3_se9_i2c {
+	status = "ok";
+	qcom,clk-freq-out = <400000>;
+	S5_drv2624: drv2624@5a {
+		compatible = "ti,drv2624";
+		reg = <0x5a>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&drv2624_rst>;
+		ti,reset-gpio = <&tlmm 11 0>;
+		ti,smart-loop = <1>; /* 0-closeloop, 1-openloop */
+		ti,actuator = <1>; /* 0-ERM, 1-LRA */
+		ti,rated-voltage = <109>;
+		ti,odclamp-voltage = <161>; /* 3.2 Vpeak */
+		ti,lra-frequency = <172>; /* f0 = 172Hz */
+		ti,ol-lra-frequency = <155>; /* off-f0 in OL */
+		ti,bemf-factor = <150>;
+		ti,bemf-gain = <0>;
+		ti,voltage-comp = <18>;
+		ti,blanking-time = <2>; /* 50 us */
+		ti,idiss-time = <2>; /* 50 us */
+		ti,zc-det-time = <0>; /* 100 us*/
+		ti,lra-wave-shape = <1>; /* Sine wave */
+		ti,waveform-interval = <1>; /* 1 ms */
+		ti,fb-brake-factor = <0>; /* braking factor 1 */
+		status = "ok";
+	};
+};

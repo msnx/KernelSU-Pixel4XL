@@ -1,0 +1,11 @@
+#
+# LM36011 led laser drivers configuration
+#
+menu "Led laser support"
+
+config INPUT_LM36011
+	tristate "Lm36011 led laser support"
+	help
+	  If you say yes here you get support for lm36011 led laser.
+
+endmenu

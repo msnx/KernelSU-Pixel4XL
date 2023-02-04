@@ -1,0 +1,69 @@
+/* Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&dsi_s6e3hc2_dsc_wqhd_cmd {
+	qcom,mdss-dsi-display-timings {
+		timing@0 {
+			qcom,mdss-dsi-lp1-command = [
+				05 01 00 00 11 00 01 28
+			];
+
+			qcom,mdss-dsi-nolp-command = [
+				05 01 00 00 00 00 01 28
+				15 01 00 00 11 00 02 53 20 /* write ctl 60 hz */
+				05 01 00 00 00 00 01 29
+			];
+
+			/delete-property/ qcom,mdss-dsi-post-nolp-command;
+		};
+		timing@1 {
+			qcom,mdss-dsi-lp1-command = [
+				05 01 00 00 11 00 01 28
+			];
+
+			qcom,mdss-dsi-nolp-command = [
+				05 01 00 00 00 00 01 28
+				15 01 00 00 11 00 02 53 30 /* write ctl 90 hz */
+				05 01 00 00 00 00 01 29
+			];
+
+			/delete-property/ qcom,mdss-dsi-post-nolp-command;
+		};
+	};
+
+	google,lp-modes {
+		lp-mode@1 {
+			google,dsi-lp-command = [
+				39 01 00 00 00 00 03 F0 5A 5A /* Unlock */
+				39 01 00 00 00 00 03 BB 05 0C
+				39 01 00 00 00 00 03 B0 05 BB
+				15 01 00 00 00 00 02 BB 80
+				15 01 00 00 00 00 02 53 03
+				15 01 00 00 00 00 02 F7 02
+				39 01 00 00 00 00 03 F0 A5 A5 /* Lock */
+				05 01 00 00 00 00 01 29
+			];
+		};
+		lp-mode@2 {
+			google,dsi-lp-command = [
+				39 01 00 00 00 00 03 F0 5A 5A /* Unlock */
+				39 01 00 00 00 00 03 BB 05 0C
+				39 01 00 00 00 00 03 B0 05 BB
+				15 01 00 00 00 00 02 BB 00
+				15 01 00 00 00 00 02 53 02
+				15 01 00 00 00 00 02 F7 02
+				39 01 00 00 00 00 03 F0 A5 A5 /* Lock */
+				05 01 00 00 00 00 01 29
+			];
+		};
+	};
+};

@@ -1,0 +1,14 @@
+modemsmem (Modem Shared Memory) Driver
+
+The modemsmem driver is used to notify with modem subsystem about
+hardware and software information via SMD channel.
+
+Required properties:
+
+- compatible: name of the component used for driver matching, should be:
+              "modemsmem"
+
+Example:
+    modemsmem {
+        compatible = "modemsmem";
+    };

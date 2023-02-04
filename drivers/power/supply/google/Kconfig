@@ -1,0 +1,55 @@
+menuconfig GOOGLE_BMS
+	bool "Google, Inc. Charging and Fuel Gauge support"
+	help
+	  Say Y here to enable Google, Inc. support for Battery and Charging.
+
+if GOOGLE_BMS
+
+config GOOGLE_BATTERY_CHARGING
+	tristate "Google Battery and Charging Control"
+	select GOOGLE_CHARGER
+	select GOOGLE_BATTERY
+	help
+	  Say Y here to enable new Google Gen Features.
+	  This option selects Google Battery and Multi Step Charging enabling
+	  new features such as battery controlled charge tables and charge path
+	  resistance compensation. New gen features require configuration in
+	  device tree.
+
+config GOOGLE_CHARGER
+	tristate "Google Multi Step Charging"
+	help
+	  Say Y here to choose the Google Multi Step Charging control.
+	  The driver implements a multi CC-CV steps charging using battery
+	  temperature and voltage to set the charger constant charging
+	  current and float voltage.
+
+config GOOGLE_BATTERY
+	tristate "Google Battery"
+	help
+	  Say Y here to choose the Google Battery.
+	  The driver handles charge tables, recharge threshold, state of charge,
+	  battery statistics such as bin count and other features common to all
+	  google battery powered devices.
+
+config USB_OVERHEAT_MITIGATION
+	tristate "Google USB Overheat Mitigation"
+	help
+	  Say Y here to enable Google USB overheat mitigation
+
+config GOOGLE_LOGBUFFER
+	tristate "debugfs logbuffer"
+	help
+	  Say Y here to enable logbuffer.
+	  This option enables a module that exposes an API to maintain driver
+	  specific logs in an exclusive ring buffer and exposes it through
+	  debugfs.
+
+endif	# GOOGLE_BMS
+
+config CHARGER_P9221
+	tristate "IDT P9221 wireless power receiver driver"
+	depends on I2C
+	help
+	  This driver provides support for the IDT P9221 wireless
+	  power receiver.

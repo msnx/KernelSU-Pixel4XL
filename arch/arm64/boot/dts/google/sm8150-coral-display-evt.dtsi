@@ -1,0 +1,149 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&dsi_s6e3hc2_dsc_wqhd_cmd {
+	qcom,mdss-dsi-display-timings {
+		timing@0 {
+			qcom,mdss-dsi-on-command = [
+				/* Compression Enable */
+				07 01 00 00 00 00 01 01
+				/* sleep out, Wait 120 ms */
+				05 01 00 00 78 00 01 11
+				15 01 00 00 00 00 02 53 20 /* write ctl 60hz */
+				15 01 00 00 00 00 02 35 00 /* TE on */
+
+				39 01 00 00 00 00 03 F0 5A 5A
+				39 01 00 00 00 00 03 F1 5A 5A
+				39 01 00 00 00 00 03 FC 5A 5A
+
+				/* Expand swire pulse width */
+				39 01 00 00 00 00 03 B0 3C B5
+				39 01 00 00 00 00 03 B5 9C D5
+				15 01 00 00 00 00 02 F7 02
+
+				/* Dither IP On */
+				39 01 00 00 00 00 03 B0 86 EB
+				15 01 00 00 00 00 02 EB 01
+
+				/* SEED TCS & ORE bypass on */
+				15 01 00 00 00 00 02 68 21
+				15 01 00 00 00 00 02 69 01
+
+				39 01 00 00 00 00 03 F0 A5 A5
+				39 01 00 00 00 00 03 F1 A5 A5
+				39 01 00 00 00 00 03 FC A5 A5
+
+				05 01 00 00 00 00 01 29    /* display on */
+			];
+
+			qcom,mdss-dsi-lp1-command = [
+				05 01 00 00 11 00 01 28
+			];
+
+			qcom,mdss-dsi-nolp-command = [
+				05 01 00 00 00 00 01 28
+				39 01 00 00 00 00 03 F0 5A 5A
+				39 01 00 00 00 00 03 B0 A8 B1
+				15 01 00 00 22 00 02 B1 01
+			];
+
+			qcom,mdss-dsi-post-nolp-command = [
+				15 01 00 00 00 00 02 53 20 /* write ctl 60 hz */
+				39 01 00 00 11 00 03 F0 A5 A5
+				05 01 00 00 00 00 01 29
+			];
+		};
+
+		timing@1 {
+			qcom,mdss-dsi-on-command = [
+				/* Compression Enable */
+				07 01 00 00 00 00 01 01
+				/* sleep out, Wait 120 ms */
+				05 01 00 00 78 00 01 11
+				15 01 00 00 00 00 02 53 30 /* write ctl 90hz */
+				15 01 00 00 00 00 02 35 00 /* TE on */
+
+				39 01 00 00 00 00 03 F0 5A 5A
+				39 01 00 00 00 00 03 F1 5A 5A
+				39 01 00 00 00 00 03 FC 5A 5A
+
+				/* Expand swire pulse width */
+				39 01 00 00 00 00 03 B0 3C B5
+				39 01 00 00 00 00 03 B5 9C D5
+				15 01 00 00 00 00 02 F7 02
+
+				/* Dither IP On */
+				39 01 00 00 00 00 03 B0 86 EB
+				15 01 00 00 00 00 02 EB 01
+
+				/* SEED TCS & ORE bypass on */
+				15 01 00 00 00 00 02 68 21
+				15 01 00 00 00 00 02 69 01
+
+				39 01 00 00 00 00 03 F0 A5 A5
+				39 01 00 00 00 00 03 F1 A5 A5
+				39 01 00 00 00 00 03 FC A5 A5
+
+				05 01 00 00 00 00 01 29    /* display on */
+			];
+
+			qcom,mdss-dsi-lp1-command = [
+				05 01 00 00 11 00 01 28
+			];
+
+			qcom,mdss-dsi-nolp-command = [
+				05 01 00 00 00 00 01 28
+				39 01 00 00 00 00 03 F0 5A 5A
+				39 01 00 00 00 00 03 B0 A8 B1
+				15 01 00 00 22 00 02 B1 01
+			];
+
+			qcom,mdss-dsi-post-nolp-command = [
+				15 01 00 00 00 00 02 53 30 /* write ctl 90 hz */
+				39 01 00 00 11 00 03 F0 A5 A5
+				05 01 00 00 00 00 01 29
+			];
+		};
+	};
+
+	google,lp-modes {
+		lp-mode@1 {
+			google,dsi-lp-command = [
+				39 01 00 00 00 00 03 F0 5A 5A /* Unlock */
+				39 01 00 00 00 00 03 B0 A8 B1
+				15 01 00 00 00 00 02 B1 00
+				39 01 00 00 00 00 03 BB 0D 0C
+				39 01 00 00 00 00 03 B0 05 BB
+				15 01 00 00 00 00 02 BB 80
+				15 01 00 00 00 00 02 53 03
+				15 01 00 00 00 00 02 F7 02
+				39 01 00 00 00 00 03 F0 A5 A5 /* Lock */
+				05 01 00 00 00 00 01 29
+			];
+		};
+
+		lp-mode@2 {
+			google,dsi-lp-command = [
+				39 01 00 00 00 00 03 F0 5A 5A /* Unlock */
+				39 01 00 00 00 00 03 B0 A8 B1
+				15 01 00 00 00 00 02 B1 00
+				39 01 00 00 00 00 03 BB 0D 0C
+				39 01 00 00 00 00 03 B0 05 BB
+				15 01 00 00 00 00 02 BB 00
+				15 01 00 00 00 00 02 53 02
+				15 01 00 00 00 00 02 F7 02
+				39 01 00 00 00 00 03 F0 A5 A5 /* Lock */
+				05 01 00 00 00 00 01 29
+			];
+		};
+	};
+};

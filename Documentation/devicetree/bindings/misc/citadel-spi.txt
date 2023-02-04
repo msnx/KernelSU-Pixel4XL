@@ -1,0 +1,14 @@
+* Google Inc. Citadel SoC
+
+Required properties:
+- compatible: Should contain "google,citadel".
+- reg: SPI address for chip
+- spi-max-frequency: max SPI frequency supported by the device
+
+Example:
+	citadel@0 {
+		compatible = "google,citadel";
+		reg = <0>;
+		spi-max-frequency = <50000000>;
+	};
+};

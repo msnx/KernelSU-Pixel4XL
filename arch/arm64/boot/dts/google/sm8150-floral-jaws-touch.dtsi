@@ -1,0 +1,41 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+// Jaws has touch on I2C, not on SPI.
+&floral_spitouch {
+	status = "disabled";
+};
+
+&qupv3_se0_i2c { // touch controller on AP QUP 0
+	status = "ok";
+	qcom,clk-freq-out = <400000>;
+	touchscreen@48 {
+		status = "ok";
+		compatible = "sec,sec_ts";
+		reg = <0x48>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <122 0x2008>;
+		vdd-supply = <&pm8150_l14>;
+		avdd-supply = <&pm8150_l17>;
+		pinctrl-names = "on_state", "off_state";
+		pinctrl-0 = <&ts_active &ts_reset_active>;
+		pinctrl-1 = <&ts_int_suspend &ts_reset_suspend>;
+		sec,irq_gpio = <&tlmm 122 0>;
+		sec,max_coords = <1440 2960>;
+		sec,firmware_name = "s6sy761.fw";
+		sec,regulator_dvdd = "pm8150_l14"; // maybe pm8150_lxx
+		sec,project_name = "test", "test2";
+		sec,regulator_avdd = "pm8150_l17"; // maybe pm8150_lxx
+		// reset is GPIO 127
+	};
+};
+

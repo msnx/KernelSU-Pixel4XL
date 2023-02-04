@@ -1,0 +1,21 @@
+/* Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+#include "sm8150-coral-common.dtsi"
+#include "sm8150-coral-camera-sensor-evt.dtsi"
+#include "sm8150-coral-battery-evt.dtsi"
+#include "sm8150-coral-display-evt.dtsi"
+#include "sm8150-coral-pac193x-evt.dtsi"
+#include "sm8150-floral-nfc-evt.dtsi"
+#include "sm8150-floral-qup-evt.dtsi"
+
+/* For proto and EVT1.0: enable backdrive WR */
+#include "sm8150-floral-airbrush-backdrive-wr.dtsi"

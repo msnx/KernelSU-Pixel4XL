@@ -1,0 +1,45 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#include "sm8150-floral-common.dtsi"
+#include "sm8150-floral-jaws-audio.dtsi"
+#include "sm8150-floral-jaws-citadel.dtsi"
+#include "sm8150-floral-jaws-haptics.dtsi"
+#include "sm8150-floral-jaws-qup.dtsi"
+#include "sm8150-floral-jaws-display.dtsi"
+#include "sm8150-floral-jaws-touch.dtsi"
+#include "sm8150-floral-jaws-battery.dtsi"
+#include "sm8150-floral-jaws-camera-sensor.dtsi"
+#include "sm8150-floral-jaws-pac193x.dtsi"
+
+/ {
+	aliases {
+		/* Override serial1 for Jaws */
+		serial1 = &qupv3_se19_2uart;
+	};
+};
+
+/*
+ * qupv3_se19_2uart is for Airbrush uart on Jaws, therefore qupv3_se1_2uart
+ * should be disabled.
+ */
+&qupv3_se1_2uart {
+	status = "disabled";
+};
+
+/* Enabling this can cause backdrive issue on Airbrush prior to EVT1.1. */
+&qupv3_se19_2uart {
+	status = "disabled";
+};
+
+/* For Jaws: enable backdrive WR */
+#include "sm8150-floral-airbrush-backdrive-wr.dtsi"

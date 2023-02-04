@@ -1,0 +1,69 @@
+// SPDX-License-Identifier: GPL-2.0
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&qupv3_se9_i2c {
+	status = "ok";
+
+	slg51000: slg51000@75 {
+		compatible = "dlg,slg51000";
+		reg = <0x75>;
+		dlg,cs-gpios = <&pm6150l_gpios 4 0>,
+				   <&pm6150l_gpios 6 0>;
+		dlg,enable-gpios = <&pm6150l_gpios 1 0>,
+				   <&pm6150l_gpios 5 0>;
+
+		regulators {
+			slg51000_ldo1: ldo1 {
+				regulator-name = "ldo1";
+				regulator-min-microvolt = <2250000>;
+				regulator-max-microvolt = <3300000>;
+			};
+
+			slg51000_ldo2: ldo2 {
+				regulator-name = "ldo2";
+				regulator-min-microvolt = <2250000>;
+				regulator-max-microvolt = <3300000>;
+			};
+
+			slg51000_ldo3: ldo3 {
+				regulator-name = "ldo3";
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <3750000>;
+			};
+
+			slg51000_ldo4: ldo4 {
+				regulator-name = "ldo4";
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <3750000>;
+			};
+
+			slg51000_ldo5: ldo5 {
+				regulator-name = "ldo5";
+				regulator-min-microvolt = <500000>;
+				regulator-max-microvolt = <1200000>;
+			};
+
+			slg51000_ldo6: ldo6 {
+				regulator-name = "ldo6";
+				regulator-min-microvolt = <500000>;
+				regulator-max-microvolt = <1200000>;
+			};
+
+			slg51000_ldo7: ldo7 {
+				regulator-name = "ldo7";
+				regulator-min-microvolt = <1200000>;
+				regulator-max-microvolt = <3750000>;
+			};
+		};
+	};
+};

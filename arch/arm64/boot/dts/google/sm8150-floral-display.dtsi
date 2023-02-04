@@ -1,0 +1,250 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#include "../qcom/sm8150-sde-display.dtsi"
+#include "dsi-panel-s6e3hc2-dsc-wqhd-cmd.dtsi"
+#include "dsi-panel-nt37280-dsc-fhd-cmd.dtsi"
+#include "dsi-panel-nt37280-2a8t-dsc-fhd-cmd.dtsi"
+#include "dsi-panel-nt37280-2b8t-dsc-fhd-cmd.dtsi"
+#include "dsi-panel-nt37280-7t-dsc-fhd-cmd.dtsi"
+
+#include <dt-bindings/clock/mdss-10nm-pll-clk.h>
+
+&sde_dsi {
+	vddio-supply = <&pm8150_l14>;
+	vci-supply = <&pm8150l_l4>;
+	qcom,platform-te-gpio = <&tlmm 8 0>;
+
+	/delete-property/ vdd-supply;
+	/delete-property/ lab-supply;
+	/delete-property/ ibb-supply;
+
+	// update secure_display_memory carveout when adding a new display
+	qcom,dsi-display-list = <&dsi_nt37280_cmd_display
+				 &dsi_nt37280_2a8t_cmd_display
+				 &dsi_nt37280_2b8t_cmd_display
+				 &dsi_nt37280_7t_cmd_display
+				 &dsi_s6e3hc2_cmd_display
+				 &dsi_sim_vid_display>;
+};
+
+&sde_dsi1 {
+    status = "disabled";
+};
+
+// Disable control of incorrect gpio pin 130
+&display_panel_avdd_eldo {
+	gpio = <>;
+	status = "disabled";
+};
+
+// Without the line below, display corruption occurs.
+&mdss_dsi0 {
+	qcom,null-insertion-enabled;
+};
+
+&dsi_sim_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply_floral>;
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,platform-reset-gpio = <&tlmm 67 0>;
+	qcom,mdss-dsi-display-timings {
+		timing@0 {
+			qcom,mdss-dsi-panel-width = <1080>;
+			qcom,mdss-dsi-panel-height = <1920>;
+		};
+	};
+};
+
+&dsi_s6e3hc2_dsc_wqhd_cmd {
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,platform-reset-gpio = <&tlmm 67 0>;
+
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply_floral>;
+
+	qcom,mdss-dsi-display-timings {
+		timing@0 {
+			qcom,mdss-dsi-panel-phy-timings =
+				[00 21 08 08 25 23 08 08 06 02 04 00 1B 18];
+		};
+		timing@1 {
+			qcom,mdss-dsi-panel-phy-timings =
+				[00 21 08 08 25 23 08 08 06 02 04 00 1B 18];
+		};
+	};
+};
+
+&dsi_nt37280_dsc_fhd_cmd {
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,platform-reset-gpio = <&tlmm 67 0>;
+
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply_floral>;
+
+	qcom,mdss-dsi-display-timings {
+		timing@0 {
+			qcom,mdss-dsi-panel-phy-timings =
+				[00 14 05 05 1F 1F 05 05 03 02 04 00 12 15];
+		};
+		timing@1 {
+			qcom,mdss-dsi-panel-phy-timings =
+				[00 14 05 05 1F 1F 05 05 03 02 04 00 12 15];
+		};
+	};
+};
+
+&dsi_nt37280_2a8t_dsc_fhd_cmd {
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,platform-reset-gpio = <&tlmm 67 0>;
+
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply_floral>;
+
+	qcom,mdss-dsi-display-timings {
+		timing@0 {
+			qcom,mdss-dsi-panel-phy-timings =
+				[00 14 05 05 1F 1F 05 05 03 02 04 00 12 15];
+		};
+		timing@1 {
+			qcom,mdss-dsi-panel-phy-timings =
+				[00 14 05 05 1F 1F 05 05 03 02 04 00 12 15];
+		};
+	};
+};
+
+&dsi_nt37280_2b8t_dsc_fhd_cmd {
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,platform-reset-gpio = <&tlmm 67 0>;
+
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply_floral>;
+
+	qcom,mdss-dsi-display-timings {
+		timing@0 {
+			qcom,mdss-dsi-panel-phy-timings =
+				[00 14 05 05 1F 1F 05 05 03 02 04 00 12 15];
+		};
+		timing@1 {
+			qcom,mdss-dsi-panel-phy-timings =
+				[00 14 05 05 1F 1F 05 05 03 02 04 00 12 15];
+		};
+	};
+};
+
+&dsi_nt37280_7t_dsc_fhd_cmd {
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,platform-reset-gpio = <&tlmm 67 0>;
+
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply_floral>;
+
+	qcom,mdss-dsi-display-timings {
+		timing@0 {
+			qcom,mdss-dsi-panel-phy-timings =
+				[00 14 05 05 1F 1F 05 05 03 02 04 00 12 15];
+		};
+		timing@1 {
+			qcom,mdss-dsi-panel-phy-timings =
+				[00 14 05 05 1F 1F 05 05 03 02 04 00 12 15];
+		};
+	};
+};
+
+&sde_dp {
+	status = "disabled";
+};
+
+&mdss_mdp {
+	connectors = <&sde_rscc &sde_wb &sde_dsi>;
+};
+
+&soc {
+	dsi_panel_pwr_supply_floral: dsi_panel_pwr_supply_floral {
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		qcom,panel-supply-entry@0 {
+			reg = <0>;
+			qcom,supply-name = "vddio";
+			qcom,supply-min-voltage = <1840000>;
+			qcom,supply-max-voltage = <1840000>;
+			qcom,supply-enable-load = <100000>;
+			qcom,supply-disable-load = <100>;
+			qcom,supply-post-on-sleep = <0>;
+		};
+
+		qcom,panel-supply-entry@1 {
+			reg = <1>;
+			qcom,supply-name = "vci";
+			qcom,supply-min-voltage = <3000000>;
+			qcom,supply-max-voltage = <3000000>;
+			qcom,supply-enable-load = <100000>;
+			qcom,supply-disable-load = <100>;
+			qcom,supply-post-on-sleep = <0>;
+		};
+	};
+
+	dsi_s6e3hc2_cmd_display: qcom,dsi-display@1 {
+		label = "dsi_s6e3hc2_cmd_display";
+		qcom,display-type = "primary";
+		qcom,dsi-display-active;
+
+		qcom,dsi-ctrl-num = <0>;
+		qcom,dsi-phy-num = <0>;
+		qcom,dsi-select-clocks = "mux_byte_clk0", "mux_pixel_clk0";
+
+		qcom,dsi-panel = <&dsi_s6e3hc2_dsc_wqhd_cmd>;
+	};
+
+	dsi_nt37280_cmd_display: qcom,dsi-display@2 {
+		label = "dsi_nt37280_cmd_display";
+		qcom,display-type = "primary";
+		qcom,dsi-display-active;
+
+		qcom,dsi-ctrl-num = <0>;
+		qcom,dsi-phy-num = <0>;
+		qcom,dsi-select-clocks = "mux_byte_clk0", "mux_pixel_clk0";
+
+		qcom,dsi-panel = <&dsi_nt37280_dsc_fhd_cmd>;
+	};
+
+	dsi_nt37280_2a8t_cmd_display: qcom,dsi-display@3 {
+		label = "dsi_nt37280_2a8t_cmd_display";
+		qcom,display-type = "primary";
+		qcom,dsi-display-active;
+
+		qcom,dsi-ctrl-num = <0>;
+		qcom,dsi-phy-num = <0>;
+		qcom,dsi-select-clocks = "mux_byte_clk0", "mux_pixel_clk0";
+
+		qcom,dsi-panel = <&dsi_nt37280_2a8t_dsc_fhd_cmd>;
+	};
+
+	dsi_nt37280_2b8t_cmd_display: qcom,dsi-display@4 {
+		label = "dsi_nt37280_2b8t_cmd_display";
+		qcom,display-type = "primary";
+		qcom,dsi-display-active;
+
+		qcom,dsi-ctrl-num = <0>;
+		qcom,dsi-phy-num = <0>;
+		qcom,dsi-select-clocks = "mux_byte_clk0", "mux_pixel_clk0";
+
+		qcom,dsi-panel = <&dsi_nt37280_2b8t_dsc_fhd_cmd>;
+	};
+
+	dsi_nt37280_7t_cmd_display: qcom,dsi-display@5 {
+		label = "dsi_nt37280_7t_cmd_display";
+		qcom,display-type = "primary";
+		qcom,dsi-display-active;
+
+		qcom,dsi-ctrl-num = <0>;
+		qcom,dsi-phy-num = <0>;
+		qcom,dsi-select-clocks = "mux_byte_clk0", "mux_pixel_clk0";
+
+		qcom,dsi-panel = <&dsi_nt37280_7t_dsc_fhd_cmd>;
+	};
+};

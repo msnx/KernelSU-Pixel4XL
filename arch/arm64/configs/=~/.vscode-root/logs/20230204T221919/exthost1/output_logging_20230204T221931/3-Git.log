@@ -1,0 +1,66 @@
+[2023-02-04T14:19:38.392Z] Log level: Info
+[2023-02-04T14:19:38.398Z] [info] Validating found git in: git
+[2023-02-04T14:19:38.434Z] [info] Using git 2.35.1 from git
+[2023-02-04T14:19:38.450Z] > git rev-parse --show-toplevel [4ms]
+[2023-02-04T14:19:38.461Z] > git rev-parse --git-dir --git-common-dir [2ms]
+[2023-02-04T14:19:38.469Z] [info] Open repository: /root/Desktop/android-kernel/private/msm-google
+[2023-02-04T14:19:38.682Z] > git status -z -uall [204ms]
+[2023-02-04T14:19:38.688Z] > git symbolic-ref --short HEAD [1ms]
+[2023-02-04T14:19:38.688Z] fatal: ref HEAD is not a symbolic ref
+[2023-02-04T14:19:38.695Z] > git rev-parse HEAD [2ms]
+[2023-02-04T14:19:38.707Z] > git remote --verbose [2ms]
+[2023-02-04T14:19:38.758Z] > git for-each-ref --sort -committerdate --format %(refname) %(objectname) %(*objectname) [57ms]
+[2023-02-04T14:19:38.794Z] > git config --get commit.template [6ms]
+[2023-02-04T14:19:38.983Z] > git status -z -uall [179ms]
+[2023-02-04T14:19:38.988Z] > git symbolic-ref --short HEAD [1ms]
+[2023-02-04T14:19:38.988Z] fatal: ref HEAD is not a symbolic ref
+[2023-02-04T14:19:38.999Z] > git rev-parse HEAD [7ms]
+[2023-02-04T14:19:39.021Z] > git check-ignore -v -z --stdin [23ms]
+[2023-02-04T14:19:39.024Z] > git remote --verbose [4ms]
+[2023-02-04T14:19:39.031Z] > git ls-files --stage -- /root/Desktop/android-kernel/private/msm-google/arch/arm64/configs/floral_defconfig [187ms]
+[2023-02-04T14:19:39.037Z] > git cat-file -s 765bb2538af3825f0eba50f03146963a2d056bcb [2ms]
+[2023-02-04T14:19:39.079Z] > git for-each-ref --sort -committerdate --format %(refname) %(objectname) %(*objectname) [66ms]
+[2023-02-04T14:19:39.093Z] > git show --textconv :arch/arm64/configs/floral_defconfig [279ms]
+[2023-02-04T14:19:39.095Z] > git config --get commit.template [2ms]
+[2023-02-04T14:19:47.753Z] > git status -z -uall [190ms]
+[2023-02-04T14:19:47.759Z] > git symbolic-ref --short HEAD [2ms]
+[2023-02-04T14:19:47.759Z] fatal: ref HEAD is not a symbolic ref
+[2023-02-04T14:19:47.766Z] > git rev-parse HEAD [1ms]
+[2023-02-04T14:19:47.782Z] > git remote --verbose [1ms]
+[2023-02-04T14:19:47.832Z] > git for-each-ref --sort -committerdate --format %(refname) %(objectname) %(*objectname) [56ms]
+[2023-02-04T14:19:47.848Z] > git config --get commit.template [1ms]
+[2023-02-04T14:19:53.045Z] > git status -z -uall [189ms]
+[2023-02-04T14:19:53.051Z] > git symbolic-ref --short HEAD [1ms]
+[2023-02-04T14:19:53.051Z] fatal: ref HEAD is not a symbolic ref
+[2023-02-04T14:19:53.057Z] > git rev-parse HEAD [1ms]
+[2023-02-04T14:19:53.070Z] > git remote --verbose [5ms]
+[2023-02-04T14:19:53.121Z] > git for-each-ref --sort -committerdate --format %(refname) %(objectname) %(*objectname) [60ms]
+[2023-02-04T14:19:53.143Z] > git config --get commit.template [2ms]
+[2023-02-04T14:19:58.367Z] > git status -z -uall [219ms]
+[2023-02-04T14:19:58.373Z] > git symbolic-ref --short HEAD [2ms]
+[2023-02-04T14:19:58.373Z] fatal: ref HEAD is not a symbolic ref
+[2023-02-04T14:19:58.380Z] > git rev-parse HEAD [2ms]
+[2023-02-04T14:19:58.395Z] > git remote --verbose [4ms]
+[2023-02-04T14:19:58.445Z] > git for-each-ref --sort -committerdate --format %(refname) %(objectname) %(*objectname) [61ms]
+[2023-02-04T14:19:58.462Z] > git config --get commit.template [1ms]
+[2023-02-04T14:20:03.662Z] > git status -z -uall [193ms]
+[2023-02-04T14:20:03.669Z] > git symbolic-ref --short HEAD [1ms]
+[2023-02-04T14:20:03.669Z] fatal: ref HEAD is not a symbolic ref
+[2023-02-04T14:20:03.676Z] > git rev-parse HEAD [2ms]
+[2023-02-04T14:20:03.686Z] > git remote --verbose [1ms]
+[2023-02-04T14:20:03.733Z] > git for-each-ref --sort -committerdate --format %(refname) %(objectname) %(*objectname) [53ms]
+[2023-02-04T14:20:03.749Z] > git config --get commit.template [1ms]
+[2023-02-04T14:20:08.992Z] > git status -z -uall [236ms]
+[2023-02-04T14:20:08.998Z] > git symbolic-ref --short HEAD [1ms]
+[2023-02-04T14:20:08.998Z] fatal: ref HEAD is not a symbolic ref
+[2023-02-04T14:20:09.005Z] > git rev-parse HEAD [2ms]
+[2023-02-04T14:20:09.018Z] > git remote --verbose [3ms]
+[2023-02-04T14:20:09.065Z] > git for-each-ref --sort -committerdate --format %(refname) %(objectname) %(*objectname) [55ms]
+[2023-02-04T14:20:09.086Z] > git config --get commit.template [2ms]
+[2023-02-04T14:20:14.308Z] > git status -z -uall [215ms]
+[2023-02-04T14:20:14.314Z] > git symbolic-ref --short HEAD [1ms]
+[2023-02-04T14:20:14.315Z] fatal: ref HEAD is not a symbolic ref
+[2023-02-04T14:20:14.321Z] > git rev-parse HEAD [2ms]
+[2023-02-04T14:20:14.334Z] > git remote --verbose [2ms]
+[2023-02-04T14:20:14.388Z] > git for-each-ref --sort -committerdate --format %(refname) %(objectname) %(*objectname) [61ms]
+[2023-02-04T14:20:14.412Z] > git config --get commit.template [5ms]

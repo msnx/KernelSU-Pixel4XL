@@ -1,0 +1,66 @@
+/* Copyright (c) 2017-2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&qupv3_se15_i2c {
+	status = "ok";
+	max1720x_fg: max1720x@36 { };
+};
+
+#include "sm8150-floral-battery.dtsi"
+
+&qupv3_se15_i2c {
+	status = "ok";
+	p9221: p9221@61 { };
+};
+
+#include "sm8150-floral-jaws-wcharger.dtsi"
+
+&google_battery {
+	google,chg-battery-default-capacity = <3430>;
+};
+
+&max1720x_fg {
+
+	maxim,rsense-default = <500>;
+	maxim,n_regval_1720x =  /bits/ 16 <
+		0x9C 0x0380 /* nIChgTerm = 280.0 mA */
+		0x9D 0x0EB4 /* nFilterCfg: TEMP=90.0s MIX=12.8h
+			     * VOLT=90.0s CURR=5.625s
+			     */
+		0x9F 0x2606 /* nLearnCfg: Filt Empty */
+		0xa5 0x0D80 /* nFullCapNom: same as design Capacity */
+		0xB0 0x7217 /* nConfig: SS TS VS Ten Aen dSOCen TAlrtEn */
+		0xB3 0x0D80 /* nDesignCap: 3456 mAh */
+		0xB7 0x33C1 /* nConvgCfg: RepLow=6% VoltLowOff=140mV
+			     * MinSlopeX=8/16 RepL_per_stage=1%
+			     */
+		0xB8 0xCDF0 /* nNVCfg0: enOCV enX enCfg enFCfg enLCfg
+			     * enICT enCG enVE enDC
+			     */
+		0xB9 0xB00E /* nNVCfg1: enTGO enFTh enRFVSH enAT enCRV enCTE */
+		0xBA 0xFF0A /* nNVCfg2: enT enSOC enMMT enMMV enMMC enVT enFC
+			     * enIAvg CYCLESpSAVE=5.0
+			     */
+		0xC0 0xFF00 /* nVAlrtTh: disabled */
+		0xC1 0x7F80 /* nTAlrtTh: disabled */
+		0xC2 0xFF00 /* nSAlrtTh: disabled */
+		0xC6 0x5A05 /* nFullSOCThr = 90% */
+		0xD5 0x307D /* nRFastVShdn: rFast=93mohm VShdn=2.5V */
+	>;
+};
+
+&soc {
+	google,overheat_mitigation {
+		google,begin-mitigation-temp = <500>;
+		google,end-mitigation-temp = <400>;
+	};
+};

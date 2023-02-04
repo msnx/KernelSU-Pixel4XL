@@ -1,0 +1,14 @@
+[2023-02-04 22:25:27.742] [exthost] [info] Extension host with pid 859107 started
+[2023-02-04 22:25:27.824] [exthost] [info] ExtensionService#_doActivateExtension vscode.microsoft-authentication, startup: false, activationEvent: 'onAuthenticationRequest:microsoft'
+[2023-02-04 22:25:27.855] [exthost] [info] ExtensionService#_doActivateExtension vscode.debug-auto-launch, startup: true, activationEvent: '*'
+[2023-02-04 22:25:27.859] [exthost] [info] ExtensionService#_doActivateExtension vscode.git-base, startup: true, activationEvent: '*'
+[2023-02-04 22:25:27.861] [exthost] [info] ExtensionService#_doActivateExtension vscode.ipynb, startup: true, activationEvent: '*'
+[2023-02-04 22:25:27.949] [exthost] [info] ExtensionService#_doActivateExtension vscode.github, startup: true, activationEvent: '*'
+[2023-02-04 22:25:27.972] [exthost] [info] Eager extensions activated
+[2023-02-04 22:25:27.982] [exthost] [info] ExtensionService#_doActivateExtension vscode.emmet, startup: false, activationEvent: 'onStartupFinished'
+[2023-02-04 22:25:27.991] [exthost] [info] ExtensionService#_doActivateExtension vscode.merge-conflict, startup: false, activationEvent: 'onStartupFinished'
+[2023-02-04 22:25:28.045] [exthost] [info] ExtensionService#_doActivateExtension vscode.github-authentication, startup: false, activationEvent: 'onAuthenticationRequest:github'
+[2023-02-04 22:25:32.612] [exthost] [info] ExtensionService#_doActivateExtension vscode.git, startup: false, activationEvent: 'api', root cause: vscode.github
+[2023-02-04 22:25:32.634] [exthost] [info] ExtensionService#_doActivateExtension 2gua.rainbow-brackets, startup: false, activationEvent: '*'
+[2023-02-04 22:28:51.686] [exthost] [info] Extension host terminating: received terminate message from renderer
+[2023-02-04 22:28:51.713] [exthost] [info] Extension host with pid 859107 exiting with code 0

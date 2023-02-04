@@ -1,0 +1,38 @@
+ARCH=arm64
+BRANCH=android-msm-pixel-4.14
+CROSS_COMPILE=aarch64-linux-android-
+CROSS_COMPILE_ARM32=arm-linux-androideabi-
+DEFCONFIG=sunfish_defconfig
+EXTRA_CMDS=''
+CLANG_PREBUILT_BIN=prebuilts-master/clang/host/linux-x86/clang-r416183b/bin/
+LD_LIBRARY_PATH=${ROOT_DIR}/prebuilts-master/clang/host/linux-x86/clang-r416183b/lib64:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH
+LINUX_GCC_CROSS_COMPILE_PREBUILTS_BIN=prebuilts/gcc/linux-x86/aarch64/aarch64-linux-android-4.9/bin
+LINUX_GCC_CROSS_COMPILE_ARM32_PREBUILTS_BIN=prebuilts/gcc/linux-x86/arm/arm-linux-androideabi-4.9/bin
+LZ4_PREBUILTS_BIN=prebuilts-master/misc/linux-x86/lz4
+DTC_PREBUILTS_BIN=prebuilts-master/misc/linux-x86/dtc
+LIBUFDT_PREBUILTS_BIN=prebuilts-master/misc/linux-x86/libufdt
+DTC_EXT=${ROOT_DIR}/prebuilts-master/misc/linux-x86/dtc/dtc
+export DTC_EXT
+DTC_OVERLAY_TEST_EXT=${ROOT_DIR}/prebuilts-master/misc/linux-x86/libufdt/ufdt_apply_overlay
+export DTC_OVERLAY_TEST_EXT
+FILES="
+arch/arm64/boot/dtbo.img
+arch/arm64/boot/Image.lz4-dtb
+arch/arm64/boot/Image.lz4
+arch/arm64/boot/dts/google/qcom-base/sdmmagpie.dtb
+vmlinux
+System.map
+.config
+"
+EXT_MODULES="
+private/msm-google-modules/wlan/qcacld-3.0
+private/msm-google-modules/touch/fts/sunfish
+"
+IN_KERNEL_MODULES=1
+STOP_SHIP_TRACEPRINTK=1
+BUILD_INITRAMFS=1
+
+UNSTRIPPED_MODULES="
+wlan.ko
+"

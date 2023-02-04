@@ -1,0 +1,8 @@
+#
+# CAMERA
+#
+
+menuconfig CAMERA_FW_UPDATE
+	tristate "Qualcomm Technologies, Inc. Camera Firmware Update"
+		depends on I2C
+

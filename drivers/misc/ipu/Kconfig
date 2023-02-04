@@ -1,0 +1,48 @@
+#
+# Paintbox IPU
+#
+
+menu "Paintbox Programmable IPU"
+
+config IPU
+	bool "Paintbox IPU Driver"
+	default n
+	---help---
+	  Say Y here if you want to include the Paintbox IPU, aka Pixel Visual
+	  Core in the kernel.  The Paintbox IPU is a hardware accelerator for
+	  image processing applications.
+
+config IPU_DEBUG
+	bool  "Paintbox IPU Debug Support"
+	depends on IPU && DEBUG_FS
+	default n
+	---help---
+	This option enables debug support for the Paintbox IPU.
+	If you are unsure, say N.
+
+config IPU_AB_MFD_ADAPTER
+	bool  "Paintbox Airbrush Multi-function Adapter"
+	depends on IPU
+	depends on MFD_ABC_PCIE
+	default n
+	---help---
+	This option enables support for IPU hardware on the Airbrush companion
+	chip.  If you are unsure, say N.
+
+config IPU_IOMMU_ENABLED
+	bool "Set the default state for the Paintbox to off"
+	depends on IPU
+	depends on IPU_IOMMU
+	default n
+	---help---
+	This option enables support for IPU IOMMU in IPU driver.
+
+config IPU_IOMMU_PAGE_TABLE_ON_AB
+	bool "store IPU IOMMU page table in AB dram"
+	depends on IPU
+	depends on IPU_IOMMU
+	default n
+	---help---
+	this option stores the IPU IOMMU page table in AB memory instead of host memory.
+
+endmenu

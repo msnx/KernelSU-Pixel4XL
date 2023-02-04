@@ -1,0 +1,143 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&ts_active {
+	mux {
+		pins = "gpio122";
+		function = "gpio";
+	};
+	config {
+		pins = "gpio122";
+		drive-strength = <8>;
+		bias-pull-up;
+	};
+};
+
+&tlmm {
+	ts_reset_active: ts_reset_active {
+		mux {
+			pins = "gpio127";
+			function = "gpio";
+		};
+		config {
+			pins = "gpio127";
+			output-high;
+			drive-strength = <16>;
+			bias-pull-up;
+		};
+	};
+	ts_mux_active: tx_mux_active {
+		mux {
+			pins = "gpio115";
+			function = "gpio";
+		};
+		config {
+			pins = "gpio115";
+			drive-strength = <8>;
+			bias-pull-down;
+		};
+	};
+	qupv3_se1_tx: qupv3_se1_tx {
+		mux {
+			pins = "gpio116";
+			function = "qup1";
+		};
+		config {
+			pins = "gpio116";
+			drive-strength = <2>;
+			bias-pull-up;
+		};
+	};
+	qupv3_se1_rx: qupv3_se1_rx {
+		mux {
+			pins = "gpio117";
+			function = "qup1";
+		};
+		config {
+			pins = "gpio117";
+			drive-strength = <2>;
+			bias-disable;
+		};
+	};
+	qupv3_se19_tx: qupv3_se19_tx {
+		mux {
+			pins = "gpio55";
+			function = "qup19";
+		};
+		config {
+			pins = "gpio55";
+			drive-strength = <2>;
+			bias-pull-up;
+		};
+	};
+	qupv3_se19_rx: qupv3_se19_rx {
+		mux {
+			pins = "gpio56";
+			function = "qup19";
+		};
+		config {
+			pins = "gpio56";
+			drive-strength = <2>;
+			bias-disable;
+		};
+	};
+};
+
+&ts_int_suspend {
+	mux {
+		pins = "gpio122";
+		function = "gpio";
+	};
+	config {
+		pins = "gpio122";
+		drive-strength = <2>;
+		bias-pull-up;
+	};
+};
+
+&ts_reset_suspend {
+	mux {
+		pins = "gpio127";
+		function = "gpio";
+	};
+	config {
+		pins = "gpio127";
+		drive-strength = <16>;
+		bias-pull-down;
+	};
+};
+
+
+&sde_dsi_active {
+	mux {
+		pins = "gpio67";
+		function = "gpio";
+	};
+	config {
+		pins = "gpio67";
+		drive-strength = <8>;
+		bias-disable = <0>;
+	};
+};
+
+&sde_dsi_suspend {
+	mux {
+		pins = "gpio67";
+		function = "gpio";
+	};
+	config {
+		pins = "gpio67";
+		drive-strength = <2>;   /* 2 mA */
+		bias-pull-down;         /* PULL DOWN */
+	};
+};
+

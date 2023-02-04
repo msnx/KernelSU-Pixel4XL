@@ -1,0 +1,39 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+&pcie0 {
+	/* PCIE0 is disabled on Floral. */
+	status = "disabled";
+};
+
+&pm8150l_gpios {
+	pcie1_pm8150l_perst_default: pcie1_pm8150l_perst_default {
+		mux {
+			pins = "gpio2";
+			function = "normal";
+			bias-pull-down;
+			qcom,pull-down-strength = <2>;
+		};
+	};
+};
+
+&pcie1 {
+	qcom,msm-bus,vectors-KBps =
+			<100 512 0 0>,
+			<100 512 500 2000000>;
+
+	/* WAKE# optional sideband signal not connected */
+	wake-gpio = <>;
+	perst-gpio = <&pm8150l_gpios 2 GPIO_ACTIVE_LOW>;
+
+	/* Remove pcie1_wake_default from pin muxing. */
+	pinctrl-0 = <&pcie1_clkreq_default &pcie1_pm8150l_perst_default>;
+};

@@ -1,0 +1,3 @@
+[2023-02-04 22:25:31.187] [renderer1] [warning] [redhat.fabric8-analytics]: Cannot register 'redhat.telemetry.enabled'. This property is already registered.
+[2023-02-04 22:25:31.187] [renderer1] [warning] [redhat.fabric8-analytics]: Cannot register 'maven.executable.path'. This property is already registered.
+[2023-02-04 22:25:31.188] [renderer1] [warning] [twxs.cmake]: Cannot register 'cmake.cmakePath'. This property is already registered.

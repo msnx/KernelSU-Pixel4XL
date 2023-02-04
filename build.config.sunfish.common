@@ -1,0 +1,15 @@
+. ${ROOT_DIR}/${KERNEL_DIR}/build.config.common
+DEFCONFIG=sunfish_defconfig
+FILES="
+arch/arm64/boot/dtbo.img
+arch/arm64/boot/Image.lz4-dtb
+arch/arm64/boot/Image.lz4
+arch/arm64/boot/dts/google/qcom-base/sdmmagpie.dtb
+vmlinux
+System.map
+.config
+"
+EXT_MODULES="
+private/msm-google-modules/wlan/qcacld-3.0
+private/msm-google-modules/touch/fts/sunfish
+"

@@ -1,0 +1,71 @@
+
+qcom,c1-47k {
+	qcom, = <24>;
+	/* #3353414_Google_C1SWDATL_3480mAh_averaged_MasterSlave_Mar23rd2018*/
+	qcom,max-voltage-uv = <4400000>;
+	qcom,nom-batt-capacity-mah = <3480>;
+	qcom,batt-id-kohm = <47>;
+	qcom,battery-beta = <4360>;
+	qcom,fg-cc-cv-threshold-mv = <4390>;
+	qcom,battery-type = "c1-47k";
+	qcom,checksum = <0xDFAB>;
+	qcom,gui-version = "PMI8998GUI - 2.0.0.58";
+	qcom,fg-profile-data = [
+		 EB 20 3C 04
+		 5B 0B 92 05
+		 04 1D 74 01
+		 65 05 1D 03
+		 F1 17 92 23
+		 D0 44 E2 53
+		 8F 00 00 00
+		 11 00 00 00
+		 00 00 29 BC
+		 CA CD 9D BA
+		 1F 00 08 00
+		 27 DB 4E E4
+		 F8 06 75 00
+		 15 02 9A 12
+		 B2 07 FF 2A
+		 1C 06 09 20
+		 27 00 14 00
+		 07 20 33 05
+		 C7 0A FE 05
+		 C8 1C F2 02
+		 00 0C 2A 12
+		 94 18 C9 23
+		 EE 4D 24 5B
+		 6C 00 00 00
+		 0E 00 00 00
+		 00 00 5B CC
+		 19 C3 27 C3
+		 1A 00 00 00
+		 E9 EA 4E E4
+		 29 07 FB EA
+		 EE E2 84 03
+		 DB FC CA 1A
+		 9C 33 CC FF
+		 07 10 00 00
+		 95 0D 66 46
+		 1A 00 40 00
+		 94 01 0A FA
+		 FF 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+		 00 00 00 00
+	];
+};

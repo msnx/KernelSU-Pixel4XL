@@ -1,0 +1,62 @@
+#
+# Multifunction miscellaneous devices
+#
+
+if HAS_IOMEM
+menu "Knowles IAxxx Multifunction device drivers"
+
+config MFD_IAXXX
+	tristate "Knowles IAxxx Audio Device"
+	select REGMAP
+	select MFD_CORE
+        help
+	  This is the MFD core driver for the Knowles IAxxx device
+
+endmenu
+endif
+
+if MFD_IAXXX
+# IAxxx bus interfaces
+config MFD_IAXXX_I2C
+	bool "I2C bus-interface"
+	select REGMAP_I2C
+	depends on I2C
+	help
+	  Enable I2C Bus interface for IAXXX MFD driver
+	  Say Y if I2C support is needed for the IAXXX device
+
+config MFD_IAXXX_SPI
+	bool "SPI bus-interface"
+	select REGMAP_SPI
+	depends on SPI
+	help
+	  Enable SPI Bus interface for IAXXX MFD driver
+	  Say Y if SPI support is needed for the IAXXX device
+
+config MFD_IAXXX_SOUNDWIRE
+	bool "SoundWire bus-interface"
+	select REGMAP_SWR
+	select SOUNDWIRE_WCD_CTRL
+	depends on SOUNDWIRE
+	help
+	  Enable SoundWire Bus interface for IAXXX MFD driver
+	  Soundwire bus enable option
+
+config MFD_IAXXX_TUNNEL_POLL
+	bool "Tunneling in polling mode"
+
+config MFD_IAXXX_ATHENS_FPGA
+        bool "Enable Athens FPGA changes"
+
+config MFD_IAXXX_REGMAP_FPGA
+        bool "Enable REGMAP FPGA changes"
+
+config MFD_IAXXX_CUSTOM_CONFIG_ALGO
+	bool "Custom configuration for plugins"
+config MFD_IAXXX_SENSOR_TUNNEL
+	bool "Custom tunnel node for sensor"
+
+config MFD_IAXXX_DISABLE_RUNTIME_PM
+	bool "Disable runtime pm"
+
+endif

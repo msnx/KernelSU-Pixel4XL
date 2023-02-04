@@ -1,0 +1,27 @@
+keydebug driver
+=========================
+
+When a system is locked up and unresponsive, a user may long press key to force
+reset it. keydebug driver add debug function to collect more information in this
+path before system restart.
+
+Collects:
+-Top CPU usage tasks
+-Call stack of uninterruptible tasks
+-Call stack of each online core
+
+Required properties:
+- compatible:     must be "keydebug"
+
+- keys_down:      The input key-code used to active debug function count down.
+- key_down_delay: The time the input key need to be hold to trigger debug
+                  event, value is in milliseconds.
+- dbg_fn_delay:   The delay time to active debug function, value is in
+                  milliseconds.
+Example:
+	keydebug {
+		compatible = "keydebug";
+		key_down_delay = <7000>;
+		keys_down = <116>;
+		dbg_fn_delay = <2500>;
+	}

@@ -1,0 +1,97 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&thermal_zones {
+	sdm-therm {
+		trips {
+			shutdown-config {
+				temperature = <60000>;
+				hysteresis = <1000>;
+				type = "critical";
+			};
+		};
+	};
+
+	usbc-therm-adc {
+		trips {
+			usb-throttling_lv1 {
+				temperature = <50000>;
+				hysteresis = <10000>;
+				type = "passive";
+			};
+		};
+	};
+
+	backup-charge {
+		trips {
+			batt-charging_lv1 {
+				temperature = <39000>;
+				hysteresis = <1000>;
+				type = "passive";
+			};
+			batt-charging_lv2 {
+				temperature = <41000>;
+				hysteresis = <1000>;
+				type = "passive";
+			};
+			batt-charging_lv3 {
+				temperature = <43000>;
+				hysteresis = <1000>;
+				type = "passive";
+			};
+			batt-charging_lv4 {
+				temperature = <48000>;
+				hysteresis = <2000>;
+				type = "passive";
+			};
+
+			dc_icl-charging_lv1 {
+				temperature = <38000>;
+				hysteresis = <1000>;
+				type = "passive";
+			};
+			dc_icl-charging_lv2 {
+				temperature = <40000>;
+				hysteresis = <1000>;
+				type = "passive";
+			};
+			dc_icl-charging_lv3 {
+				temperature = <42000>;
+				hysteresis = <1000>;
+				type = "passive";
+			};
+			dc_icl-charging_lv4 {
+				temperature = <47000>;
+				hysteresis = <2000>;
+				type = "passive";
+			};
+		};
+	};
+
+	bcl-virt2 {
+		cooling-maps {
+			led_flash0 {
+				trip = <&active_config0>;
+				cooling-device =
+					<&cam_flash_rear THERMAL_MAX_LIMIT
+						THERMAL_MAX_LIMIT>;
+			};
+			led_flash1 {
+				trip = <&active_config0>;
+				cooling-device =
+					<&cam_flash_rear_aux
+						THERMAL_MAX_LIMIT
+						THERMAL_MAX_LIMIT>;
+			};
+		};
+	};
+};

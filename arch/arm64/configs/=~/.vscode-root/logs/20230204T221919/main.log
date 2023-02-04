@@ -1,0 +1,6 @@
+[2023-02-04 22:19:20.139] [main] [info] update#setState idle
+[2023-02-04 22:19:23.035] [main] [info] Starting extension host with pid 842369 (fork() took 16 ms).
+[2023-02-04 22:19:50.146] [main] [info] update#setState checking for updates
+[2023-02-04 22:19:50.153] [main] [info] update#setState available for download
+[2023-02-04 22:20:19.168] [main] [info] Waiting for extension host with pid 842369 to exit.
+[2023-02-04 22:20:19.173] [main] [info] Extension host with pid 842369 exited with code: 0, signal: null.

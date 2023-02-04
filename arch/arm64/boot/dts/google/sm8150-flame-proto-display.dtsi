@@ -1,0 +1,144 @@
+/* Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&dsi_nt37280_dsc_fhd_cmd {
+	qcom,mdss-dsi-display-timings {
+		timing@0 {
+			qcom,mdss-dsi-on-command = [
+				/* MCS */
+				15 01 00 00 00 00 02 FF E0
+				15 01 00 00 00 00 02 FB 01
+				15 01 00 00 00 00 02 18 80
+				15 01 00 00 00 00 02 1A 15
+				15 01 00 00 00 00 02 73 01
+				15 01 00 00 00 00 02 89 7F
+				15 01 00 00 00 00 02 0D 9B
+				15 01 00 00 00 00 02 46 17
+
+				15 01 00 00 00 00 02 FF F0
+				15 01 00 00 00 00 02 FB 01
+				15 01 00 00 00 00 02 54 03
+				15 01 00 00 00 00 02 9C 00
+
+				15 01 00 00 00 00 02 FF 20
+				15 01 00 00 00 00 02 FB 01
+				15 01 00 00 00 00 02 34 00
+				15 01 00 00 00 00 02 35 00
+				15 01 00 00 00 00 02 36 00
+
+				/* UCS */
+				15 01 00 00 00 00 02 FF 10
+				15 01 00 00 00 00 02 FB 01
+				15 01 00 00 00 00 02 88 07
+				39 01 00 00 00 00 05 2A 00 00 04 37
+				39 01 00 00 00 00 05 2B 00 00 08 E7
+				15 01 00 00 00 00 02 7F 07
+				15 01 00 00 00 00 02 E9 00
+				15 01 00 00 00 00 02 BF 03
+				15 01 00 00 00 00 02 C0 03
+
+				/* sleep out, Wait 120 ms */
+				05 01 00 00 78 00 01 11
+				15 01 00 00 00 00 02 35 00
+
+				/* display on */
+				05 01 00 00 00 00 01 29
+			];
+
+			qcom,mdss-dsi-timing-switch-command = [
+				15 01 00 00 00 00 02 FF 10
+				15 01 00 00 00 00 02 BB 10 /* 60hz */
+			];
+
+			qcom,mdss-dsi-lp1-command = [
+				15 01 00 00 00 00 02 FF 10
+				39 01 00 00 00 00 03 51 00 00
+				05 01 00 00 00 00 01 39	   /* AOD on */
+				05 01 00 00 00 00 01 2C
+				05 01 00 00 32 00 01 00
+			];
+
+			qcom,mdss-dsi-nolp-command = [
+				15 01 00 00 00 00 02 FF 10
+				39 01 00 00 00 00 03 51 00 00
+				05 01 00 00 00 00 01 38	   /* AOD off */
+				05 01 00 00 00 00 01 2C
+				05 01 00 00 5A 00 01 00
+			];
+
+		};
+		timing@1 {
+			qcom,mdss-dsi-on-command = [
+				/* MCS */
+				15 01 00 00 00 00 02 FF E0
+				15 01 00 00 00 00 02 FB 01
+				15 01 00 00 00 00 02 18 80
+				15 01 00 00 00 00 02 1A 15
+				15 01 00 00 00 00 02 73 01
+				15 01 00 00 00 00 02 89 7F
+				15 01 00 00 00 00 02 0D 9B
+				15 01 00 00 00 00 02 46 17
+
+				15 01 00 00 00 00 02 FF F0
+				15 01 00 00 00 00 02 FB 01
+				15 01 00 00 00 00 02 54 03
+				15 01 00 00 00 00 02 9C 00
+
+				15 01 00 00 00 00 02 FF 20
+				15 01 00 00 00 00 02 FB 01
+				15 01 00 00 00 00 02 34 00
+				15 01 00 00 00 00 02 35 00
+				15 01 00 00 00 00 02 36 00
+
+				/* UCS */
+				15 01 00 00 00 00 02 FF 10
+				15 01 00 00 00 00 02 FB 01
+				15 01 00 00 00 00 02 88 07
+				39 01 00 00 00 00 05 2A 00 00 04 37
+				39 01 00 00 00 00 05 2B 00 00 08 E7
+				15 01 00 00 00 00 02 7F 07
+				15 01 00 00 00 00 02 E9 00
+				15 01 00 00 00 00 02 BB 90  /* 90 hz */
+				15 01 00 00 00 00 02 BF 03
+				15 01 00 00 00 00 02 C0 03
+
+				/* sleep out, Wait 120 ms */
+				05 01 00 00 78 00 01 11
+				15 01 00 00 00 00 02 35 00
+
+				/* display on */
+				05 01 00 00 00 00 01 29
+			];
+
+			qcom,mdss-dsi-timing-switch-command = [
+				15 01 00 00 00 00 02 FF 10
+				15 01 00 00 00 00 02 BB 90 /* 90hz */
+			];
+
+			qcom,mdss-dsi-lp1-command = [
+				15 01 00 00 00 00 02 FF 10
+				39 01 00 00 00 00 03 51 00 00
+				05 01 00 00 00 00 01 39	   /* AOD on */
+				05 01 00 00 00 00 01 2C
+				05 01 00 00 32 00 01 00
+			];
+
+			qcom,mdss-dsi-nolp-command = [
+				15 01 00 00 00 00 02 FF 10
+				39 01 00 00 00 00 03 51 00 00
+				05 01 00 00 00 00 01 38	   /* AOD off */
+				05 01 00 00 00 00 01 2C
+				05 01 00 00 5A 00 01 00
+			];
+		};
+	};
+};

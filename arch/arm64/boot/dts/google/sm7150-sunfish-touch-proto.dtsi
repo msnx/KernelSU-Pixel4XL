@@ -1,0 +1,71 @@
+// SPDX-License-Identifier: GPL-2.0
+/* Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&qupv3_se7_spi {
+	status = "disabled";
+};
+
+&qupv3_se7_i2c {
+	status = "ok";
+	qcom,clk-freq-out = <1000000>;
+	sunfish_i2ctouch@49 {
+		status = "ok";
+		compatible = "st,fts";
+		reg = <0x49>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <9 IRQ_TYPE_LEVEL_LOW>;
+//		vdd-supply = <&pm8150_l14>;		// 1v8
+//		avdd-supply = <&pm8150_l13>;		// 3v3
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&touch_power_default &touch_irq_default
+				 &touch_switch_default>;
+
+		st,irq-gpio = <&tlmm 9 0>;
+		st,reset-gpio = <&tlmm 8 0>;
+		st,switch_gpio = <&tlmm 72 0>;		// Low: AP, High: SLPI
+		st,max-coords = <1079 2339>;
+		st,panel_map = <&dsi_sofef00_sdc_1080p_cmd 0>,
+			       <&dsi_sofef01_sdc_1080p_cmd 1>;
+		st,force-pi-cfg-ver-map = <769>;	// 0x0301
+		//st,disp-rate-gpio = <&tlmm 128 0>;
+//		st,regulator_dvdd = "vdd";
+//		st,regulator_avdd = "avdd";
+/*
+		st,panel_map = <&dsi_s6e3hc2_dsc_wqhd_cmd 0>,
+			       <&dsi_nt37280_dsc_fhd_cmd 1>,
+			       <&dsi_nt37280_2a8t_dsc_fhd_cmd 1>,
+			       <&dsi_nt37280_2b8t_dsc_fhd_cmd 1>,
+			       <&dsi_nt37280_7t_dsc_fhd_cmd 1>;
+
+		// Override table format:
+		// panel number, extinfo index, mask, value, firmware index
+		st,extinfo_override_table = <1  1 0xF0 0x00 2>,
+					    <1  1 0xF0 0x10 2>,
+					    <1  1 0xFC 0x24 3>,
+					    <1  1 0xFC 0x28 4>;
+
+		st,firmware_names = "ftm5_fw_c2.ftb",
+				    "ftm5_fw_f2.ftb",
+				    "ftm5_fw_f2_p2.ftb",
+				    "ftm5_fw_f2_evt1.ftb",
+				    "ftm5_fw_f2_evt2.ftb";
+		st,limits_names = "stm_fts_production_limits_c2.csv",
+				  "stm_fts_production_limits_f2.csv",
+				  "stm_fts_production_limits_f2_p2.csv",
+				  "stm_fts_production_limits_f2_evt1.csv",
+				  "stm_fts_production_limits_f2_evt2.csv";
+		st,sensor_inverted = <0>, <1>, <1>, <1>, <1>;
+*/
+	};
+};

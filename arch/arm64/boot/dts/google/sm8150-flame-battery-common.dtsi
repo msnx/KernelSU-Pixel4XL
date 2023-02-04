@@ -1,0 +1,88 @@
+/* Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#include "sm8150-floral-battery.dtsi"
+#include "sm8150-floral-wcharger.dtsi"
+
+&google_battery {
+	google,chg-battery-default-capacity = <2800>;
+
+	google,ttf-adapter = <1800>;
+	google,ttf-soc-table =  <62 75 85 89  92  95  98  100>;
+	google,ttf-elap-table = <40 55 75 100 120 180 250 300>;
+	google,ttf-tier-table = <0 64 80>;
+};
+
+&google_charger {
+	google,fcc-max-ua = <2800000>;
+};
+
+&vendor {
+	f2_maxim_config: maxim,config {
+		maxim,f2-22k {
+			maxim,batt-id-kohm = <22>;
+			maxim,capacity-rcomp0 = <0x1067>; /* LSN */
+		};
+		maxim,f2-47k {
+			maxim,batt-id-kohm = <47>;
+			maxim,capacity-rcomp0 = <0x1067>; /* LSN */
+		};
+		maxim,f2-100k {
+			maxim,batt-id-kohm = <100>;
+			maxim,capacity-rcomp0 = <0x1078>; /* LWN */
+		};
+		maxim,f2-33k {
+			maxim,batt-id-kohm = <33>;
+			maxim,capacity-rcomp0 = <0x1078>; /* LWN */
+		};
+	};
+};
+
+&max1720x_fg {
+	google,cap-tsettle = <3>;
+	google,cap-filt-length = <12>;
+
+	maxim,capacity-stable = <5>;
+	maxim,capacity-fade = <4000>;
+	maxim,capacity-design = <2800>;
+	maxim,capacity-tempco = <0x223c>;
+
+	maxim,n_regval_1730x_ver_por = /bits/ 8 <0xcc 0x01>;
+	maxim,n_regval_1730x_ver = /bits/ 8 <0xcc 0x00>;
+	maxim,n_regval_1730x =  /bits/ 16 <
+		0xD1 0x4BF6	/* nTPrtTh1 */
+		0xD2 0x782a	/* nTPrtTh3 */
+		0xD6 0x4029	/* nProtMiscTh */
+		0xDC 0x34C9	/* nDelayCfg */
+	>;
+
+	maxim,n_regval_1720x_ver_por = /bits/ 8 <0xd4 0x01>;
+	maxim,n_regval_1720x_ver = /bits/ 8 <0xd4 0x3>;
+	maxim,n_regval_1720x =  /bits/ 16 <
+		0xA7 0x223C	/* nTempCo Register */
+	>;
+
+	maxim,fix-vempty;
+};
+
+&soc {
+	google,overheat_mitigation {
+		google,begin-mitigation-temp = <550>;
+		google,end-mitigation-temp = <450>;
+	};
+};
+
+&p9221 {
+	google,q_value = <42>;
+	fod = [AB 29 8F 2E 99 1B 9D 13 A5 E9 B9 BE 12 02 9A 12];
+	fod_epp = [B1 28 90 40 87 53 90 32 96 1B 9B 06 17 12 01 40];
+};

@@ -1,0 +1,20 @@
+trip0 {
+	temperature = <100000>;
+	hysteresis = <0>;
+	type = "hot";
+};
+trip1 {
+	temperature = <100000>;
+	hysteresis = <0>;
+	type = "hot";
+};
+trip2 {
+	temperature = <100000>;
+	hysteresis = <0>;
+	type = "hot";
+};
+trip3 {
+	temperature = <100000>;
+	hysteresis = <0>;
+	type = "hot";
+};

@@ -1,0 +1,8 @@
+#
+# google set wlan mac
+#
+config GOOGLE_WLAN_MAC
+	bool "Read MAC from device tree"
+	default n
+	help
+	  Say Y here if you want the GOOGLE WLAN MAC features

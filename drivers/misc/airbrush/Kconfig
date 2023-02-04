@@ -1,0 +1,88 @@
+#
+# Airbrush
+#
+
+menu "Airbrush"
+
+config AIRBRUSH_SM
+	bool "Device driver for Airbrush State Manager"
+	default "n"
+	---help---
+	  This option enables device driver support for airbrush state manager.
+	  This includes the support for CLK, LPDDR, UART, SPI and other IP
+	  configurations which can be controlled through the PCIe interface.
+
+config AIRBRUSH_SM_DEBUGFS
+	depends on AIRBRUSH_SM
+	bool "Debugfs entries for Airbrush State Manager"
+	default "n"
+	---help---
+	  This option enables Debugfs entries for airbrush state manager.
+
+config AIRBRUSH_SM_PROFILE
+	depends on AIRBRUSH_SM && AIRBRUSH_SM_DEBUGFS
+	bool "Profiling support for Airbrush State Manager"
+	default "y"
+	---help---
+	  This option enables profiling support for airbrush state manager.
+
+config AIRBRUSH_SM_DEBUG_IOCTLS
+	depends on AIRBRUSH_SM
+	bool "Debug ioctls for Airbrush State Manager"
+	default "y"
+	---help---
+	  This option enables debug ioctls for airbrush state manager.
+
+config AB_DDR_MR13_RRO_ENABLE
+	depends on AIRBRUSH_SM
+	bool "MR13 RRO Enable (4x, 2x refresh)"
+	default "n"
+	---help---
+	  This option enables the MR13 RRO(Refresh Rate Option) (=OP[4]).
+	  When this is slected, all the refresh rate options will be enabled
+	  from the MR4 OP[2:0] which includes "4x refresh" and "2x refresh".
+
+config AB_DDR_RW_TEST
+	depends on AIRBRUSH_SM
+	bool "DDR Read/Write test"
+	default "y"
+	---help---
+	  This option enables DDR read/write test functionality. Read/Write
+	  test includes Memtester and PCIe DMA read/write test. Please check
+	  the drivers/misc/airbrush/airbrush-ddr.h for all the options exposed
+	  by this interface.
+
+config AB_DDR_SANITY_TEST
+	depends on AB_DDR_RW_TEST
+	bool "DDR sanity test during state change"
+	default "n"
+	---help---
+	  This option enables DDR sanity test during state manger state
+	  transitions. Sanity test is DDR PCIe dma read/write test which is
+	  executed during the ASM state transitions from DDR driver to check
+	  the DDR data integrity.
+
+config AB_DDR_SANITY_SZ_MBYTES
+	int "Size in Mega Bytes"
+	depends on AB_DDR_SANITY_TEST
+	default 48
+	---help---
+	  Defines the size (in MiB) of the memory area for DDR sanity test.
+	  Size should be between 1 to 512 MiB. Sanity test always uses
+	  0x2000_0000 as base address which is the DRAM base address.
+
+config AB_DDR_EYE_MARGIN
+	depends on AB_DDR_RW_TEST
+	bool "DDR Eye Margin test"
+	default "y"
+	---help---
+	  This option enables DDR Eye Margin test.
+
+config AB_DDR_PPC
+	depends on AIRBRUSH_SM
+	bool "DDR Performance Profiling"
+	default "y"
+	---help---
+	  This option enables DDR Performance Profiling functionality.
+
+endmenu

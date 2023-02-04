@@ -1,0 +1,130 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+#include <dt-bindings/mfd/iaxxx.h>
+
+&cs35l36_reset_top {
+	mux {
+		pins = "gpio128";
+		function = "gpio";
+	};
+
+	config {
+		pins = "gpio128";
+		drive-strength = <2>;
+		bias-disable;
+	};
+};
+
+&cs35l36_irq_top {
+	mux {
+		pins = "gpio125";
+		function = "gpio";
+	};
+
+	config {
+		pins = "gpio125";
+		drive-strength = <2>;
+		bias-pull-up;
+	};
+};
+
+&cs35l36_codec_top {
+	reset-gpios = <&tlmm 128 0>;
+	irq-gpio = <&tlmm 125 0>;
+	interrupt-parent = <&tlmm>;
+	interrupts = <125 IRQ_TYPE_LEVEL_LOW>;
+};
+
+&qupv3_se4_spi_active {
+	config {
+		drive-strength = <16>;
+	};
+};
+
+&qupv3_se4_spi_sleep {
+	config {
+		drive-strength = <16>;
+	};
+};
+
+/delete-node/ &iaxxxspi1;
+
+/* knowles IA8508 SPI1 */
+&qupv3_se4_spi {
+	status = "ok";
+	iaxxxspi1: iaxxx@0 {
+		compatible = "knowles,iaxxx-spi";
+		reg = <0>;
+		#address-cells = <1>;
+		#size-cells = <0>;
+
+		spi-max-frequency = <4800000>;
+		spi-cpha;
+
+		/* Regulator LDO_9A, 1.2V, max load 385mA */
+		adnc,vdd-core-supply = <&pm8150_l9>;
+		adnc,vdd-core-voltage-uV = <1224000 1224000>;
+		adnc,vdd-core-maxload-uA = <385000>;
+
+		/* Regulator LDO_1C, 1.8V, max load 300mA */
+		adnc,vdd-oslo-supply = <&pm8150l_l1>;
+		adnc,vdd-oslo-voltage-uV = <1800000 1800000>;
+		adnc,vdd-oslo-maxload-uA = <300000>;
+
+		clock-names = "iaxxx_clk";
+		clocks = <&clock_rpmh RPMH_LN_BB_CLK3>;
+
+		adnc,reset-gpio = <&tlmm 143 0>;
+		adnc,event-gpio = <&tlmm 123 0>;
+
+		adnc,pwr-vld-gpio = <&tlmm 151 0>;
+		adnc,spi-app-speed = <9600000>;
+
+		/* The PDM port used by FlickerSensor */
+		adnc,sensor-port = <IAXXX_PDM_PORT_D>;
+
+		/* no of output channels to mute and unmute */
+		adnc,op-ch-active = <0xF>;
+		/* pcm port format configuration
+		 * 0 is i2s mode
+		 * 1 is tdm mode
+		 * 2 is DSP_A mode
+		 */
+		adnc,pcm-port-fmt =  <2>, <0>, <0>, <0>, <2>, <0>;
+		/* pcm port word length configuration
+		 *  0: auto (according to application)
+		 * 16: 16 bits per sample
+		 * 20: 20 bits per sample
+		 * 24: 24 bits per sample
+		 * 32: 32 bits per sample
+		 */
+		adnc,pcm-port-word-len = <32>, <0>, <0>, <0>, <32>, <0>;
+		/* input pdm port acting as master or slave */
+		adnc,ip-port-master = <0>, <0>, <0>, <0>, <0>, <0>, <1>;
+		/* Input pdm clock source for all microphones are defined
+		 * here.
+		 * Each MIC from same port can act as master clock source
+		 * or it can be derived from common clock source from a
+		 * shared port.
+		 */
+		adnc,ip-pdm-clk-src = <0>, <0>, <0>, <0>, <0>, <0>, <1>;
+	};
+};
+
+/* sound card */
+&snd_8150 {
+	qcom,model = "sm8150-iaxxx-jaws-snd-card";
+};
+
+&qupv3_se4_i2c {
+	status = "disabled";
+};

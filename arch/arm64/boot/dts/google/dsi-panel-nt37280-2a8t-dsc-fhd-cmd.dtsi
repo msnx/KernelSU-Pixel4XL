@@ -1,0 +1,409 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&mdss_mdp {
+	dsi_nt37280_2a8t_dsc_fhd_cmd: qcom,mdss_dsi_nt37280_2a8t {
+		compatible = "google,dsi_binned_lp";
+
+		qcom,mdss-dsi-panel-name = "nt37280 amoled 5.68 cmd mode panel";
+		qcom,mdss-dsi-panel-physical-type = "oled";
+		google,mdss-dsi-panel-vendor = "LG";
+		google,mdss-dsi-panel-sn-location = <0xA0 0 9>;
+		google,mdss-dsi-panel-vendor-extinfo-loc = <0xDA 0 1>,
+							   <0xDB 0 1>,
+							   <0xDC 0 1>;
+		qcom,mdss-dsi-panel-type = "dsi_cmd_mode";
+		qcom,mdss-dsi-virtual-channel-id = <0>;
+		qcom,mdss-dsi-bpp = <24>;
+		qcom,mdss-dsi-color-order = "rgb_swap_rgb";
+		qcom,mdss-dsi-traffic-mode = "non_burst_sync_event";
+		qcom,mdss-dsi-lane-map = "lane_map_0123";
+		qcom,mdss-dsi-lane-0-state;
+		qcom,mdss-dsi-lane-1-state;
+		qcom,mdss-dsi-lane-2-state;
+		qcom,mdss-dsi-lane-3-state;
+
+		qcom,mdss-dsi-dma-trigger = "trigger_sw";
+		qcom,mdss-dsi-mdp-trigger = "none";
+		qcom,mdss-dsi-wr-mem-start = <0x2c>;
+		qcom,mdss-dsi-wr-mem-continue = <0x3c>;
+
+		qcom,mdss-dsi-te-pin-select = <1>;
+		qcom,mdss-dsi-te-dcs-command = <1>;
+		qcom,mdss-dsi-te-check-enable;
+		qcom,mdss-dsi-te-using-te-pin;
+		qcom,mdss-dsi-panel-status-check-mode = "te_signal_check";
+
+		qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+		qcom,mdss-dsi-bl-min-level = <0x012>;
+		qcom,mdss-dsi-bl-max-level = <0xFEF>;
+
+		qcom,mdss-dsi-reset-sequence = <1 5>, <0 1>, <1 10>;
+		qcom,mdss-dsi-lp11-init;
+		qcom,mdss-dsi-init-delay-us = <10000>;
+
+		qcom,mdss-pan-physical-width-dimension = <62>;
+		qcom,mdss-pan-physical-height-dimension = <130>;
+		qcom,mdss-dsi-display-timings {
+			timing@0 {
+				qcom,mdss-dsi-panel-clockrate = <550000000>;
+				qcom,mdss-mdp-transfer-time-us = <14000>;
+				qcom,mdss-dsi-panel-framerate = <60>;
+				qcom,mdss-dsi-panel-jitter = <10 3>;
+				qcom,mdss-dsi-panel-width = <1080>;
+				qcom,mdss-dsi-panel-height = <2280>;
+				qcom,mdss-dsi-h-pulse-width = <8>;
+				qcom,mdss-dsi-h-back-porch = <16>;
+				qcom,mdss-dsi-h-front-porch = <36>;
+				qcom,mdss-dsi-v-pulse-width = <4>;
+				qcom,mdss-dsi-v-back-porch = <28>;
+				qcom,mdss-dsi-v-front-porch = <16>;
+				qcom,mdss-dsi-on-command = [
+					/* MCS */
+					15 01 00 00 00 00 02 FF E0
+					15 01 00 00 00 00 02 FB 01
+					15 01 00 00 00 00 02 28 03
+					15 01 00 00 00 00 02 89 7F
+					15 01 00 00 00 00 02 0D 9B
+
+					/* Programming dynamic trimming setting registers */
+					15 01 00 00 00 00 02 FF 27
+					15 01 00 00 00 00 02 C9 0D
+					15 01 00 00 00 00 02 CA 0A
+					15 01 00 00 00 00 02 CB 03
+					15 01 00 00 00 00 02 CC F9
+					15 01 00 00 00 00 02 CD 0A
+					15 01 00 00 00 00 02 CF 00
+					15 01 00 00 00 00 02 D0 35
+					15 01 00 00 00 00 02 D1 05
+					15 01 00 00 00 00 02 D2 01
+					15 01 00 00 00 00 02 D3 0D
+					15 01 00 00 00 00 02 D4 0A
+					15 01 00 00 00 00 02 D5 03
+					15 01 00 00 00 00 02 D6 F9
+					15 01 00 00 00 00 02 D7 0A
+					15 01 00 00 00 00 02 D9 00
+					15 01 00 00 00 00 02 DA 35
+					15 01 00 00 00 00 02 DB 05
+					15 01 00 00 00 00 02 DC 01
+					15 01 00 00 00 00 02 FB 01
+
+					/* UCS */
+					15 01 00 00 00 00 02 FF 10
+					15 01 00 00 00 00 02 FB 01
+					15 01 00 00 00 00 02 88 07
+					15 01 00 00 00 00 02 8A 00
+					39 01 00 00 00 00 05 2A 00 00 04 37
+					39 01 00 00 00 00 05 2B 00 00 08 E7
+					15 01 00 00 00 00 02 7F 07
+					15 01 00 00 00 00 02 E9 00
+					15 01 00 00 00 00 02 BF 03
+					15 01 00 00 00 00 02 C0 03
+
+					/* sleep out, Wait 120 ms */
+					05 01 00 00 78 00 01 11
+					15 01 00 00 00 00 02 35 00
+
+					/* display on */
+					05 01 00 00 00 00 01 29
+				];
+				qcom,mdss-dsi-on-command-state = "dsi_lp_mode";
+				qcom,mdss-dsi-off-command = [
+					15 01 00 00 00 00 02 FF 10
+
+					/* display off */
+					05 01 00 00 14 00 01 28
+
+					/* sleep in, Wait 100 ms */
+					05 01 00 00 64 00 01 10
+				];
+				qcom,mdss-dsi-off-command-state = "dsi_lp_mode";
+
+				qcom,mdss-dsi-timing-switch-command = [
+					15 01 00 00 00 00 02 FF 2C
+					15 00 00 00 00 00 02 FB 01
+					39 00 00 00 00 00 11 B4
+						00 00 00 00 00 00 00 00
+						00 00 01 56 02 B2 03 36
+					39 00 00 00 00 00 07 B5
+						03 5A 03 5A 03 5A
+					39 00 00 00 00 00 11 B8
+						03 5E 03 5E 03 5E 03 5E
+						03 5E 02 08 00 AC 00 28
+					39 01 00 00 00 00 07 B9
+						00 04 00 04 00 04
+
+					15 01 00 00 00 00 02 FF 10
+					15 00 00 00 00 00 02 BB 10 /* 60hz */
+					15 00 00 00 00 00 02 26 01
+					15 01 00 00 00 00 02 2C 00
+					05 01 00 00 00 00 01 00
+				];
+				qcom,mdss-dsi-timing-switch-command-state = "dsi_lp_mode";
+
+				qcom,mdss-dsi-lp1-command = [
+					15 01 00 00 00 00 02 FF 10
+					39 01 00 00 00 00 03 51 00 00
+					05 01 00 00 00 00 01 39	   /* AOD on */
+					15 01 00 00 00 00 02 2C 00
+					05 01 00 00 50 00 01 00
+				];
+				qcom,mdss-dsi-nolp-command = [
+					15 01 00 00 00 00 02 FF 10
+					39 01 00 00 00 00 03 51 00 00
+					05 01 00 00 00 00 01 38	   /* AOD off */
+					15 01 00 00 00 00 02 2C 00
+					05 01 00 00 7A 00 01 00
+				];
+
+				qcom,compression-mode = "dsc";
+				qcom,mdss-dsc-slice-height = <20>;
+				qcom,mdss-dsc-slice-width = <540>;
+				qcom,mdss-dsc-slice-per-pkt = <1>;
+				qcom,mdss-dsc-bit-per-component = <8>;
+				qcom,mdss-dsc-bit-per-pixel = <8>;
+				qcom,mdss-dsc-block-prediction-enable;
+
+				/* 2xLM, 2xDSC Enc, 1xDSI Intf */
+				qcom,display-topology = <2 2 1>;
+				qcom,default-topology-index = <0>;
+
+				qcom,panel-roi-alignment = <1080 20 1080 20 1080 20>;
+				qcom,partial-update-enabled = "single_roi";
+			};
+
+			timing@1 {
+				qcom,mdss-dsi-panel-clockrate = <550000000>;
+				qcom,mdss-mdp-transfer-time-us = <9000>;
+				qcom,mdss-dsi-panel-framerate = <90>;
+				qcom,mdss-dsi-panel-jitter = <10 3>;
+				qcom,mdss-dsi-panel-width = <1080>;
+				qcom,mdss-dsi-panel-height = <2280>;
+				qcom,mdss-dsi-h-pulse-width = <8>;
+				qcom,mdss-dsi-h-back-porch = <16>;
+				qcom,mdss-dsi-h-front-porch = <36>;
+				qcom,mdss-dsi-v-pulse-width = <4>;
+				qcom,mdss-dsi-v-back-porch = <28>;
+				qcom,mdss-dsi-v-front-porch = <16>;
+				qcom,mdss-dsi-on-command = [
+					/* MCS */
+					15 01 00 00 00 00 02 FF E0
+					15 01 00 00 00 00 02 FB 01
+					15 01 00 00 00 00 02 28 03
+					15 01 00 00 00 00 02 89 7F
+					15 01 00 00 00 00 02 0D 9B
+
+					/* Programming dynamic trimming setting registers */
+					15 01 00 00 00 00 02 FF 27
+					15 01 00 00 00 00 02 C9 0D
+					15 01 00 00 00 00 02 CA 0A
+					15 01 00 00 00 00 02 CB 03
+					15 01 00 00 00 00 02 CC F9
+					15 01 00 00 00 00 02 CD 0A
+					15 01 00 00 00 00 02 CF 00
+					15 01 00 00 00 00 02 D0 35
+					15 01 00 00 00 00 02 D1 05
+					15 01 00 00 00 00 02 D2 01
+					15 01 00 00 00 00 02 D3 0D
+					15 01 00 00 00 00 02 D4 0A
+					15 01 00 00 00 00 02 D5 03
+					15 01 00 00 00 00 02 D6 F9
+					15 01 00 00 00 00 02 D7 0A
+					15 01 00 00 00 00 02 D9 00
+					15 01 00 00 00 00 02 DA 35
+					15 01 00 00 00 00 02 DB 05
+					15 01 00 00 00 00 02 DC 01
+					15 01 00 00 00 00 02 FB 01
+
+					/* UCS */
+					15 01 00 00 00 00 02 FF 2C
+					15 01 00 00 00 00 02 FB 01
+					39 01 00 00 00 00 11 B4
+						00 00 00 00 00 00 00 00
+						00 00 00 E6 01 CE 02 26
+					39 01 00 00 00 00 07 B5
+						02 3A 02 3A 02 3A
+					39 01 00 00 00 00 11 B8
+						02 40 02 40 02 40 02 40
+						02 40 01 5A 00 72 00 1A
+					39 01 00 00 00 00 07 B9
+						00 06 00 06 00 06
+
+					/* UCS */
+					15 01 00 00 00 00 02 FF 10
+					15 01 00 00 00 00 02 FB 01
+					15 01 00 00 00 00 02 88 07
+					15 01 00 00 00 00 02 8A 00
+					39 01 00 00 00 00 05 2A 00 00 04 37
+					39 01 00 00 00 00 05 2B 00 00 08 E7
+					15 01 00 00 00 00 02 7F 07
+					15 01 00 00 00 00 02 E9 00
+					15 01 00 00 00 00 02 BB 90  /* 90 hz */
+					15 01 00 00 00 00 02 26 02
+					15 01 00 00 00 00 02 BF 03
+					15 01 00 00 00 00 02 C0 03
+
+					/* sleep out, Wait 120 ms */
+					05 01 00 00 78 00 01 11
+					15 01 00 00 00 00 02 35 00
+
+					/* display on */
+					05 01 00 00 00 00 01 29
+				];
+				qcom,mdss-dsi-on-command-state = "dsi_lp_mode";
+				qcom,mdss-dsi-off-command = [
+					15 01 00 00 00 00 02 FF 10
+
+					/* display off */
+					05 01 00 00 14 00 01 28
+
+					/* sleep in, Wait 100 ms */
+					05 01 00 00 64 00 01 10
+				];
+				qcom,mdss-dsi-off-command-state = "dsi_lp_mode";
+
+				qcom,mdss-dsi-timing-switch-command = [
+					15 01 00 00 00 00 02 FF 2C
+					15 00 00 00 00 00 02 FB 01
+					39 00 00 00 00 00 11 B4
+						00 00 00 00 00 00 00 00
+						00 00 00 E6 01 CE 02 26
+					39 00 00 00 00 00 07 B5
+						02 3A 02 3A 02 3A
+					39 00 00 00 00 00 11 B8
+						02 40 02 40 02 40 02 40
+						02 40 01 5A 00 72 00 1A
+					39 01 00 00 00 00 07 B9
+						00 06 00 06 00 06
+
+					15 01 00 00 00 00 02 FF 10
+					15 00 00 00 00 00 02 BB 90 /* 90hz */
+					15 00 00 00 00 00 02 26 02
+					15 01 00 00 00 00 02 2C 00
+					05 01 00 00 00 00 01 00
+				];
+				qcom,mdss-dsi-timing-switch-command-state = "dsi_lp_mode";
+
+				qcom,mdss-dsi-lp1-command = [
+					15 01 00 00 00 00 02 FF 2C
+					15 00 00 00 00 00 02 FB 01
+					39 00 00 00 00 00 11 B4
+						00 00 00 00 00 00 00 00
+						00 00 01 56 02 B2 03 36
+					39 00 00 00 00 00 07 B5
+						03 5A 03 5A 03 5A
+					39 00 00 00 00 00 11 B8
+						03 5E 03 5E 03 5E 03 5E
+						03 5E 02 08 00 AC 00 28
+					39 01 00 00 00 00 07 B9
+						00 04 00 04 00 04
+					15 01 00 00 00 00 02 FF 10
+					15 00 00 00 00 00 02 BB 10 /* 60hz */
+					15 00 00 00 00 00 02 26 01
+					15 01 00 00 00 00 02 2C 00
+					05 01 00 00 20 00 01 00
+
+					15 01 00 00 00 00 02 FF 10
+					39 01 00 00 00 00 03 51 00 00
+					05 01 00 00 00 00 01 39	   /* AOD on */
+					15 01 00 00 00 00 02 2C 00
+					05 01 00 00 50 00 01 00
+				];
+				qcom,mdss-dsi-nolp-command = [
+					15 01 00 00 00 00 02 FF 10
+					39 01 00 00 00 00 03 51 00 00
+					05 01 00 00 00 00 01 38	   /* AOD off */
+					15 01 00 00 00 00 02 2C 00
+					05 01 00 00 7A 00 01 00
+
+					15 01 00 00 00 00 02 FF 2C
+					15 00 00 00 00 00 02 FB 01
+					39 00 00 00 00 00 11 B4
+						00 00 00 00 00 00 00 00
+						00 00 00 E6 01 CE 02 26
+					39 00 00 00 00 00 07 B5
+						02 3A 02 3A 02 3A
+					39 00 00 00 00 00 11 B8
+						02 40 02 40 02 40 02 40
+						02 40 01 5A 00 72 00 1A
+					39 01 00 00 00 00 07 B9
+						00 06 00 06 00 06
+					15 01 00 00 00 00 02 FF 10
+					15 00 00 00 00 00 02 BB 90 /* 90hz */
+					15 00 00 00 00 00 02 26 02
+					15 01 00 00 00 00 02 2C 00
+					05 01 00 00 00 00 01 00
+				];
+
+				qcom,compression-mode = "dsc";
+				qcom,mdss-dsc-slice-height = <20>;
+				qcom,mdss-dsc-slice-width = <540>;
+				qcom,mdss-dsc-slice-per-pkt = <1>;
+				qcom,mdss-dsc-bit-per-component = <8>;
+				qcom,mdss-dsc-bit-per-pixel = <8>;
+				qcom,mdss-dsc-block-prediction-enable;
+
+				/* 2xLM, 2xDSC Enc, 1xDSI Intf */
+				qcom,display-topology = <2 2 1>;
+				qcom,default-topology-index = <0>;
+
+				qcom,panel-roi-alignment = <1080 20 1080 20 1080 20>;
+				qcom,partial-update-enabled = "single_roi";
+			};
+		};
+
+		google,lp-modes {
+			lp-mode@0 {
+				label = "off";
+
+				google,dsi-lp-brightness-threshold = <0>;
+				google,dsi-lp-command = [
+					15 01 00 00 00 00 02 FF 10
+					39 01 00 00 00 00 03 51 00 00
+				];
+				google,dsi-lp-command-state = "dsi_lp_mode";
+			};
+
+			lp-mode@1 {
+				label = "low";
+
+				google,dsi-lp-brightness-threshold = <20>;
+				google,dsi-lp-command = [
+					15 01 00 00 00 00 02 FF 10
+					39 01 00 00 00 00 03 51 06 FF
+				];
+				google,dsi-lp-command-state = "dsi_lp_mode";
+			};
+
+			lp-mode@2 {
+				label = "high";
+
+				google,dsi-lp-brightness-threshold = <255>;
+				google,dsi-lp-command = [
+					15 01 00 00 00 00 02 FF 10
+					39 01 00 00 00 00 03 51 0F FF
+				];
+				google,dsi-lp-command-state = "dsi_lp_mode";
+			};
+		};
+
+		google,hbm-ranges {
+			hbm-range@0 {
+				google,dsi-hbm-range-brightness-threshold = <1>;
+
+				google,dsi-hbm-range-bl-min-level = <0x1>;
+				google,dsi-hbm-range-bl-max-level = <0xfff>;
+
+			};
+		};
+	};
+};

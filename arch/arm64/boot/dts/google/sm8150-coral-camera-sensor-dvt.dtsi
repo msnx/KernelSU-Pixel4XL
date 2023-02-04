@@ -1,0 +1,36 @@
+/*
+* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License version 2 and
+* only version 2 as published by the Free Software Foundation.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*/
+
+&tlmm {
+	ir_vcsel_fault_active_np: ir_vcsel_fault_active_np {
+		mux {
+			pins = "gpio124";
+			function = "gpio";
+		};
+		config {
+			pins = "gpio124";
+			bias-disable;
+			input-enable;
+		};
+	};
+};
+
+&lm36011_flood {
+	pinctrl-0 = <&ir_vcsel_fault_active_np>;
+	hw-version = <4>;
+};
+
+&lm36011_dot {
+	pinctrl-0 = <&ir_vcsel_fault_active_np>;
+	hw-version = <4>;
+};

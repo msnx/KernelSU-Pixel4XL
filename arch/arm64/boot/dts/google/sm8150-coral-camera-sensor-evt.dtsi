@@ -1,0 +1,114 @@
+/*
+ * Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&pm8150l_gpios {
+	ir_vcsel_test_active: ir_vcsel_test_active {
+		mux {
+			pins = "gpio4";
+			function = "normal";
+			bias-disable;
+			input-enable;
+		};
+	};
+
+	ir_vcsel_test_suspend: ir_vcsel_test_suspend {
+		mux {
+			pins = "gpio4";
+			function = "normal";
+			bias-pull-down;
+			input-enable;
+		};
+	};
+};
+
+&tlmm {
+	csense_irq_active: csense_irq_active {
+		mux {
+			pins = "gpio49";
+			function = "gpio";
+		};
+		config {
+			pins = "gpio49";
+			bias-pull-up;
+			input-enable;
+		};
+	};
+
+	csense_irq_suspend: csense_irq_suspend {
+		mux {
+			pins = "gpio49";
+			function = "gpio";
+		};
+		config {
+			pins = "gpio49";
+			bias-pull-down;
+			input-enable;
+		};
+	};
+
+	ir_vcsel_fault_active_np: ir_vcsel_fault_active_np {
+		mux {
+			pins = "gpio124";
+			function = "gpio";
+		};
+		config {
+			pins = "gpio124";
+			bias-disable;
+			input-enable;
+		};
+	};
+};
+
+&lm36011_flood {
+	sx9320_vdd-supply = <&max77826_ldo11>;
+	pinctrl-0 = <&ir_vcsel_fault_active_np &ir_vcsel_test_active
+			&csense_irq_active>;
+	pinctrl-1 = <&ir_vcsel_fault_suspend &ir_vcsel_test_suspend
+			&csense_irq_suspend>;
+	gpios = <&tlmm 124 0>,
+		<&pm8150l_gpios 4 0>,
+		<&pm8150l_gpios 5 0>,
+		<&tlmm 49 0>;
+	hw-version = <2>;
+};
+
+&lm36011_dot {
+	sx9320_vdd-supply = <&max77826_ldo11>;
+	pinctrl-0 = <&ir_vcsel_fault_active_np &ir_vcsel_test_active
+			&csense_irq_active>;
+	pinctrl-1 = <&ir_vcsel_fault_suspend &ir_vcsel_test_suspend
+			&csense_irq_suspend>;
+	gpios = <&tlmm 124 0>,
+		<&pm8150l_gpios 4 0>,
+		<&pm8150l_gpios 5 0>,
+		<&tlmm 49 0>;
+	hw-version = <2>;
+};
+
+&ois_rear {
+	ois-version = <1>;
+};
+
+&ois_rear_aux {
+	ois-version = <1>;
+};
+
+&cam_cci0 {
+	qcom,cam-sensor@3 {
+		rgltr-min-voltage = <1800000 2900000 1350000 4100000 0>;
+	};
+
+	qcom,cam-sensor@4 {
+		rgltr-min-voltage = <1800000 2900000 1350000 4100000 0>;
+	};
+};

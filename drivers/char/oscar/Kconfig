@@ -1,0 +1,23 @@
+menu "Gasket devices"
+
+config GASKET_FRAMEWORK
+	tristate "Gasket framework"
+	depends on PCI && (X86_64 || ARM64)
+	help
+	  This framework supports Gasket-compatible devices, such as Apex and
+	  Oscar.  It is required for any of the following module(s).
+
+	  To compile this driver as a module, choose M here.  The module
+	  will be called "gasket".
+
+config OSCAR_DRIVER
+        tristate "Oscar Driver"
+        depends on GASKET_FRAMEWORK && MFD_ABC_PCIE && AIRBRUSH_DRAM && AIRBRUSH_SM
+        help
+          This driver supports the Oscar device.  Say Y if you want to
+          include this driver in the kernel.
+
+          To compile this driver as a module, choose M here.  The module
+          will be called "oscar".
+
+endmenu

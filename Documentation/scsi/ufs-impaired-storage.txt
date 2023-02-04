@@ -1,0 +1,48 @@
+
+UFS-Impaired-Storage
+====================
+
+Contents
+--------
+
+1. Overview
+2. Quick reference guide
+3. Detailed information
+
+1. Overview
+-----------
+
+Flash storage performance can be degraded over time due to the storage and
+file system aging as well as complicated internal structure.
+Impaired Storage emulate degraded storage latencies by adding delay for each
+I/O request.
+
+
+2. Quick reference guide
+------------------------
+
+* Case1: delay all read requests by 1.5x
+  echo 150 > /sys/.../impaired/read_delay_percent
+  echo 1 > /sys/.../impaired/enabled
+
+* Case 2: delay all write requests by 300us
+  echo 300 > /sys/.../impaired/write_delay_us
+  echo 1 > /sys/.../impaired/enabled
+
+* Case 3: delay both read and write requests by 2x, then add 100us
+  echo 200 > /sys/.../impaired/read_delay_percent
+  echo 200 > /sys/.../impaired/write_delay_percent
+  echo 100 > /sys/.../impaired/read_delay_us
+  echo 100 > /sys/.../impaired/write_delay_us
+  echo 1 > /sys/.../impaired/enabled
+
+* Case 4: emulate impaired read latencies.
+  echo fragftl > /sys/.../impaired/read_model
+  echo 1 > /sys/.../impaired/enabled
+
+
+3. Detailed information
+-----------------------
+
+http://go/impairedstorage
+

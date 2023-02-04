@@ -1,0 +1,18 @@
+[2023-02-04 22:19:37.089] [renderer1] [warning] [redhat.fabric8-analytics]: Cannot register 'redhat.telemetry.enabled'. This property is already registered.
+[2023-02-04 22:19:37.090] [renderer1] [warning] [redhat.fabric8-analytics]: Cannot register 'maven.executable.path'. This property is already registered.
+[2023-02-04 22:19:37.090] [renderer1] [warning] [twxs.cmake]: Cannot register 'cmake.cmakePath'. This property is already registered.
+[2023-02-04 22:19:37.944] [renderer1] [error] Could not find category with ID: ms-vscode.cpptools#cppWelcome: Error: Could not find category with ID: ms-vscode.cpptools#cppWelcome
+    at vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:3111:102440
+    at S.invoke (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:83:145)
+    at l.deliver (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:83:2266)
+    at a.fire (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:83:1844)
+    at P.progressStep (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2115:30154)
+    at P.registerDoneListeners (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2115:32694)
+    at vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2115:31012
+    at Array.forEach (<anonymous>)
+    at P._registerWalkthrough (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2115:30794)
+    at vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2115:28186
+    at async Promise.all (index 0)
+    at async P.registerExtensionWalkthroughContributions (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2115:25993)
+    at async Promise.all (index 0)
+    at async i._handler (vscode-file://vscode-app/usr/share/code/resources/app/out/vs/workbench/workbench.desktop.main.js:2115:22204)

@@ -1,0 +1,81 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&tlmm {
+	cs40l2x_pinctrl: cs40l25ax_pinctrl {
+		rst {
+			pins = "gpio152";
+			function = "gpio";
+			drive-strength = <2>;
+			bias-disable;
+			output-low;
+		};
+		irq {
+			pins = "gpio129";
+			function = "gpio";
+			bias-disable;
+		};
+	};
+};
+
+&pm8150_gpios {
+	clk_out {
+		clk_out_default: clk_out_default {
+			pins = "gpio3"; /* GPIO 3 */
+			function = "func1"; /* Special Function 1 */
+			bias-disable; /* No Pull */
+			power-source = <0>; /* VIN0 */
+			output-low; /* digital output, no invert */
+			input-disable; /* prevent GPIO from being set to DIO */
+		};
+	};
+};
+
+&qupv3_se15_i2c {
+	status = "ok";
+	// see -qup.dtsi for clk-freq-out setting
+	floral_cs40l25a: cs40l25a@43 {
+		compatible = "cirrus,cs40l25a";
+		pinctrl-names = "default";
+		pinctrl-0 = <&cs40l2x_pinctrl &clk_out_default>;
+		reset-gpios = <&tlmm 152 0>;
+		reg = <0x43>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <129 IRQ_TYPE_LEVEL_LOW>;
+		async-suspend;
+		cirrus,boost-ind-nanohenry = <1000>;
+		cirrus,boost-cap-microfarad = <4>;
+		cirrus,boost-ipk-milliamp = <4500>;
+		cirrus,boost-ctl-millivolt = <10000>; /* 10V */
+		cirrus,boost-ovp-millivolt = <11000>; /* 11V */
+		cirrus,f0-default = <2514000>; /* 153 Hz */
+		cirrus,f0-min = <2293760>; /* 140 Hz */
+		cirrus,f0-max = <2703360>; /* 165 Hz */
+		cirrus,redc-comp-disable = <1>; /* disabling ReDC clk comp */
+		cirrus,redc-default = <327728>; /* 15 Ohm */
+		cirrus,redc-min = <302112>; /* 13.5 Ohm */
+		cirrus,redc-max = <369248>; /* 16.5 Ohm */
+		cirrus,gpio1-rise-index = <5>; /* 100% HEAVY_CLICK */
+		cirrus,gpio1-fall-index = <4>; /* 75% HEAVY_CLICK */
+		cirrus,gpio1-fall-timeout = <47278>; /* 985 ms */
+		cirrus,gpio1-mode = <2>; /* enabled only in suspend mode */
+		cirrus,hiber-enable;
+		cirrus,refclk-gpio2 = <1>; /* set GPIO2 as REFCLK  */
+		cirrus,asp-bclk-freq-hz = <6144000>;
+		cirrus,asp-bclk-inv;
+		cirrus,asp-fmt = <0>;
+		cirrus,asp-slot-num = <2>;
+		cirrus,asp-slot-width = <32>;
+		cirrus,asp-samp-width = <24>;
+		status = "ok";
+	};
+};

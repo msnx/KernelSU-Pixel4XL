@@ -1,0 +1,100 @@
+Documentation on how to use debugfs/sysfs entries for airbush:
+
+1. State Manager (/sys/kernel/debug/airbrush/airbrush_sm)
+--------------------------------------------------------------------------------
+The entry of utmost importance is the read-write file:
+
+"chip_state"
+	Reading: Exports the information about the current state of the overall
+		chip.
+	Writing: On writing another chip state, it changes the overall chip-
+		-state to that state.
+
+Other than that, there are directories for each block (IPU, TPU, DRAM, MIF,
+FSYS, AON) each of which contains the following READ-ONLY entries which exports
+information about the respective block:
+
+"state_id"
+	current block-state-id
+
+"state_name"
+	name of the curent state
+
+"substate_name"
+	name of the current substate.
+
+"rail_en"
+	current status of the voltage_rail
+
+"logic_voltage"
+	current logic voltage
+
+"clk_status"
+	current clock tree gating status
+
+"clk_frequency"
+	current clock_frequency.
+	(This value is only superficial, for actual value maintained by software
+	see Clock Section below)
+
+"num_powered_cores"
+	current number of powered_cores (Applicable in case of IPU only)
+
+"num_computing_cores"
+	current number of computing_cores (Applicable in case of IPU only)
+
+"num_powered_tiles"
+	current number of powered_tiles (Applicable in case of TPU only)
+
+"data_rate"
+	current data_rate (Applicable in case of DRAM and FSYS)
+
+2. Clocks (/sys/kernel/debug/clk/)
+--------------------------------------------------------------------------------
+
+After the first write to /sys/kernel/debug/airbrush/airbrush_sm/chip_state,
+various clocks will be registered.
+Once registered we can see various debugfs entries inside /sys/kernel/debug/clk/
+
+"clk_summary" is one such read-only debugfs entry provided by CCF
+	Reading it exports vaious information about clock tree in a tabular
+	format.
+
+Each clock creates it's own subdirectory by the name of the clock and inside it
+one can find many debugfs entries exporting properties of the clock.
+
+"clk_rate"
+	Reading: exports the frequency of the clock
+	Writing: changes the rate of the clock to the given frequency
+		(for PLL clocks or divider clocks)
+
+"clk_parent"
+	Reading: exports the name of the parent clock
+	Writing: changes the clock parent
+
+"clk_enable_count"
+	Reading: exports the enable_count of the clock.
+	Writing: Enables/Disables the clock depending on the value written.
+
+"clk_prepare_count"
+	Reading: exports the prepare_count of the clock.
+	Writing: Prepares/Unprepares the clock depending on the value written.
+
+"clk_flags"
+	Reading: exports the value of flags
+	Writing: Invalid
+
+"clk_notifier_count", "clk_phase", "clk_accuracy" are not used in case of 
+airbrush.
+
+3. DDR
+--------------------------------------------------------------------------------
+
+Debugfs entry for DDR control is /sys/kernel/debug/airbrush/ab_ddr_ctrl
+
+"ab_ddr_ctrl"
+	Reading: Invalid
+	Writing: 0 to trigger ddr_init()
+		 1 to trigger ddr_suspend()
+		 3 to trigger ddr_resume()
+

@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: GPL-2.0
+/* Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&qupv3_se7_i2c {
+	status = "ok";
+	/delete-node/ sunfish_i2ctouch@49;
+	synaptics_dsx@20 {
+		compatible = "synaptics,dsx-i2c";
+		reg = <0x20>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <9 0x2008>;
+		synaptics,irq-gpio = <&tlmm 9 0x2008>;
+				/* IRQF_ONESHOT | IRQF_TRIGGER_LOW */
+		synaptics,reset-gpio = <&tlmm 8 0>;
+		synaptics,switch-gpio= <&tlmm 72 0>;
+		synaptics,switch-ssc-state= <1>;
+		pinctrl-names = "default";
+		pinctrl-0 = <&touch_power_default &touch_irq_default
+				&touch_reset_default &touch_switch_default>;
+		synaptics,irq-on-state = <0>;
+		synaptics,reset-delay-ms = <20>;
+		synaptics,reset-on-state = <0>;
+		synaptics,reset-active-ms = <1>;
+		synaptics,display-coords = <1080 2160>;
+	};
+};

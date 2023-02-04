@@ -1,0 +1,22 @@
+#
+# iaxxx codec driver
+#
+if MFD_IAXXX
+config SND_SOC_IAXXX
+	tristate "Knowles IAxxx Audio Device"
+	---help---
+	  Enable codec driver for IAxxx
+
+config IAXXX_PORT_CLOCK_FORWARD
+	bool "Enable Port clock forwarding"
+	---help---
+	This config enables Port Clock
+	forwarding for PDM Port clocks.
+
+config IAXXX_TO_MAX_PLUGIN_IP_EP
+	bool "Enables to max plugin input endpoints"
+	---help---
+	This kcontrol is used to define to max
+	plugin input endpoints based on usecase
+	requirement.
+endif

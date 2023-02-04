@@ -1,0 +1,30 @@
+What:		/sys/devices/virtual/ramoops/pstore/aes_key
+Date:		July 24, 2017
+KernelVersion:	4.4
+Contact:	Patrick Tjin <pattjin@google.com>
+Description:	This file is used to communicate the AES key used to decrypt the
+		alternate buffer.
+
+What:		/sys/devices/virtual/ramoops/pstore/aes_key_iv
+Date:		July 24, 2017
+KernelVersion:	4.4
+Contact:	Patrick Tjin <pattjin@google.com>
+Description:	This file is used to communicate the AES IV used to decrypt the
+		alternate buffer.
+
+What:		/sys/devices/virtual/ramoops/pstore/aes_key_tag
+Date:		July 24, 2017
+KernelVersion:	4.4
+Contact:	Patrick Tjin <pattjin@google.com>
+Description:	This file is used to communicate the AES tag used to decrypt the
+		alternate buffer.
+
+What:		/sys/devices/virtual/ramoops/pstore/use_alt
+Date:		July 24, 2017
+KernelVersion:	4.4
+Contact:	Patrick Tjin <pattjin@google.com>
+Description:	Writing a 1 to this file will cause the ramoops to pivot to
+		using the alternate buffer. (This includes decryption, the
+		AES keys should have been given to the driver prior to writing
+		this node.)
+

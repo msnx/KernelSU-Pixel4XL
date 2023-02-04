@@ -1,0 +1,37 @@
+MAX17201/MAX17205 Fuel Gauge
+----------------------------
+
+Required properties :
+ - compatible : "maxim,max1720x"
+
+Optional properties :
+ - maxim,psy-type-unknown: if set, forces poser supply type to be
+   POWER_SUPPLY_TYPE_UNKNOWN rather than POWER_SUPPLY_TYPE_BATTERY
+
+ - io-channels: see Documentation/devicetree/bindings/iio/iio-bindings.txt
+ - io-channel-names: see Documentation/devicetree/bindings/iio/iio-bindings.txt
+ - maxim,batt-id-range-pct: tolerance in percent on the resitance ID value. if
+   not provided, defaults to 20%.
+ - maxim,force-batt-id: force battery id (skip detection)
+ - maxim,force-hard-reset: force fg hard reset during probe
+ - maxim,max1730x-compat: enable experimental support for max17301 fuel gauge
+
+ - maxim,config: node in which children would have a "maxim,batt-id-kohm"
+   property and a "maxim,regval" to allow applying configuration changes given a
+   battery.
+ - maxim,batt-id-kohm: the value of the battery resitance ID the config applies
+   to.
+ - maxim,n_regval_1720x: An array of u16 that are pairs of register address and
+   corresponding values. These values will be written to the shadow registers
+   of Maxim fuel gauge their address must be within 0x80 - 0xDF to be considered
+ - maxim,r_regval_1720x: An array of u16 that are pairs of register address and
+   corresponding values. These values will be written to the ModelGauge m5
+   Register their address must be within 0x00 - 0x4D, 0xB0 - 0xDF to be
+   considered.
+ - maxim,n_regval_1730x: An array of u16 that are pairs of register address and
+   corresponding values. These values will be written to the shadow registers
+   of Maxim fuel gauge their address must be within 0x80 - 0xEF to be considered
+ - maxim,r_regval_1730x: An array of u16 that are pairs of register address and
+   corresponding values. These values will be written to the ModelGauge m5
+   Register their address must be within 0x00 - 0x4F, 0xA0 - 0xDF to be
+   considered.

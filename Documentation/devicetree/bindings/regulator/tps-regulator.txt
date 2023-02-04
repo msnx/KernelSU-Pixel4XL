@@ -1,0 +1,34 @@
+TPS fixed voltage regulators
+
+Required properties:
+- compatible: Must be "regulator-tps".
+- nr-control-gpios: the number of gpios involved in controlling the
+  regulator.
+- control-gpios: list of phandles for the control gpio.
+- gpio-enable-sequence - gpio indexes for enabling the regulator.
+- gpio-enable-delay - delays in microseconds, if any, after turning on
+  each gpio in gpio-enable-sequence. 0 if no delay.
+- gpio-disable-sequence - gpio indexes for disabling the regulator.
+- gpio-disable-delay - delays in microseconds, if any, after turning off
+  each gpio in gpio-disable-sequence. 0 if no delay.
+
+Any property defined as part of the core regulator
+binding, defined in regulator.txt, can also be used.
+However a fixed voltage regulator is expected to have the
+regulator-min-microvolt and regulator-max-microvolt
+to be the same.
+
+Example:
+        regulator@00{
+                compatible = "regulator-tps";
+                regulator-name = "ext_5v_boost";
+                nr-control-gpios = <3>;
+                control-gpios = <&tlmm 146 GPIO_ACTIVE_HIGH>,
+                                <&tlmm 66 GPIO_ACTIVE_HIGH>,
+                                <&tlmm 118 GPIO_ACTIVE_HIGH>;
+                gpio-enable-sequence = <1 2 3>;
+                gpio-enable-delay = <1000 100 300>;
+                gpio-disable-sequence = <2 3 1>;
+                gpio-disable-delay = <0 0 0>;
+                status = "okay";
+        };

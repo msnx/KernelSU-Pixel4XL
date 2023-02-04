@@ -1,0 +1,46 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/* sound card */
+&snd_8150 {
+	qcom,model = "sm8150-iaxxx-coral-snd-card";
+};
+
+&routing {
+	qcom,msm-pcm-config = "coral";
+};
+
+&msm_cirrus_playback {
+	/*
+	 * Mapping formula from audio hw
+	 *  ohm = imp / Qfactor * Amp_Constant
+	 *  ohm = imp / 8192 * 5.85714
+	 */
+
+	/* the resistance is 7.1 ohm */
+	cirrus,top-speaker-impedance = <9930>;
+
+	/* the percentage of tolerance is 21, ie 1.5ohm */
+	cirrus,top-speaker-tolerance = <21>;
+
+	/* the resistance is 7.1 ohm */
+	cirrus,top-speaker-mean = <9930>;
+
+	/* the resistance is 6.9 ohm */
+	cirrus,bottom-speaker-impedance = <9651>;
+
+	/* the percentage of tolerance is 22, ie 1.5ohm */
+	cirrus,bottom-speaker-tolerance = <22>;
+
+	/* the resistance is 6.9 ohm */
+	cirrus,bottom-speaker-mean = <9651>;
+};

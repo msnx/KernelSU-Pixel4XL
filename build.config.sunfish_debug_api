@@ -1,0 +1,24 @@
+KERNEL_DIR=private/msm-google
+. ${ROOT_DIR}/${KERNEL_DIR}/build.config.sunfish.common.clang
+POST_DEFCONFIG_CMDS="check_defconfig && update_debug_config"
+
+function update_debug_config() {
+    ${KERNEL_DIR}/scripts/config --file ${OUT_DIR}/.config \
+         -e CONFIG_DMA_API_DEBUG \
+         -e CONFIG_DEBUG_SHIRQ \
+         -e CONFIG_DEBUG_KOBJECT \
+         -e CONFIG_DEBUG_KOBJECT_RELEASE \
+         -e CONFIG_DEBUG_LIST \
+         -e CONFIG_DEBUG_PI_LIST \
+         -e CONFIG_DEBUG_NOTIFIERS \
+         -e CONFIG_DEBUG_CREDENTIALS \
+         -e CONFIG_PANIC_ON_WARN_DEFAULT_ENABLE \
+         -d LTO \
+         -d LTO_CLANG \
+         -d CFI \
+         -d CFI_PERMISSIVE \
+         -d CFI_CLANG \
+         -d SHADOW_CALL_STACK
+    (cd ${OUT_DIR} && \
+     make ${CC_LD_ARG} O=${OUT_DIR} olddefconfig)
+}

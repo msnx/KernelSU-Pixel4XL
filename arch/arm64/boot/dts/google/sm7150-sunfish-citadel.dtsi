@@ -1,0 +1,60 @@
+/* Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&tlmm {
+	citadel {
+		ctdl_ap_irq: ctdl_ap_irq {
+			mux {
+				pins = "gpio4";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio4";
+				drive-strength = <2>; /* 2 MA */
+				input-enable;
+				bias-disable;
+			};
+		};
+
+		ap_ctdl_irq: ap_ctdl_irq {
+		        mux {
+			        pins = "gpio16";
+				function = "gpio";
+			};
+
+			config {
+			        pins = "gpio16";
+				drive-strength = <2>; /* 2 MA */
+				bias-pull-down;
+				output-high;
+			};
+		};
+	};
+};
+
+&qupv3_se1_spi {
+	status = "okay";
+	pinctrl-0 = <>;
+	pinctrl-1 = <>;
+	citadel@0 {
+		compatible = "google,citadel";
+		interrupt-parent = <&tlmm>;
+		interrupts = <4 0x0>;
+		citadel,ctdl_ap_irq = <&tlmm 4 0x0>;
+		citadel,ctdl_rst = <&tlmm 25 0x0>;
+		pinctrl-names = "ap_ctdl_irq";
+		pinctrl-0 = <&ap_ctdl_irq>;
+		reg = <0>;
+		spi-max-frequency = <1200000>;
+	};
+};

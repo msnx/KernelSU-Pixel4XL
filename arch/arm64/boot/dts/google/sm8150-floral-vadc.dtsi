@@ -1,0 +1,150 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&pm8150_vadc {
+	vph_pwr {
+		reg = <ADC_VPH_PWR>;
+		label = "vph_pwr";
+		qcom,pre-scaling = <1 3>;
+	};
+
+	vcoin {
+		reg = <ADC_VCOIN>;
+		label = "vcoin";
+		qcom,pre-scaling = <1 3>;
+	};
+
+	pa_therm {
+		reg = <ADC_AMUX_THM2_PU2>;
+		label = "pa_therm";
+		qcom,ratiometric;
+		qcom,hw-settle-time = <200>;
+		qcom,pre-scaling = <1 1>;
+	};
+
+	quiet_therm {
+		reg = <ADC_AMUX_THM1_PU2>;
+		label = "quiet_therm";
+		qcom,ratiometric;
+		qcom,hw-settle-time = <200>;
+		qcom,pre-scaling = <1 1>;
+	};
+
+	xo_therm {
+		reg = <ADC_XO_THERM_PU2>;
+		label = "xo_therm";
+		qcom,ratiometric;
+		qcom,hw-settle-time = <200>;
+		qcom,pre-scaling = <1 1>;
+	};
+};
+
+
+&pm8150l_vadc {
+	vph_pwr {
+		reg = <ADC_VPH_PWR>;
+		label = "vph_pwr";
+		qcom,pre-scaling = <1 3>;
+	};
+
+	btn_therm {
+		reg = <ADC_AMUX_THM3_PU2>;
+		label = "btn_therm";
+		qcom,ratiometric;
+		qcom,hw-settle-time = <200>;
+		qcom,pre-scaling = <1 1>;
+	};
+
+	rcam_therm {
+		reg = <ADC_AMUX_THM1_PU2>;
+		label = "rcam_therm";
+		qcom,ratiometric;
+		qcom,hw-settle-time = <200>;
+		qcom,pre-scaling = <1 1>;
+	};
+
+	sdm_therm {
+		reg = <ADC_AMUX_THM2_PU2>;
+		label = "sdm_therm";
+		qcom,ratiometric;
+		qcom,hw-settle-time = <200>;
+		qcom,pre-scaling = <1 1>;
+	};
+
+};
+
+
+&pm8150b_vadc {
+
+	disp_therm {
+		reg = <ADC_AMUX_THM1_PU2>;
+		label = "disp_therm";
+		qcom,ratiometric;
+		qcom,hw-settle-time = <200>;
+		qcom,pre-scaling = <1 1>;
+	};
+
+	chg_therm {
+		reg = <ADC_AMUX_THM2_PU2>;
+		label = "chg_therm";
+		qcom,ratiometric;
+		qcom,hw-settle-time = <200>;
+		qcom,pre-scaling = <1 1>;
+	};
+
+	usbc_therm {
+		reg = <ADC_AMUX_THM3_PU2>;
+		label = "usbc_therm";
+		qcom,ratiometric;
+		qcom,hw-settle-time = <200>;
+		qcom,pre-scaling = <1 1>;
+	};
+
+	vcoin {
+		reg = <ADC_VCOIN>;
+		label = "vcoin";
+		qcom,pre-scaling = <1 3>;
+	};
+
+	vph_pwr {
+		reg = <ADC_VPH_PWR>;
+		label = "vph_pwr";
+		qcom,pre-scaling = <1 3>;
+	};
+
+	chg_sbux {
+		reg = <ADC_SBUx>;
+		label = "chg_sbux";
+		qcom,pre-scaling = <1 3>;
+	};
+
+	mid_chg_div6 {
+		reg = <ADC_MID_CHG_DIV6>;
+		label = "chg_mid";
+		qcom,pre-scaling = <1 6>;
+	};
+
+	usb_in_i_uv {
+		reg = <ADC_USB_IN_I>;
+		label = "usb_in_i_uv";
+		qcom,pre-scaling = <1 1>;
+	};
+
+	usb_in_v_div_16 {
+		reg = <ADC_USB_IN_V_16>;
+		label = "usb_in_v_div_16";
+		qcom,pre-scaling = <1 16>;
+	};
+
+	/delete-node/smb1390_therm;
+	/delete-node/smb1355_therm;
+};

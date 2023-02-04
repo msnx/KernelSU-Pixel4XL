@@ -1,0 +1,132 @@
+/* Copyright (c) 2019, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+#include <dt-bindings/usb/pd.h>
+
+&pm6150_gpios {
+	ext_5v_vbus {
+		ext_5v_vbus_default: ext_5v_vbus_default {
+			pins = "gpio1";
+			function = "normal";
+			output-low;
+			power-source = <1>;
+		};
+	};
+};
+
+&soc {
+	ext_5v_boost: ext_5v_boost {
+		compatible = "regulator-tps";
+		regulator-name = "ext_5v_boost";
+		nr-control-gpios = <1>;
+		control-gpios = <&pm6150_gpios 1 GPIO_ACTIVE_HIGH>;
+		nr-gpio-enable-sequence = <1>;
+		gpio-enable-sequence = <1>;
+		gpio-enable-delay = <0>;
+		nr-gpio-disable-sequence = <1>;
+		gpio-disable-sequence = <1>;
+		gpio-disable-delay = <0>;
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&ext_5v_vbus_default>;
+
+		status = "okay";
+	};
+};
+
+&qusb_phy0 {
+	skip_efuse_reg;
+
+	qcom,qusb-phy-init-seq =
+		/* <value reg_offset> */
+		<0x23 0x210 /* PWR_CTRL1 */
+		 0x03 0x04  /* PLL_ANALOG_CONTROLS_TWO */
+		 0x7c 0x18c /* PLL_CLOCK_INVERTERS */
+		 0x80 0x2c  /* PLL_CMODE */
+		 0x0a 0x184 /* PLL_LOCK_DELAY */
+		 0x19 0xb4  /* PLL_DIGITAL_TIMERS_TWO */
+		 0x40 0x194 /* PLL_BIAS_CONTROL_1 */
+		 0x22 0x198 /* PLL_BIAS_CONTROL_2 */
+		 0x21 0x214 /* PWR_CTRL2 */
+		 0x08 0x220 /* IMP_CTRL1 */
+		 0x58 0x224 /* IMP_CTRL2 */
+		 0x76 0x240 /* TUNE1 */
+		 0x29 0x244 /* TUNE2 */
+		 0xca 0x248 /* TUNE3 */
+		 0x04 0x24c /* TUNE4 */
+		 0x03 0x250 /* TUNE5 */
+		 0x30 0x23c /* CHG_CTRL2 */
+		 0x22 0x210>; /* PWR_CTRL1 */
+
+	qcom,qusb-phy-host-init-seq =
+		/* <value reg_offset> */
+		<0x23 0x210 /* PWR_CTRL1 */
+		 0x03 0x04  /* PLL_ANALOG_CONTROLS_TWO */
+		 0x7c 0x18c /* PLL_CLOCK_INVERTERS */
+		 0x80 0x2c  /* PLL_CMODE */
+		 0x0a 0x184 /* PLL_LOCK_DELAY */
+		 0x19 0xb4  /* PLL_DIGITAL_TIMERS_TWO */
+		 0x40 0x194 /* PLL_BIAS_CONTROL_1 */
+		 0x22 0x198 /* PLL_BIAS_CONTROL_2 */
+		 0x21 0x214 /* PWR_CTRL2 */
+		 0x08 0x220 /* IMP_CTRL1 */
+		 0x58 0x224 /* IMP_CTRL2 */
+		 0x76 0x240 /* TUNE1 */
+		 0x29 0x244 /* TUNE2 */
+		 0xca 0x248 /* TUNE3 */
+		 0x04 0x24c /* TUNE4 */
+		 0x03 0x250 /* TUNE5 */
+		 0x30 0x23c /* CHG_CTRL2 */
+		 0x22 0x210>; /* PWR_CTRL1 */
+
+
+};
+
+&pm6150_pdphy {
+	google,ext_vbus-supported;
+	google,maxpower-switch;
+	ext-vbus-supply = <&ext_5v_boost>;
+
+	usb_con: connector {
+		compatible = "usb-c-connector";
+		label = "USB-C";
+		data-role = "dual";
+		power-role = "dual";
+		try-power-role = "sink";
+		self-powered;
+		source-pdos = <PDO_FIXED(5000, 900,
+					PDO_FIXED_SUSPEND
+					| PDO_FIXED_USB_COMM
+					| PDO_FIXED_DATA_SWAP
+					| PDO_FIXED_DUAL_ROLE)>;
+		sink-pdos = <PDO_FIXED(5000, 3000, PDO_FIXED_USB_COMM
+						| PDO_FIXED_DATA_SWAP
+						| PDO_FIXED_DUAL_ROLE)
+				PDO_FIXED(9000, 2200, 0)>;
+		op-sink-microwatt = <2500000>;
+		sink-vdos = <VDO_IDH(IDH_USB_HOST | IDH_USB_DEVICE,
+					IDH_PTYPE_PERIPH,
+					IDH_PTYPE_HOST,
+					0x18D1)
+				VDO_CERT(0x0)
+				VDO_PRODUCT(0x4EE1, 0x0)>;
+	};
+};
+
+&usb0 {
+	google,switch-vbus = <250>;
+};
+
+&pm6150_charger {
+	qcom,typec-legacy-rp-icl;
+	qcom,otg-cl-ua = <1500000>;
+	ext-vbus-supply = <&ext_5v_boost>;
+};

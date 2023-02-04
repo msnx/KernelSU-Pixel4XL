@@ -1,0 +1,27 @@
+MSM Restart Driver
+
+A power supply hold (ps-hold) bit is set to power the msm chipsets.
+Clearing that bit allows us to restart/poweroff. The difference
+between poweroff and restart is determined by unique power manager IC
+settings.
+
+Required Properties:
+-compatible: "qcom,pshold"
+-reg: Specifies the physical address of the ps-hold register
+
+Optional Properties:
+-qcom,force-warm-reboot: Issue a warm reboot, even for the traditional cases
+				where hard reboot is issued.
+
+-qcom,force-warm-reboot-on-thermal-shutdown: Issue a warm reboot on
+				"shutdown,thermal" restart reason.
+
+-qcom,force-warm-reboot-on-reboot-ab-update: Issue a warm reboot on
+				"reboot-ab-update" restart reason.
+
+Example:
+
+	restart@fc4ab000 {
+		compatible = "qcom,pshold";
+		reg = <0xfc4ab000 0x4>;
+	};

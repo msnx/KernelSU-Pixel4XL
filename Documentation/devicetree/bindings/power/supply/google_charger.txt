@@ -1,0 +1,46 @@
+google_charger
+~~~~~~~~~~~~~~
+
+Required properties:
+ - compatible : "google,charger"
+ - google,chg-power-supply: name of the charge control power supply
+ - google,bat-power-supply: name of the Fuel Gauge power supply
+ - google,chg-update-interval: delay in ms to wait before re-running the work
+     item
+ - google,chg-battery-capacity: the nominal capacity used to compute the
+     effective 1C charge rate
+ - google,chg-temp-limits: the temperature buckets limits defining the indexes
+     of the constant charge limits (row index in google,chg-cc-limits)
+ - google,chg-cv-limits: steps voltage limits (column index in
+     google,chg-cc-limits)
+ - google,chg-cc-limits: the array of constant current charge rates given in %
+     of google,chg-battery-capacity
+
+Optional properties:
+ - google,wlc-power-supply: name of wireless charing input power supply
+ - google,cv-hw-resolution: the constant voltage setting resolution in micro
+     volt defaults to 25000
+ - google,cc-hw-resolution: the constant current setting resolution in micro amp
+     defaults to 25000
+ - google,cv-range-accuracy: the voltage margin in micro volt used at taper to
+     determine whether battery voltage should be raised in an attempt to match
+     tier voltage for ir drop compensation. Defaults to cv-hw-resolution / 2.
+ - google,cv-debounce-cnt: the number of cv-update-interval to wait after
+     entering taper or after raising charging voltage for ir drop compensation
+     before a new attempt. Defaults to 3 (eg 6 seconds for default
+     cv-update-interval).
+ - google,cv-update-interval: delay in ms to wait before re-running the work
+     item while in taper. Defaults to 2000 (2 seconds)
+ - google,cv-tier-ov-delay: the number of cv-update-interval to wait (penalty)
+     during ir drop compensation before a new attempt to raise voltage when
+     battery voltage is found above tier limit. Defaults to 10 cycles (20
+     seconds for default cv-update-interval).
+ - google,chg-cc-tolerance: the deci-percent tolerance we need to give the PMIC to
+     ensure actual current is below chg-cc-limits (divide by 10 to get
+     percentage points). Max allowed tolerance is 25%.
+- google,fv-uv-margin-dpct: the deci-percent margin on vtier that charger float
+     voltage must not exceed when calculating target voltage during IRDROP
+     compensation. Default 0 (disabled), set to 1030 for 3%.
+- google,cv-tier-switch-cnt: the number of consecutive poll cyles with current
+     under next tier that are needed before switching charge tier.
+     Default 3 poll cycles.

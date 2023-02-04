@@ -1,0 +1,35 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/dts-v1/;
+/plugin/;
+
+#include <dt-bindings/interrupt-controller/arm-gic.h>
+#include <dt-bindings/clock/qcom,camcc-sdmmagpie.h>
+
+#include "sm7150-sunfish-common.dtsi"
+#include "qcom-base/sdmmagpie-audio-overlay.dtsi"
+#include "sm7150-sunfish-audio.dtsi"
+#include "sm7150-sunfish-display.dtsi"
+#include "sm7150-sunfish-usb.dtsi"
+
+
+/ {
+	model = "Google Inc. MSM sm7150 Sunfish MP1.0";
+	compatible = "qcom,sdmmagpie-idp", "qcom,sdmmagpie", "qcom,idp";
+	qcom,msm-id = <365 0x0>;
+	qcom,board-id = <0x0e2805 0>;
+};
+
+&lpi_tlmm {
+	goog,ignored-gpios = <0 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17>;
+};

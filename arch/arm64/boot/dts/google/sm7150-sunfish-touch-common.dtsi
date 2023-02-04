@@ -1,0 +1,76 @@
+&pm6150_gpios {
+	touch_power_default: touch_power_default {
+		pins = "gpio4";
+		function = "normal";
+		qcom,drive-strength = <2>;
+		power-source = <1>;
+		output-high;
+		bias-disable;
+	};
+};
+
+&tlmm {
+	touch_irq_default: touch_irq_default {
+		mux {
+			pins = "gpio9";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio9";
+			drive-strength = <2>;
+			bias-disable;
+		};
+	};
+
+	touch_reset_default: touch_reset_default {
+		mux {
+			pins = "gpio8";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio8";
+			drive-strength = <2>;
+			output-high;
+			bias-disable;
+		};
+	};
+
+	touch_switch_default: touch_switch_default {
+		mux {
+			pins = "gpio72";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio72";
+			drive-strength = <2>;
+			output-low;
+			bias-disable;
+		};
+	};
+};
+
+&qupv3_se7_i2c_active {
+	mux {
+		pins = "gpio6", "gpio7";
+		function = "qup11";
+	};
+	config {
+		pins = "gpio6", "gpio7";
+		drive-strength = <8>;
+		bias-disable;
+	};
+};
+&qupv3_se7_i2c_sleep {
+	mux {
+		pins = "gpio6", "gpio7";
+		function = "gpio";
+	};
+	config {
+		pins = "gpio6", "gpio7";
+		drive-strength = <2>;
+		bias-pull-up;
+	};
+};

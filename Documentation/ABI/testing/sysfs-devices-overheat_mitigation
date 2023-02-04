@@ -1,0 +1,37 @@
+What:		/sys/devices/platform/soc/soc:google,overheat_mitigation/max_temp
+Date:		February, 2019
+Contact:	"Maggie White" <maggiewhite@google.com>
+Description:
+		Maximum temperature that the USB port reaches during an overheat
+                event in deci degC.
+
+What:		/sys/devices/platform/soc/soc:google,overheat_mitigation/plug_temp
+Date:		February, 2019
+Contact:	"Maggie White" <maggiewhite@google.com>
+Description:
+		Initial temperature of the USB port when USB plug event is
+                detected.
+
+What:		/sys/devices/platform/soc/soc:google,overheat_mitigation/trip_time
+Date:		February, 2019
+Contact:	"Maggie White" <maggiewhite@google.com>
+Description:
+		Number of seconds from USB charger plug time to the time that
+                the overheat threshold for the USB port temperature is tripped.
+
+What:		/sys/devices/platform/soc/soc:google,overheat_mitigation/hysteresis_time
+Date:		February, 2019
+Contact:	"Maggie White" <maggiewhite@google.com>
+Description:
+		Number of seconds from the time that the overheat threshold for
+                the USB port temperature is tripped until the hysteresis
+                threshold for the USB port temperature is cleared.
+
+What:		/sys/devices/platform/soc/soc:google,overheat_mitigation/cleared_time
+Date:		February, 2019
+Contact:	"Maggie White" <maggiewhite@google.com>
+Description:
+                Number of sections from the time that the hysteresis threshold
+                for the USB port temperature is cleared until the charger is
+                unplugged from the device, therefore clearing the active
+                overheat mitigation.

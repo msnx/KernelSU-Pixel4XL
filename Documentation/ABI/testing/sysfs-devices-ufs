@@ -1,0 +1,506 @@
+What:		/sys/devices/platform/soc/<....>ufshc/manual_gc
+Date:		April, 2018
+Contact:	"Jaegeuk Kim" <jaegeuk@google.com>
+Description:
+		Control UFS to give a time for internal Garbage Collections,
+		given manual_gc_hold seconds.
+
+What:		/sys/devices/platform/soc/<....>ufshc/manual_gc_hold
+Date:		April, 2018
+Contact:	"Jaegeuk Kim" <jaegeuk@google.com>
+Description:
+		Give the seconds to UFS for internal GCs.
+
+What:		/sys/devices/platform/soc/<....>ufshc/slowio_read_us
+Date:		May, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Contains watermark value in micro seconds unit for slow
+		UFS read I/O logging and counting. Can be updated by writing
+		value to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/slowio_read_cnt
+Date:		May, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Contains the number of UFS read I/O requests which took more
+		or equal to the defined slow I/O water mark time.
+		Can be reset by writing any value.
+
+What:		/sys/devices/platform/soc/<....>ufshc/slowio_write_us
+Date:		May, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Contains watermark value in micro seconds unit for slow
+		UFS write I/O logging and counting. Can be updated by writing
+		value to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/slowio_write_cnt
+Date:		May, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Contains the number of UFS write I/O requests which took more
+		or equal to the defined slow I/O water mark time.
+		Can be reset by writing any value.
+
+What:		/sys/devices/platform/soc/<....>ufshc/slowio_unmap_us
+Date:		May, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Contains watermark value in micro seconds unit for slow
+		UFS unmap I/O logging and counting. Can be updated by writing
+		value to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/slowio_unmap_cnt
+Date:		May, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Contains the number of UFS unmap I/O requests which took more
+		or equal to the defined slow I/O water mark time.
+		Can be reset by writing any value.
+
+What:		/sys/devices/platform/soc/<....>ufshc/slowio_sync_us
+Date:		May, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Contains watermark value in micro seconds unit for slow
+		UFS sync I/O logging and counting. Can be updated by writing
+		value to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/slowio_sync_cnt
+Date:		May, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Contains the number of UFS sync I/O requests which took more
+		or equal to the defined slow I/O water mark time.
+		Can be reset by writing any value.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/enabled
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Enable or disable impaired storage emulation.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/read_model
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Degraded UFS performance model is applied for read requests.
+		It could be set with 'fragftl' or 'none'; the former enables
+		model based delay emulation and the later disables the feature.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/read_delay_percent
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		This knob can be used to control target delay for UFS read requests.
+		It receives a precentage value, and the default value is 100, which means
+		no change. When 200 is written, the target latency with delay will be
+		twice of an input latency, which is either the actual latency or a latency
+		chosen by the degraded performance model when fragmented ftl emulation
+		feature is enabled.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/read_delay_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		This knob is used to control target delay for UFS read requsts.
+		For each read request, this value will be added to the target delay.
+		For instance, when 200 is set, all read requests will be delayed
+		by 200 microseconds. The default value is 0, which means no delay.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/write_model
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Degraded UFS performance model is applied for write requests.
+		It could be set with 'fragftl' or 'none'; the former enables
+		model based delay emulation and the later disables the feature.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/write_delay_percent
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		This knob can be used to control target delay for UFS write requests.
+		It receives a precentage value, and the default value is 100, which means
+		no change. When 200 is written, the target latency with delay will be
+		twice of an input latency, which is either the actual latency or a latency
+		chosen by the degraded performance model when fragmented ftl emulation
+		feature is enabled.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/write_delay_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		This knob is used to control target delay for UFS write requsts.
+		For each write request, this value will be added to the target delay.
+		For instance, when 200 is set, all write requests will be delayed
+		by 200 microseconds. The default value is 0, which means no delay.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/read_max_delayed_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Maximum read request latency can be set by this entry. For instance,
+		when 1000 is set to this entry, the emulated read latency will not
+		be bigger than 1ms.
+		Default value is 0, which means no limitation.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/read_skip_delay_cnt
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		This knob can be used to control delay emulation frequency.
+		When the default 0 is set, all read requests are delayed.
+		When 1 is written, every other read request is delayed.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/write_max_delayed_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Maximum write request latency can be set by this entry. For instance,
+		when 1000 is set to this entry, the emulated write latency will not
+		be bigger than 1ms.
+		Default value is 0, which means no limitation.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/write_skip_delay_cnt
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		This knob can be used to control delay emulation frequency.
+		When the default 0 is set, all write requests are delayed.
+		When 1 is written, every other write request is delayed.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/read_total_cnt
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Total number of read requests can be checked by reading this entry.
+		Can be reset together with all other statistics entries when
+		any value is written to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/read_total_original_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Aggregated original read latencies without added delay can be checked
+		by reading this entry.
+		Can be reset together with all other statistics entries when
+		any value is written to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/read_total_delayed_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Aggregated read latencies with delay emulation can be checked
+		by reading this entry.
+		Can be reset together with all other statistics entries when
+		any value is written to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/write_total_cnt
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Total number of write requests can be checked by reading this entry.
+		Can be reset together with all other statistics entries when
+		any value is written to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/write_total_original_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Aggregated original write latencies without added delay can be checked
+		by reading this entry.
+		Can be reset together with all other statistics entries when
+		any value is written to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/write_total_delayed_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Aggregated write latencies with delay emulation can be checked
+		by reading this entry.
+		Can be reset together with all other statistics entries when
+		any value is written to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/read_max_delay_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Maximum read delay in microseconds, targeted by delay emulation,
+		can be checked by reading this entry.
+		Can be reset together with all other statistics entries when
+		any value is written to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/read_max_delay_error_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Added delay might be different from the intended delay value.
+		By reading this entry, observed maximum read delay error value can be
+		checked in microsecond unit.
+		Can be reset together with all other statistics entries when
+		any value is written to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/read_total_delay_error_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Added delay might be different from the intended delay value.
+		For all delayed read requests, the additional delay value than intended delay
+		is aggrated to this entry.
+		Can be reset together with all other statistics entries when
+		any value is written to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/write_max_delay_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Maximum write delay in microseconds, targeted by delay emulation,
+		can be checked by reading this entry.
+		Can be reset together with all other statistics entries when
+		any value is written to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/write_max_delay_error_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Added delay might be different from the intended delay value.
+		By reading this entry, observed maximum write delay error value can be
+		checked in microsecond unit.
+		Can be reset together with all other statistics entries when
+		any value is written to.
+
+What:		/sys/devices/platform/soc/<....>ufshc/impaired/write_total_delay_error_us
+Date:		December, 2018
+Contact:	"Hyojun Kim" <hyojun@google.com>
+Description:
+		Added delay might be different from the intended delay value.
+		For all delayed write requests, the additional delay value than intended delay
+		is aggrated to this entry.
+		Can be reset together with all other statistics entries when
+		any value is written to.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/device_type
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the device type. This is one of the UFS
+		device descriptor parameters. The full information about
+		the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/device_class
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the device class. This is one of the UFS
+		device descriptor parameters. The full information about
+		the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/device_sub_class
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the UFS storage subclass. This is one of
+		the UFS device descriptor parameters. The full information
+		about the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/protocol
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the protocol supported by an UFS device.
+		This is one of the UFS device descriptor parameters.
+		The full information about the descriptor could be found
+		at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/number_of_luns
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows number of logical units. This is one of
+		the UFS device descriptor parameters. The full information
+		about the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/number_of_wluns
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows number of well known logical units.
+		This is one of the UFS device descriptor parameters.
+		The full information about the descriptor could be found
+		at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/boot_enable
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows value that indicates whether the device is
+		enabled for boot. This is one of the UFS device descriptor
+		parameters. The full information about the descriptor could
+		be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/descriptor_access_enable
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows value that indicates whether the device
+		descriptor could be read after partial initialization phase
+		of the boot sequence. This is one of the UFS device descriptor
+		parameters. The full information about the descriptor could
+		be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/initial_power_mode
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows value that defines the power mode after
+		device initialization or hardware reset. This is one of
+		the UFS device descriptor parameters. The full information
+		about the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/high_priority_lun
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the high priority lun. This is one of
+		the UFS device descriptor parameters. The full information
+		about the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/secure_removal_type
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the secure removal type. This is one of
+		the UFS device descriptor parameters. The full information
+		about the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/support_security_lun
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows whether the security lun is supported.
+		This is one of the UFS device descriptor parameters.
+		The full information about the descriptor could be found
+		at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/bkops_termination_latency
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the background operations termination
+		latency. This is one of the UFS device descriptor parameters.
+		The full information about the descriptor could be found
+		at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/initial_active_icc_level
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the initial active ICC level. This is one
+		of the UFS device descriptor parameters. The full information
+		about the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/specification_version
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the specification version. This is one
+		of the UFS device descriptor parameters. The full information
+		about the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/manufacturing_date
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the manufacturing date in BCD format.
+		This is one of the UFS device descriptor parameters.
+		The full information about the descriptor could be found
+		at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/manufacturer_id
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the manufacturee ID. This is one of the
+		UFS device descriptor parameters. The full information about
+		the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/rtt_capability
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the maximum number of outstanding RTTs
+		supported by the device. This is one of the UFS device
+		descriptor parameters. The full information about
+		the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/rtc_update
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the frequency and method of the realtime
+		clock update. This is one of the UFS device descriptor
+		parameters. The full information about the descriptor
+		could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/ufs_features
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows which features are supported by the device.
+		This is one of the UFS device descriptor parameters.
+		The full information about the descriptor could be
+		found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/ffu_timeout
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the FFU timeout. This is one of the
+		UFS device descriptor parameters. The full information
+		about the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/queue_depth
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the device queue depth. This is one of the
+		UFS device descriptor parameters. The full information
+		about the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/device_version
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the device version. This is one of the
+		UFS device descriptor parameters. The full information
+		about the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/number_of_secure_wpa
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows number of secure write protect areas
+		supported by the device. This is one of the UFS device
+		descriptor parameters. The full information about
+		the descriptor could be found at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/psa_max_data_size
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the maximum amount of data that may be
+		written during the pre-soldering phase of the PSA flow.
+		This is one of the UFS device descriptor parameters.
+		The full information about the descriptor could be found
+		at UFS specifications 2.1.
+		The file is read only.
+
+What:		/sys/bus/platform/drivers/ufshcd/*/device_descriptor/psa_state_timeout
+Date:		February 2018
+Contact:	Stanislav Nijnikov <stanislav.nijnikov@wdc.com>
+Description:	This file shows the command maximum timeout for a change
+		in PSA state. This is one of the UFS device descriptor
+		parameters. The full information about the descriptor could
+		be found at UFS specifications 2.1.
+		The file is read only.

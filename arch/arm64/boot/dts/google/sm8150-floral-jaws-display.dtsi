@@ -1,0 +1,82 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#include "dsi-panel-s6e3ha8-dsc-wqhd-cmd.dtsi"
+
+&pm8150l_l9 {
+	status = "okay";
+};
+
+&sde_dsi {
+	vci-supply = <&pm8150l_l9>;
+	lab-supply = <&ab_vreg>;
+
+	qcom,dsi-display-list = <&dsi_s6e3ha8_cmd_display
+				 &dsi_s6e3hc2_cmd_display
+				 &dsi_nt37280_cmd_display
+				 &dsi_sim_vid_display>;
+};
+
+&pm8150a_amoled {
+	status = "ok";
+};
+
+&ab_vreg {
+	qcom,aod-pd-control;
+};
+
+&ibb_vreg {
+	qcom,aod-pd-control;
+};
+
+&soc {
+	dsi_s6e3ha8_cmd_display: qcom,dsi-display@0 {
+		label = "dsi_s6e3ha8_cmd_display";
+		qcom,display-type = "primary";
+		qcom,dsi-display-active;
+
+		qcom,dsi-ctrl-num = <0>;
+		qcom,dsi-phy-num = <0>;
+		qcom,dsi-select-clocks = "mux_byte_clk0", "mux_pixel_clk0";
+
+		qcom,dsi-panel = <&dsi_s6e3ha8_dsc_wqhd_cmd>;
+	};
+};
+
+&dsi_s6e3ha8_dsc_wqhd_cmd {
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,platform-te-gpio = <&tlmm 8 0>;
+	qcom,platform-reset-gpio = <&tlmm 67 0>;
+
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply_floral>;
+
+	qcom,mdss-dsi-t-clk-post = <0x17>;
+	qcom,mdss-dsi-t-clk-pre = <0X19>;
+	qcom,mdss-dsi-display-timings {
+		timing@0 {
+			qcom,mdss-dsi-panel-phy-timings =
+				[00 1E 08 07 24 22 08 08 05 02 04 00 19 17];
+		};
+	};
+};
+
+&dsi_panel_pwr_supply_floral {
+	qcom,panel-supply-entry@0 {
+		qcom,supply-min-voltage = <1800000>;
+		qcom,supply-max-voltage = <1800000>;
+	};
+	qcom,panel-supply-entry@1 {
+		qcom,supply-min-voltage = <2960000>;
+		qcom,supply-max-voltage = <2960000>;
+	};
+};
+

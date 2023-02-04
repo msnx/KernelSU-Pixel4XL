@@ -1,0 +1,30 @@
+* abc-sm device-tree bindings
+
+Required properties:
+- compatible		: Shall be "abc,airbrush-sm".
+
+- clocks		: A phandle to reference clk.
+- clock-names		: Shall be "ab_ref".
+
+- ab-ready-gpio		: A phandle to READY GPIO; ABH output.
+- fw-patch-en		: A phandle to FW_PATCH_EN GPIO; ABH input.
+- soc-pwrgood-gpio	: A phandle to RESET_N GPIO; ABH input.
+- ddr-iso-gpio		: A phandle to DDRCKE_ISO GPIO; ABH input.
+- ddr-sr-gpio		: A phandle to DDR_SR GPIO; ABH input.
+
+- pinctrl-names		: Shall be "default".
+- pinctrl-0		: List of phandles to pinctrl; they can be on AP,
+			  or AP PMIC.
+
+- chip-id		: Shall be "0" for A0 or "1" for B0.
+
+Optional properties:
+- ddrcke-iso-clamp-wr	: If present, WR will be applied so that DDRCKE_ISO
+			  is clamped before suspend.  This is only needed if
+			  the hardware configuration incorrectly caused a
+			  backdrive issue.
+
+- otp-bypass		: If present, WR will be applied so that OTP is NOT
+			  loaded during cold boot or resume boot.  This is
+			  only needed if the OTP values on the hardware
+			  configuration are known to be problematic.

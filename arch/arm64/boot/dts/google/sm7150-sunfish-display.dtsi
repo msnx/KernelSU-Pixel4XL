@@ -1,0 +1,126 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#include "dsi-panel-sofef00-1080p-cmd.dtsi"
+#include "dsi-panel-sofef01-1080p-cmd.dtsi"
+
+&sde_dsi {
+	vddio-supply = <&pm6150_l13>;    /* PP1800_PANEL */
+	vdda-3p3-supply = <&pm6150l_l7>; /* PP3000_VCI */
+	lab-supply = <&ab_vreg>;
+	qcom,platform-te-gpio = <&tlmm 10 0>;
+	qcom,platform-reset-gpio = <&pm6150l_gpios 9 0>;
+	qcom,dsi-display-list =
+				<&dsi_sofef01_sdc_1080p_cmd_display
+				 &dsi_sofef00_sdc_1080p_cmd_display
+				 &dsi_sim_vid_display>;
+};
+
+&soc {
+	dsi_sofef00_sdc_1080p_cmd_display: qcom,dsi-display@18 {
+		label = "dsi_sofef00_sdc_1080p_cmd_display";
+		qcom,display-type = "primary";
+		qcom,dsi-ctrl-num = <0>;
+		qcom,dsi-phy-num = <0>;
+		qcom,dsi-select-clocks = "mux_byte_clk0", "mux_pixel_clk0";
+
+		qcom,dsi-panel = <&dsi_sofef00_sdc_1080p_cmd>;
+	};
+
+	dsi_sofef01_sdc_1080p_cmd_display: qcom,dsi-display@19 {
+		label = "dsi_sofef01_sdc_1080p_cmd_display";
+		qcom,display-type = "primary";
+		qcom,dsi-ctrl-num = <0>;
+		qcom,dsi-phy-num = <0>;
+		qcom,dsi-select-clocks = "mux_byte_clk0", "mux_pixel_clk0";
+
+		qcom,dsi-panel = <&dsi_sofef01_sdc_1080p_cmd>;
+	};
+};
+
+
+&sde_dsi1 {
+	status = "disabled";
+};
+
+&sde_dp {
+	status = "disabled";
+};
+
+&mdss_mdp {
+	connectors = <&sde_rscc &sde_wb &sde_dsi>;
+};
+
+&pm6150l_wled {
+	status = "disabled";
+};
+
+&ab_vreg {
+	qcom,aod-pd-control;
+};
+
+&ibb_vreg {
+	qcom,aod-pd-control;
+};
+
+&dsi_sim_vid {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply_no_labibb>;
+	qcom,mdss-dsi-bl-pmic-control-type = "bl_ctrl_dcs";
+	qcom,platform-reset-gpio = <&pm6150l_gpios 9 0>;
+	qcom,mdss-dsi-t-clk-post = <0x0D>;
+	qcom,mdss-dsi-t-clk-pre = <0x2D>;
+	qcom,mdss-dsi-display-timings {
+		timing@0{
+			qcom,mdss-dsi-panel-phy-timings = [00 1C 07 07 23 21 07
+				07 05 02 04 00];
+			qcom,display-topology = <1 0 1>;
+			qcom,default-topology-index = <0>;
+		};
+	};
+};
+
+&dsi_sofef00_sdc_1080p_cmd {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply_labibb_amoled>;
+	qcom,mdss-dsi-t-clk-post = <0x0e>;
+	qcom,mdss-dsi-t-clk-pre = <0x33>;
+	qcom,platform-te-gpio = <&tlmm 10 0>;
+	qcom,platform-reset-gpio = <&pm6150l_gpios 9 0>;
+	qcom,mdss-dsi-display-timings {
+		timing@0{
+			qcom,mdss-dsi-panel-phy-timings = [00 21 08 08 25 22 09
+				08 06 02 04 00];
+			qcom,mdss-mdp-transfer-time-us = <13000>;
+			qcom,display-topology = <1 0 1>;
+			qcom,default-topology-index = <0>;
+		};
+	};
+};
+
+&dsi_sofef01_sdc_1080p_cmd {
+	qcom,panel-supply-entries = <&dsi_panel_pwr_supply_labibb_amoled>;
+	qcom,mdss-dsi-t-clk-post = <0x0e>;
+	qcom,mdss-dsi-t-clk-pre = <0x36>;
+	qcom,platform-te-gpio = <&tlmm 10 0>;
+	qcom,platform-reset-gpio = <&pm6150l_gpios 9 0>;
+	qcom,mdss-dsi-display-timings {
+		timing@0{
+			qcom,mdss-dsi-panel-phy-timings = [00 24 09 0A 26 24 09
+				0A 06 02 04 00];
+			qcom,display-topology = <1 0 1>;
+			qcom,default-topology-index = <0>;
+		};
+	};
+};
+
+&dsi_sofef01_sdc_1080p_cmd_display {
+	qcom,dsi-display-active;
+};

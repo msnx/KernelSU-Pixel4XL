@@ -1,0 +1,163 @@
+Google binned low power mode panel
+
+This is an extension of QTI's mdss-dsi-panel to handle additional command
+sequences for low power modes.
+
+Required properties:
+- compatible:           "google,dsi_binned_lp"
+
+
+==============================================================
+
+Google low power display modes
+
+Required properties:
+- compatible:		"google,lp-modes"
+- label:			Name of the entry
+- dsi-lp-brightness-threshold:
+			Max brightness supported by the mode
+- dsi-lp-command:	Command sequence to enter this mode
+- dsi-lp-command-state:	Command state used in this mode
+
+Example:
+
+/ {
+	...
+	google,lp-modes {
+		lp-mode@0 {
+			label = "off";
+			google,dsi-lp-brightness-threshold = <0>;
+			google,dsi-lp-command = [
+				05 01 00 00 00 00 01 22
+			];
+			google,dsi-lp-command-state = "dsi_lp_mode";
+		};
+
+		lp-mode@1 {
+			label = "high";
+			google,dsi-lp-brightness-threshold = <255>;
+			google,dsi-lp-command = [
+				39 01 00 00 00 00 03 51 01 FF
+				05 01 00 00 00 00 01 12
+			];
+			google,dsi-lp-command-state = "dsi_lp_mode";
+		};
+};
+
+==============================================================
+
+Google high brightness display mode
+
+This is an extension of QTI's mdss-dsi-panel to handle special display modes
+that allow for exceptionally high brightness.
+
+High brightness mode (HBM) is specified through 1 or more user brightness
+ranges. Conceptually, Each HBM range contains,
+1) User brightness threshold
+2) Panel brightness range
+3) DSI command (optional)
+
+HBM ranges must be sorted by brightness threshold and not overlap.
+An HBM range covers user brightness levels starting from the threshold, up to
+but not including the next HBM mode's threshold.
+The last HBM range covers user brightness levels starting from its threshold,
+up to and including qcom,mdss-brightness-max-level.
+
+When user brightness is updated, the appropriate HBM range is selected and the
+corresponding DSI command, if present, is sent to the panel. Then the user's
+brightness is linearly mapped to the panel's brightness range and the panel is
+updated if needed.
+
+Note that there is currently no support for backlight LUTs during HBM mode.
+
+HBM support also includes optional brightness dimming support. Brightness
+dimming refers to some panels' ability to gradually change brightness over
+time, smoothing the transition between current brightness and the latest
+brightness level requested by the host. The driver uses this feature, if
+supported by the panel, to smooth brightness changes as HBM is enabled, changes
+ranges, or disabled.
+To implement this support,
+1) HBM range entry sequences (dsi-hbm-range-entry-command) or exit sequences
+(dsi-hbm-exit-command) will include commands necessary to enable brightness
+dimming
+2) The corresponding HBM node will specify the number of frames dimming is
+expected to last on the panel side
+3) The same node will specify a command to send to the panel at the end of the
+brightness dimming duration, to disable brightness dimming.
+
+HBM uses the following properties. Each property is required, unless specified
+as optional:
+- google,hbm-ranges:	Parent list of HBM ranges.
+- hbm-range@n:		An HBM range, starting at n=0.
+- dsi-hbm-exit-command: Optional command sequence to exit HBM.
+- dsi-hbm-commands-state: Optional command state used for HBM commands.
+- dsi-hbm-exit-num-dimming-frames: Optional number of frames indicating
+    brightness dimming duration. Mandatory if dsi-hbm-exit-dimming-stop-command
+    is specified.
+- dsi-hbm-exit-dimming-stop-command: Optional command to send at the end of the
+	brightness dimming duration, to disable dimming. Mandatory if
+	dsi-hbm-exit-num-dimming-frames is specified.
+- dsi-irc-addr: Optional register address to control IRC.
+- dsi-irc-bit-offset: Optional IRC bit offset.
+- dsi-irc-unlock-command: Optional command for unlock panel IRC.
+- dsi-irc-unlock-commands-state: Optional command state for unlock panel IRC.
+- dsi-irc-lock-command: Optional command for lock panel IRC.
+- dsi-irc-lock-commands-state: Optional command state for lock panel IRC
+
+Each hbm-range@n contains the following properties. Each property is required,
+unless specified as optional:
+- dsi-hbm-range-brightness-threshold: Starting user brightness for this HBM
+    range.
+- dsi-hbm-range-entry-command: Optional command sequence to enter this range.
+- dsi-hbm-range-commands-state: Optional command state used in this range.
+- dsi-hbm-range-bl-min-level: Start of panel brightness range
+    (inclusive).
+- dsi-hbm-range-bl-max-level: End of panel brightness range (inclusive).
+- dsi-hbm-range-num-dimming-frames: Optional. Analogous to
+    dsi-hbm-exit-num-dimming-frames, but for a given HBM range.
+- dsi-hbm-range-dimming-stop-command: Optional. Analogous to
+    dsi-hbm-exit-dimming-stop-command, but for a given HBM range.
+
+Example:
+
+/ {
+	...
+	google,hbm-ranges {
+		google,dsi-hbm-exit-command = [
+			15 01 00 00 00 00 02 53 20
+		];
+		google,dsi-hbm-commands-state = "dsi_lp_mode";
+
+		google,dsi-irc-addr = <0xBE>;
+		google,dsi-irc-bit-offset = <21>;
+		google,dsi-irc-unlock-command = [
+			39 01 00 00 00 00 03 F0 5A 5A
+		];
+		google,dsi-irc-unlock-commands-state = "dsi_lp_mode";
+		google,dsi-irc-lock-command = [
+			39 01 00 00 00 00 03 F0 A5 A5
+		];
+		google,dsi-irc-lock-commands-state = "dsi_lp_mode";
+
+		hbm-range@0 {
+			google,dsi-hbm-range-brightness-threshold = <1>;
+
+			google,dsi-hbm-range-bl-min-level = <0x5>;
+			google,dsi-hbm-range-bl-max-level = <0x3ff>;
+			google,dsi-hbm-range-entry-command = [
+				15 01 00 00 00 00 02 53 20
+			];
+			google,dsi-hbm-range-commands-state = "dsi_lp_mode";
+		};
+
+		hbm-range@1 {
+			google,dsi-hbm-range-brightness-threshold = <170>;
+
+			google,dsi-hbm-range-bl-min-level = <0x3ff>;
+			google,dsi-hbm-range-bl-max-level = <0x3ff>;
+			google,dsi-hbm-range-entry-command = [
+				15 01 00 00 00 00 02 53 E0
+			];
+			google,dsi-hbm-range-commands-state = "dsi_lp_mode";
+		};
+	};

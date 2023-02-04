@@ -1,0 +1,19 @@
+google,overheat_mitigation
+~~~~~~~~~~~~~~
+
+Required properties:
+ - compatible : "google,overheat_mitigation"
+ - google,begin-mitigation-temp: USB port temperature threshold in decidegrees
+     Celsius at which to begin overheat mitigation
+ - google,end-mitigation-temp: USB port temperature threshold in decidegrees
+     Celsius at which to end overheat mitigation
+ - google,port-overheat-work-interval: period in milliseconds at which the
+     driver should monitor the overheat status
+ - google,polling-freq: the frequency at which the USB connected status should
+     be polled (ex. if this is set to 3, check USB status every 3rd work
+     interval)
+
+Optional properties:
+ - google,accessory-monitoring-period: the length of time in seconds that the
+     driver should monitor USB port temperature after a USB accessory is plugged
+     in

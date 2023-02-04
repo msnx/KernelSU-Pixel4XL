@@ -1,0 +1,164 @@
+/* Copyright (c) 2016-2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/* floral memory includes go here */
+
+
+/*
+ * Reverved memory carveout is defined in TZ project:
+ * ssg/securemsm/trustzone/qsee/mink/oem/config/sdm855/oem_config.xml
+ */
+
+/*
+ * the following carveout items are still defined in sm8150.dtsi:
+ * region              address    size
+ * ==========          ========== =========
+ * hyp_region:         0x85700000 0x600000
+ * xbl_aop_mem:        0x85e00000 0x140000
+ * smem_region:        0x86000000 0x200000
+ * removed_regions:    0x86200000 0x5500000
+ * pil_camera_mem:     0x8b700000 0x500000
+ * pil_wlan_fw_mem:    0x8bc00000 0x180000
+ * pil_npu_mem:        0x8bd80000 0x80000
+ */
+
+&pil_adsp_mem {
+	reg = <0x0 0x8be00000 0x0 0x1e00000>;
+};
+
+&pil_modem_mem {
+	reg = <0x0 0x8dc00000 0x0 0xb400000>;
+};
+
+&pil_video_mem {
+	reg = <0x0 0x99000000 0x0 0x500000>;
+};
+
+&pil_cdsp_mem {
+	reg = <0x0 0x99500000 0x0 0x1400000>;
+};
+
+&pil_ipa_fw_mem {
+	reg = <0x0 0x9A900000 0x0 0x10000>;
+};
+
+&pil_ipa_gsi_mem {
+	reg = <0x0 0x9A910000 0x0 0x5000>;
+};
+
+&pil_gpu_mem {
+	reg = <0x0 0x9A915000 0x0 0x2000>;
+};
+
+&pil_spss_mem {
+	reg = <0x0 0x9AA00000 0x0 0x100000>;
+};
+
+&pil_slpi_mem {
+	reg = <0x0 0x9AB00000 0x0 0x1800000>;
+};
+
+&cont_splash_memory {
+	reg = <0x0 0x9C400000 0x0 0x02400000>;
+};
+
+&disp_rdump_memory {
+	reg = <0x0 0x9C400000 0x0 0x02400000>;
+};
+
+&qseecom_mem {
+	reg = <0 0x9E800000 0 0x1400000>;
+};
+
+// carveout for max supported resolution (1472*3040)*32bpp
+// Aligned with 2M for secure buffer in gralloc = 18,874,368 bytes * 5
+// Aligned with 0x400000 for secure_display_region in device tree = 0x5C00000
+&secure_display_memory {
+	size = <0x0 0x5C00000>;
+};
+
+&reserved_memory {
+	debug_info: debug_info@A47EF000 {
+		compatible = "removed-dma-pool";
+		no-map;
+		reg = <0 0xA47EF000 0 0x00010000>;
+	};
+
+	ramoops_mem: ramoops_region@A47FF000 {
+		compatible = "removed-dma-pool";
+		no-map;
+		reg = <0 0xA47FF000 0 0x200000>;
+	};
+
+	alt_ramoops_mem: alt_ramoops_region@A49FF000 {
+		compatible = "removed-dma-pool";
+		no-map;
+		reg = <0 0xA49FF000 0 0x200000>;
+	};
+
+	ramoops_meta_mem: ramoops_meta_region@0xA4BFF000 {
+		compatible = "removed-dma-pool";
+		no-map;
+		reg = <0 0xA4BFF000 0 0x1000>;
+	};
+
+	ramdumplog_mem: ramdumplog_region@0xa4c00000 {
+		compatible = "removed-dma-pool";
+		no-map;
+		reg = <0 0xa4c00000 0 0x10000>;
+	};
+
+	pil_faceauth_fw_mem: pil_faceauth_fw_mem@a8800000 {
+		compatible = "removed-dma-pool";
+		no-map;
+		reg = <0x0 0xa8800000 0x0 0x2000000>;
+	};
+
+	pil_faceauth_fw_b_mem: pil_faceauth_fw_mem@aa800000 {
+		compatible = "removed-dma-pool";
+		no-map;
+		reg = <0x0 0xaa800000 0x0 0x2000000>;
+	};
+};
+
+&soc {
+	qcom,faceauth_fws {
+		compatible = "qcom,pil-tz-generic";
+		qcom,pas-id = <0x18>;
+		qcom,firmware-name = "faceauth";
+		qcom,pil-force-shutdown;
+		memory-region = <&pil_faceauth_fw_mem>;
+	};
+
+	qcom,faceauth_fws_b {
+		compatible = "qcom,pil-tz-generic";
+		qcom,pas-id = <0x1d>; // 29
+		qcom,firmware-name = "faceauth_b";
+		qcom,pil-force-shutdown;
+		memory-region = <&pil_faceauth_fw_b_mem>;
+	};
+};
+
+/* Override TZ removed memory region 0x5500000 -> 0x3F00000 */
+&removed_regions {
+	reg = <0x0 0x86200000 0x0 0x3F00000>;
+};
+
+/* Override TZ App (secapp) memory region 0x2200000 -> 0x2800000 */
+
+&qcom_seecom {
+	reg = <0x87900000 0x2800000>;
+};
+
+&qcom_smcinvoke {
+	reg = <0x87900000 0x2800000>;
+};

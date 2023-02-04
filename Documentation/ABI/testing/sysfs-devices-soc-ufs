@@ -1,0 +1,35 @@
+What:		/sys/devices/soc/X.ufshc/erasesize
+Date:		April 2018
+contact:	Jaegeuk Kim <jaegeuk@google.com>
+Description:
+		This file shows the size of erase operation reported by UFS.
+
+What:		/sys/devices/soc/X.ufshc/health
+Date:		September 2017
+contact:	Jaegeuk Kim <jaegeuk@google.com>
+Description:
+		This directory contains health information reported by UFS.
+		- length must be 25h
+		- type must be 09h
+		- eol represent
+		  00h: Not defined
+		  01h: Normal
+		  02h: Warning
+		  03h: Critical
+		- lifetimeA/B
+		  00h: Not defined
+		  01h:  0% ~ 10% device life time used
+		  02h: 10% ~ 20% device life time used
+		  03h: 20% ~ 30% device life time used
+		  04h: 30% ~ 40% device life time used
+		  05h: 40% ~ 50% device life time used
+		  06h: 50% ~ 60% device life time used
+		  07h: 60% ~ 70% device life time used
+		  08h: 70% ~ 80% device life time used
+		  09h: 80% ~ 90% device life time used
+		  0Ah: 90% ~ 100% device life time used
+		  0Bh: Exceeded its maximum estimated device life time
+		- erasecount
+		  average erase count
+		- totalwrite
+		  total host data writes in 100MB

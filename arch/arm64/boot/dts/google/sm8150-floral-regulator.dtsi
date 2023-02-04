@@ -1,0 +1,71 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+
+/** PM8150A  */
+
+&pm8150l_l4 {
+	regulator-max-microvolt = <3000000>;
+	qcom,init-voltage = <3000000>;
+	qcom,init-mode = <RPMH_REGULATOR_MODE_HPM>;
+	status = "okay";
+};
+
+&pm8150l_l9 {
+	status = "disabled";
+};
+
+/** PM8150 */
+
+&pm8150_s5 {
+	regulator-min-microvolt = <2040000>;
+	qcom,init-voltage = <2040000>;
+};
+
+&soc {
+	rpmh-regulator-ldoa9 {
+		qcom,supported-modes = <RPMH_REGULATOR_MODE_HPM>;
+		L9A: pm8150_l9: regulator-pm8150-l9 {
+			qcom,init-mode = <RPMH_REGULATOR_MODE_HPM>;
+			qcom,init-voltage = <1224000>;
+			regulator-min-microvolt = <1224000>;
+			regulator-max-microvolt = <1224000>;
+		};
+	};
+};
+
+&pm8150_l11 {
+	regulator-min-microvolt = <808000>;
+	regulator-max-microvolt = <808000>;
+	qcom,init-voltage = <808000>;
+};
+
+&pm8150_l13 {
+	status = "disabled";
+};
+
+&pm8150_l14 {
+	regulator-min-microvolt = <1800000>;
+	regulator-max-microvolt = <1840000>;
+	qcom,init-voltage = <1840000>;
+	qcom,init-mode = <RPMH_REGULATOR_MODE_HPM>;
+	status = "okay";
+};
+
+&pm8150_l17 {
+	regulator-min-microvolt = <2856000>;
+	regulator-max-microvolt = <3008000>;
+	qcom,init-voltage = <2856000>;
+	qcom,init-mode = <RPMH_REGULATOR_MODE_HPM>;
+	status = "okay";
+};
+

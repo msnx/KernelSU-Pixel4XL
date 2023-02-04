@@ -1,0 +1,203 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+#include <dt-bindings/gpio/gpio.h>
+#include <dt-bindings/input/input.h>
+
+#include "../qcom/sm8150-pmic-overlay.dtsi"
+#include "../qcom/sm8150-thermal-overlay.dtsi"
+
+#include "sm8150-floral-airbrush.dtsi"
+#include "sm8150-floral-audio.dtsi"
+#include "sm8150-floral-camera-pmic.dtsi"
+#include "sm8150-floral-citadel.dtsi"
+#include "sm8150-floral-display.dtsi"
+#include "sm8150-floral-ese.dtsi"
+#include "sm8150-floral-haptics.dtsi"
+#include "sm8150-floral-memory.dtsi"
+#include "sm8150-floral-nfc.dtsi"
+#include "sm8150-floral-pcie.dtsi"
+#include "sm8150-floral-pinctrl.dtsi"
+#include "sm8150-floral-qup.dtsi"
+#include "sm8150-floral-rainbow.dtsi"
+#include "sm8150-floral-regulator.dtsi"
+#include "sm8150-floral-thermal.dtsi"
+#include "sm8150-floral-touch.dtsi"
+#include "sm8150-floral-usb.dtsi"
+#include "sm8150-floral-vadc.dtsi"
+
+&vendor {
+	bluetooth: bt_wcn3990 {
+		compatible = "qca,wcn3990";
+		qca,bt-vdd-core-supply = <&pm8150_l7>;
+		qca,bt-vdd-pa-supply = <&pm8150l_l2>;
+		qca,bt-vdd-ldo-supply = <&pm8150l_l11>;
+
+		qca,bt-vdd-core-voltage-level = <1800000 1800000>;
+		qca,bt-vdd-pa-voltage-level = <1304000 1304000>;
+		qca,bt-vdd-ldo-voltage-level = <3312000 3312000>;
+
+		qca,bt-vdd-core-current-level = <0>; /* LPM/PFM */
+		qca,bt-vdd-pa-current-level = <0>; /* LPM/PFM */
+		qca,bt-vdd-ldo-current-level = <0>; /* LPM/PFM */
+	};
+};
+
+&soc {
+	gpio_keys {
+		compatible = "gpio-keys";
+		label = "gpio-keys";
+
+		pinctrl-names = "default";
+		pinctrl-0 = <&key_home_default
+			     &key_vol_up_default>;
+
+		vol_up {
+			label = "volume_up";
+			gpios = <&pm8150_gpios 6 GPIO_ACTIVE_LOW>;
+			linux,input-type = <1>;
+			linux,code = <KEY_VOLUMEUP>;
+			gpio-key,wakeup;
+			debounce-interval = <15>;
+			linux,can-disable;
+		};
+	};
+
+	qcom,msm-imem@146bf000 {
+		uuid_info@cf8 {
+			compatible = "msm-imem-uuid_info";
+			reg = <0xcf8 64>;
+		};
+
+		rst_info@d38 {
+			compatible = "msm-imem-rst_info";
+			reg = <0xd38 100>;
+		};
+
+		bldr_info@d9c {
+			compatible = "msm-imem-bldr_info";
+			reg = <0xd9c 256>;
+		};
+
+		kernel_info@e9c {
+			compatible = "msm-imem-kernel_info";
+			reg = <0xe9c 256>;
+		};
+	};
+
+	modemsmem {
+		compatible = "modemsmem";
+	};
+
+	bootloader_log {
+		compatible = "qcom,bldr_log";
+		reg = <0xA47EF000 0x5C00>, <0xA47F4C00 0x5C00>;
+		reg-names = "bl_log", "bl_old_log";
+		memory-region = <&debug_info>;
+	};
+
+	ramoops {
+		compatible = "ramoops";
+		memory-region = <&ramoops_mem>;
+		alt-memory-region = <&alt_ramoops_mem>;
+		record-size = <0x20000>;
+		console-size = <0x100000>;
+		pmsg-size = <0x80000>;
+	};
+
+	access_ramoops@0 {
+		compatible = "access_ramoops";
+		label = "metadata";
+		memory-region = <&ramoops_meta_mem>;
+	};
+
+	access_ramoops@1 {
+		compatible = "access_ramoops";
+		label = "ramoops";
+		memory-region = <&alt_ramoops_mem>;
+	};
+
+	keydebug {
+		compatible = "keydebug";
+		key_down_delay = <7000>;
+		keys_down = <116>;
+		dbg_fn_delay = <2500>;
+	};
+};
+
+&ufsphy_mem {
+	compatible = "qcom,ufs-phy-qmp-v4";
+
+	vdda-phy-supply = <&pm8150_l5>;
+	vdda-phy-always-on;
+	vdda-pll-supply = <&pm8150l_l3>;
+	vdda-phy-max-microamp = <90200>;
+	vdda-pll-max-microamp = <19000>;
+
+	status = "ok";
+};
+
+&ufshc_mem {
+	vdd-hba-supply = <&ufs_phy_gdsc>;
+	vdd-hba-fixed-regulator;
+	vcc-supply = <&pm8150_l10>;
+	vcc-voltage-level = <2950000 2960000>;
+	vccq2-supply = <&pm8150_s4>;
+	vcc-max-microamp = <750000>;
+	vccq2-max-microamp = <750000>;
+
+	qcom,vddp-ref-clk-supply = <&pm8150_l9>;
+	qcom,vddp-ref-clk-max-microamp = <100>;
+	qcom,vddp-ref-clk-min-uV = <1224000>;
+	qcom,vddp-ref-clk-max-uV = <1224000>;
+
+	status = "ok";
+};
+
+&mhi_0 {
+	mhi,fw-name = "debug.mbn";
+	status = "okay";
+};
+
+// Force-enable pm8150a gpio7.
+&pm8150l_gpios {
+	interrupts = <0x4 0xc0 0 IRQ_TYPE_NONE>,
+			<0x4 0xc1 0 IRQ_TYPE_NONE>,
+			<0x4 0xc2 0 IRQ_TYPE_NONE>,
+			<0x4 0xc3 0 IRQ_TYPE_NONE>,
+			<0x4 0xc4 0 IRQ_TYPE_NONE>,
+			<0x4 0xc5 0 IRQ_TYPE_NONE>,
+			<0x4 0xc6 0 IRQ_TYPE_NONE>, // added by google
+			<0x4 0xc7 0 IRQ_TYPE_NONE>,
+			<0x4 0xc8 0 IRQ_TYPE_NONE>,
+			<0x4 0xc9 0 IRQ_TYPE_NONE>,
+			<0x4 0xca 0 IRQ_TYPE_NONE>,
+			<0x4 0xcb 0 IRQ_TYPE_NONE>;
+	interrupt-names = "pm8150l_gpio1", "pm8150l_gpio2",
+			"pm8150l_gpio3", "pm8150l_gpio4",
+			"pm8150l_gpio5", "pm8150l_gpio6",
+			"pm8150l_gpio7", // Added by google
+			"pm8150l_gpio8", "pm8150l_gpio9",
+			"pm8150l_gpio10", "pm8150l_gpio11",
+			"pm8150l_gpio12";
+	qcom,gpios-disallowed = <>;
+};
+
+&android_fstab {
+	status = "disabled";
+};
+
+// Force warm reboot on 'shutdown,thermal' & 'reboot-ab-update'.
+&msm_poweroff {
+	qcom,force-warm-reboot-on-thermal-shutdown;
+	qcom,force-warm-reboot-on-reboot-ab-update;
+};

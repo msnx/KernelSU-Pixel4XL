@@ -1,0 +1,64 @@
+#include <dt-bindings/usb/pd.h>
+
+&vendor {
+	ext_5v_boost: ext_5v_boost {
+		compatible = "regulator-tps";
+		regulator-name = "ext_5v_boost";
+		nr-control-gpios = <3>;
+		control-gpios = <&tlmm 146 GPIO_ACTIVE_HIGH>,
+				<&tlmm 66 GPIO_ACTIVE_HIGH>,
+				<&tlmm 118 GPIO_ACTIVE_HIGH>;
+		nr-gpio-enable-sequence = <3>;
+		gpio-enable-sequence = <1 2 3>;
+		gpio-enable-delay = <1000 100 300>;
+		nr-gpio-disable-sequence = <3>;
+		gpio-disable-sequence = <2 3 1>;
+		gpio-disable-delay = <0 0 0>;
+		status = "okay";
+	};
+};
+
+&pm8150b_pdphy {
+	google,ext_vbus-supported;
+	ext-vbus-supply = <&ext_5v_boost>;
+	goog,wlc-supported;
+
+	usb_con: connector {
+		compatible = "usb-c-connector";
+		label = "USB-C";
+		data-role = "dual";
+		power-role = "dual";
+		try-power-role = "sink";
+		self-powered;
+		source-pdos = <PDO_FIXED(5000, 900,
+					PDO_FIXED_SUSPEND
+					 | PDO_FIXED_USB_COMM
+					 | PDO_FIXED_DATA_SWAP
+					 | PDO_FIXED_DUAL_ROLE)>;
+		sink-pdos = <PDO_FIXED(5000, 3000, PDO_FIXED_USB_COMM
+						   | PDO_FIXED_DATA_SWAP
+						   | PDO_FIXED_DUAL_ROLE)
+			    PDO_FIXED(9000, 2200, 0)>;
+		op-sink-microwatt = <2500000>;
+		sink-vdos = <VDO_IDH(IDH_USB_HOST | IDH_USB_DEVICE,
+				     IDH_PTYPE_PERIPH,
+				     IDH_PTYPE_HOST,
+				     0x18D1)
+			     VDO_CERT(0x0)
+			     VDO_PRODUCT(0x4EE1, 0x0)>;
+	};
+};
+
+&pm8150b_charger {
+	qcom,otg-cl-ua = <2000000>;
+	qcom,typec-legacy-rp-icl;
+	google,otg-out-uv = <5100000>;
+	ext-vbus-supply = <&ext_5v_boost>;
+};
+
+&usb0 {
+	google,switch-vbus = <500>;
+	dwc3@a600000 {
+		maximum-speed = "super-speed";
+	};
+};

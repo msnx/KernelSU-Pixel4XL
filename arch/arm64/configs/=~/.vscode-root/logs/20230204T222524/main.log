@@ -1,0 +1,6 @@
+[2023-02-04 22:25:24.895] [main] [info] update#setState idle
+[2023-02-04 22:25:26.515] [main] [info] Starting extension host with pid 859107 (fork() took 15 ms).
+[2023-02-04 22:25:54.902] [main] [info] update#setState checking for updates
+[2023-02-04 22:25:55.254] [main] [info] update#setState available for download
+[2023-02-04 22:28:51.708] [main] [info] Waiting for extension host with pid 859107 to exit.
+[2023-02-04 22:28:51.738] [main] [info] Extension host with pid 859107 exited with code: 0, signal: null.

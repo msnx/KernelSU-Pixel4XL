@@ -1,0 +1,4 @@
+[2023-02-04 22:23:16.578] [main] [info] update#setState idle
+[2023-02-04 22:23:18.148] [main] [info] Starting extension host with pid 856805 (fork() took 18 ms).
+[2023-02-04 22:23:21.711] [main] [info] Waiting for extension host with pid 856805 to exit.
+[2023-02-04 22:23:21.725] [main] [info] Extension host with pid 856805 exited with code: 0, signal: null.

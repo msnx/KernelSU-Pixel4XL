@@ -1,0 +1,83 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/*  p9221         PMI855B
+ * --------------------------------
+ *  QI_INT_ODL -> GPIO02
+ *       EN_L  <- GPIO12
+ *  WLC_1V8_PG              150              interrupt
+ *  WLC_BPP_EPP_SLCT        149              output
+ */
+
+#include <dt-bindings/wc/p9221-wc.h>
+
+&pm8150b_gpios {
+
+	p9221_int_default:p9221_int_default {
+		pins = "gpio2";
+		function = "normal";
+		power-source = <0>;
+		drive-open-drain;
+		input-enable;
+		bias-pull-up;
+	};
+
+	gpio_qien_default: gpio_qien_default {
+		pins = "gpio12";
+		function = "normal";
+		power-source = <0>;
+		bias-disable;
+		output-low;
+	};
+
+};
+
+&tlmm {
+	p9221_det_int: p9221_det_int {
+		mux {
+			pins = "gpio150";
+			function = "gpio";
+		};
+		config {
+			pins = "gpio150";
+			drive-strength = <2>;
+			bias-pull-down;
+		};
+	};
+};
+
+&p9221 {
+	status = "ok";
+	compatible = "idt,p9221";
+	reg = <0x61>;
+
+	pinctrl-names = "default";
+	pinctrl-0 = <&gpio_qien_default &p9221_int_default &p9221_det_int>;
+
+	interrupt-parent = <&spmi_bus>,
+			   <&tlmm>;
+	interrupts = <2 0>,
+		     <150 0>;
+	interrupt-names = "p9221_int";
+	idt,irq_gpio =<&pm8150b_gpios 2 IRQ_TYPE_NONE>;
+	idt,irq_det_gpio = <&tlmm 150 0x00>;
+	idt,gpio_qien = <&pm8150b_gpios 12 GPIO_ACTIVE_LOW>;
+	idt,gpio_slct = <&tlmm 149 0x00>;
+	idt,gpio_slct_value = <1>;
+	google,epp_rp_value = <0x16>;
+	google,needs_dcin_reset = <P9221_WC_DC_RESET_MODECHANGED>;
+	google,alignment_frequencies = /bits/ 32 <87000 120000 130000
+						  140000 205000>;
+	google,alignment_scalar = <4>;
+	google,alignment_hysteresis = <5000>;
+	google,power_mitigate_threshold = <90>;
+};

@@ -1,0 +1,76 @@
+KERNEL_DIR=private/msm-google
+. ${ROOT_DIR}/${KERNEL_DIR}/build.config.floral.common.clang
+POST_DEFCONFIG_CMDS="check_defconfig && update_perf_config"
+
+function update_perf_config() {
+  # Disable debug options
+  ${KERNEL_DIR}/scripts/config --file ${OUT_DIR}/.config \
+    -d CGROUP_DEBUG \
+    -d CMA_DEBUGFS \
+    -d PM_DEBUG \
+    -d DEBUG_PAGEALLOC \
+    -d SLUB_DEBUG_PANIC_ON \
+    -d DEBUG_PAGEALLOC_ENABLE_DEFAULT \
+    -d DEBUG_OBJECTS \
+    -d DEBUG_OBJECTS_FREE \
+    -d DEBUG_OBJECTS_TIMERS \
+    -d DEBUG_OBJECTS_WORK \
+    -d DEBUG_OBJECTS_PERCPU_COUNTER \
+    -d DEBUG_KMEMLEAK \
+    -d DEBUG_KMEMLEAK_DEFAULT_OFF \
+    -d DEBUG_KMEMLEAK_EARLY_LOG_SIZE \
+    -d DEBUG_STACK_USAGE \
+    -d DEBUG_SPINLOCK \
+    -d DEBUG_MUTEXES \
+    -d DEBUG_ATOMIC_SLEEP \
+    -d DEBUG_SG \
+    -d DEBUG_NOTIFIERS \
+    -d DEBUG_CREDENTIALS \
+    -d LOCK_TORTURE_TEST \
+    -d RCU_TORTURE_TEST \
+    -d FAULT_INJECTION \
+    -d FAIL_PAGE_ALLOC \
+    -d FAULT_INJECTION_STACKTRACE_FILTER \
+    -d DEBUG_SECTION_MISMATCH \
+    -d DEBUG_MEMORY_INIT \
+    -d RMNET_DATA_DEBUG_PKT \
+    -d ESOC_DEBUG \
+    -d FHANDLE \
+    -d RD_BZIP2 \
+    -d RD_LZMA \
+    -d SYSFS_SYSCALL \
+    -d SLAB_FREELIST_RANDOM \
+    -d SLAB_FREELIST_HARDENED \
+    -d CMA_DEBUGFS \
+    -e HARDEN_BRANCH_PREDICTOR \
+    -d EFI \
+    -d L2TP_DEBUGFS \
+    -d REGMAP_ALLOW_WRITE_DEBUGFS \
+    -d CORESIGHT \
+    -d PAGE_POISONING \
+    -d QCOM_RTB \
+    -d BLK_DEV_IO_TRACE \
+    -d PREEMPTIRQ_EVENTS \
+    -d PREEMPT_TRACER \
+    -d IRQSOFF_TRACER \
+    -d PAGE_OWNER \
+    -d DRM_SDE_EVTLOG_DEBUG \
+    -d DRM_MSM_REGISTER_LOGGING \
+    -d MSM_SDE_ROTATOR_EVTLOG_DEBUG \
+    -d VIDEO_ADV_DEBUG \
+    -d IPU_DEBUG \
+    -d SPMI_MSM_PMIC_ARB_DEBUG \
+    -d WQ_WATCHDOG \
+    -d SCHED_STACK_END_CHECK \
+    -d LOCKUP_DETECTOR \
+    -d SOFTLOCKUP_DETECTOR \
+    -d MHI_DEBUG \
+    -d PANIC_ON_SCHED_BUG \
+    -d PANIC_ON_RT_THROTTLING \
+    -d PANIC_ON_REFCOUNT_ERROR \
+    -d EDAC_KRYO_ARM64_PANIC_ON_UE \
+    -d EDAC_QCOM_LLCC_PANIC_ON_UE \
+
+  (cd ${OUT_DIR} && \
+   make ${CC_LD_ARG} O=${OUT_DIR} olddefconfig)
+}

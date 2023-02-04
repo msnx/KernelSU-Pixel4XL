@@ -1,0 +1,318 @@
+
+// SPDX-License-Identifier: GPL-2.0
+/* Copyright (c) 2017-2019, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&soc {
+	sunfish_batterydata: qcom,battery-data {
+		qcom,batt-id-range-pct = <10>;
+		#include "batterydata-qcom-s5-SWD-ATL.dtsi"
+		#include "batterydata-qcom-s5-SWD-LSN.dtsi"
+		#include "batterydata-qcom-s5-unknown.dtsi"
+	};
+};
+
+&pm6150_charger {
+	io-channels = <&pm6150_vadc ADC_USB_IN_V_16>,
+		      <&pm6150_vadc ADC_USB_IN_I>,
+		      <&pm6150_vadc ADC_CHG_TEMP>,
+		      <&pm6150_vadc ADC_DIE_TEMP>,
+		      <&pm6150l_vadc ADC_AMUX_THM1_PU2>,
+		      <&pm6150_vadc ADC_SBUx>,
+		      <&pm6150_vadc ADC_VPH_PWR>;
+	io-channel-names = "usb_in_voltage",
+			   "usb_in_current",
+			   "chg_temp",
+			   "die_temp",
+			   "conn_temp",
+			   "sbux_res",
+			   "vph_voltage";
+	qcom,auto-recharge-soc = <97>;
+	qcom,thermal-mitigation = <4200000 3500000 3000000
+			2500000 2000000 1500000 1000000 500000>;
+	dpdm-supply = <&qusb_phy0>;
+	qcom,charger-temp-max = <800>;
+	qcom,smb-temp-max = <800>;
+
+	qcom,battery-data = <&sunfish_batterydata>;
+	/* google,batt_psy_disable ; */
+	google,batt_psy_name = "smb5";
+	google,batt_psy_is_bms;
+	google,usb-port-tz-name = "usbc-therm-adc";
+	google,wdog_snarl_disable;
+	google,sdam_sts_disable;
+	qcom,hvdcp-disable;
+	qcom,chg-term-src = <1>;
+	qcom,chg-term-current-ma = <(-154)>;
+
+/* FIXME: b/144553297
+ * It looks like /delete-property/ cannot overlay the node in pm6150.dtsi
+ * Temporarily disable it in pm6150.dtsi
+	qcom,chgr@1000 {
+		/delete-property/ interrupts;
+		/delete-property/ interrupt-names;
+	};
+
+	qcom,batif@1200 {
+		/delete-property/ interrupts;
+		/delete-property/ interrupt-names;
+	};
+*/
+};
+
+&pm6150_qg {
+	qcom,battery-data = <&sunfish_batterydata>;
+	qcom,cl-feedback-on;
+	qcom,cl-max-increment = <3>;
+	qcom,cl-max-decrement = <5>;
+	qcom,cl-min-limit = <500>;
+	qcom,cl-max-limit = <0>;
+	qcom,cl-min-delta-batt-soc = <10>;
+	google,cl-degrade = <50>;
+	qcom,cl-wt-enable;
+	qcom,qg-iterm-ma = <460>;
+	qcom,vbatt-cutoff-mv = <3300>;
+	qcom,vbatt-low-mv = <3500>;
+	qcom,vbatt-low-cold-mv = <3800>;
+	qcom,vbatt-empty-mv = <2800>;
+	qcom,s2-fifo-length = <1>;
+	qcom,s2-vbat-low-fifo-length = <1>;
+	qcom,fvss-enable;
+	qcom,fvss-vbatt-mv = <3420>;
+	qcom,fvss-fifo-count = <10>;
+	google,fvss-interval-ms = <5000>;
+	qcom,s3-entry-ibat-ua = <14640>;
+	qcom,qg-sleep-config;
+
+	/* pon soc parameters */
+	/* 30% / 30 degree / 2 weeks */
+	qcom,shutdown_soc_threshold = <30>;
+	qcom,shutdown-temp-diff = <300>;
+	qcom,ignore-shutdown-soc-secs = <1209600>;
+
+	google,qg-cycle-disable;
+};
+
+&spmi_bus {
+	qcom,pm6150@0 {
+		google_bms: google,bms {
+			compatible = "google,sm7150_bms";
+			google,psy-name = "sm7150_bms";
+
+			pinctrl-names = "default";
+			pinctrl-0 = <&usb_otp_en_default>;
+			google,otp_en = <&pm6150_gpios 2 GPIO_ACTIVE_LOW>;
+
+			io-channels = <&pm6150_vadc ADC_BAT_THERM_PU2>,
+				      <&pm6150_vadc ADC_BAT_ID_PU2>;
+			io-channel-names = "batt-therm",
+					   "batt-id";
+
+			sm7150_bms,chgr@1000 {
+				reg = <0x1000 0x100>;
+				interrupts =
+					<0x0 0x10 0x0 IRQ_TYPE_EDGE_RISING>,
+					<0x0 0x10 0x1 IRQ_TYPE_EDGE_RISING>;
+				interrupt-names =
+					"chgr-error",
+					"chg-state-change";
+			};
+
+			sm7150_bms,batif@1200 {
+				reg = <0x1200 0x100>;
+				interrupts =
+					<0x0 0x12 0x0 IRQ_TYPE_EDGE_RISING>,
+					<0x0 0x12 0x2 IRQ_TYPE_EDGE_BOTH>,
+					<0x0 0x12 0x3 IRQ_TYPE_EDGE_BOTH>,
+					<0x0 0x12 0x4 IRQ_TYPE_EDGE_BOTH>,
+					<0x0 0x12 0x5 IRQ_TYPE_EDGE_BOTH>;
+				interrupt-names =
+						"bat-temp",
+						"bat-ov",
+						"bat-low",
+						"bat-therm-or-id-missing",
+						"bat-terminal-missing";
+			};
+		};
+	};
+};
+
+&soc {
+	google_battery: google,battery {
+		compatible = "google,battery";
+		google,fg-psy-name = "bms";
+
+		google,chg-battery-default-capacity = <3080>;
+		/* chg-battery-capacity = <0> -> read FULL_DESIGN from FG */
+		google,chg-battery-capacity = <3080>;
+
+		/* charge table for sunfish */
+		google,chg-temp-limits = <0 100 200 420 460 480 550>;
+		google,chg-cv-limits =
+			<4200000 4300000 4420000 4430000 4440000 4450000>;
+		google,chg-cc-limits = <
+			 30  10   0   0   0   0
+			 50  30  30  30  24  17
+			100  70  50  35  24  17
+			 80  50  50  35  24  17
+			 50  50   0   0   0   0
+			 30   0   0   0   0   0
+		>;
+
+		/* micro-adjust cc_max to avoid vpack exceeding spec criteria */
+		/* vpack tolerance: 6675uV = 4450mV * 15 / (10 * 1000) */
+		google,chg-last-tier-vpack-tolerance = <6675>;
+		/* decrease and terminal current unit : uA */
+		google,chg-last-tier-dec-current = <50000>;
+		google,chg-last-tier-term-current = <206000>;
+
+		/* battery poll rate */
+		google,update-interval = <30000>;
+		/* IRDrop Compensation */
+		google,fv-uv-resolution = <10000>;
+		google,fv-uv-margin-dpct = <1020>;
+		/* tier switch */
+		google,cv-range-accuracy = <80000>;
+		google,cv-otv-margin = <90000>;
+		google,cv-debounce-cnt = <3>;
+		google,cv-tier-ov-cnt = <1>;
+		google,cv-tier-switch-cnt = <3>;
+		/* resistance estimation */
+		google,res-temp-hi = <390>;
+		google,res-temp-lo = <350>;
+		google,res-soc-thresh = <75>;
+		google,res-filt-length = <10>;
+		/* enable cycle counts */
+		google,cycle-counts;
+		/* rest charging */
+		google,chg-rest-rate = <15>;
+		google,chg-rest-soc = <80>;
+		/* battery high temperature update threshold */
+		google,update-high-temp-threshold = <550>;
+
+		#thermal-sensor-cells = <0>;
+
+		google,ttf-adapter = <1800>;
+		google,ttf-soc-table =  <47 66 72 82 94 96  98  100>;
+		google,ttf-elap-table = <35 45 50 59 80 121 152 284>;
+		google,ttf-tier-table = <0 69 83>;
+
+		/* soc smothing */
+		google,rl_delta-max-soc = <1>;
+		google,rl_delta-max-time = <12>;
+		google,rl_ft-low-limit = <7>;
+		google,rl_ft-delta-limit = <15>;
+		google,rl_st-delta-limit = <7>;
+		google,rl_st-max-count = <3>;
+		google,rl_no-zero;
+		google,rl_soc-limits = <20 30 40 50 60 70 90 100>;
+		google,rl_soc-rates =  <15 16 17 18 20 22 24 25>;
+
+		/* battery history */
+		google,eeprom-inside;
+		google,history-delta-cycle-count = <25>;
+
+		google,ssoc-delta = <2>;
+
+		/* TRICKLE-DEFEND threshold */
+		google,bd-trickle-recharge-soc = <80>;
+		/* Enable TRICKLE-DEFEND */
+		google,bd-trickle-enable;
+	};
+
+	google_charger: google,charger {
+		compatible = "google,charger";
+		#cooling-cells = <2>;
+		google,chg-power-supply = "sm7150_bms";
+		google,bat-power-supply = "battery";
+		google,tcpm-power-supply = "tcpm-source-psy-usbpd0";
+		google,thermal-mitigation =
+			<3080000 2500000 2000000 1500000 1000000 500000>;
+		google,fv-max-uv = <4450000>;
+		google,chg-termination-5v;
+
+		/* TODO: remove when using proper "charger" */
+		google,chg-cc-tolerance = <25>;
+
+		google,pps-awake;
+		google,usbc-connector = <&usb_con>;
+
+		/* b/170700459 thresholds */
+		google,bd-resume-abs-temp = <280>;
+		google,bd-resume-time = <14400>;  /* 4 hours */
+		google,bd-resume-temp = <290>;
+		google,bd-resume-soc = <50>;
+		google,bd-trigger-time = <21600>; /* 6 hours */
+		google,bd-trigger-temp = <350>;
+		google,bd-trigger-voltage = <4270000>;
+		google,bd-recharge-voltage = <4250000>;
+		google,bd-drainto-soc = <80>;
+		google,bd-recharge-soc = <79>;
+		/* Enable TEMP-DEFEND */
+		google,bd-temp-enable;
+		google,bd-temp-dry-run;
+	};
+
+	google_overheat_mitigation: google,overheat_mitigation {
+		compatible = "google,overheat_mitigation";
+		google,port-overheat-work-interval = <2000>;
+		/* Must maintain < 1/15 duty cycle */
+		google,polling-freq = <3>;
+		#cooling-cells = <2>;
+		google,begin-mitigation-temp = <600>;
+		google,end-mitigation-temp = <500>;
+	};
+
+	google_bms {
+		google,gbms-providers = "batt_eeprom";
+	};
+};
+
+&qupv3_se9_i2c {
+	status = "ok";
+	google_eeprom: m24c08@50 {
+		compatible = "stchip,m24c08";
+		reg = <0x50>;
+	};
+};
+
+&tlmm {
+	ext_fg_alert {
+		ext_fg_alert_sleep: ext_fg_alert_sleep {
+			mux {
+				pins = "gpio66";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio66";
+				drive-strength = <2>;
+				bias-pull-up;
+				input-enable;
+			};
+		};
+	};
+};
+
+&pm6150_gpios {
+	usb_otp_en {
+		usb_otp_en_default: usb_otp_en_default {
+			pins = "gpio2";
+			function = "normal";
+			qcom,drive-strength = <2>;
+			power-source = <0>;
+			bias-disable;
+			output-low;
+			input-disable;
+		};
+	};
+};

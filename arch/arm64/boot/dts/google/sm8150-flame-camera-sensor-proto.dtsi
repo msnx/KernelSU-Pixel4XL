@@ -1,0 +1,110 @@
+/*
+* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+*
+* This program is free software; you can redistribute it and/or modify
+* it under the terms of the GNU General Public License version 2 and
+* only version 2 as published by the Free Software Foundation.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*/
+
+&pm8150l_gpios {
+	cam_sensor_active_ircam1: cam_sensor_active_ircam1 {
+		mux {
+			pins = "gpio12";
+		};
+	};
+
+	cam_sensor_suspend_ircam1: cam_sensor_suspend_ircam1 {
+		mux {
+			pins = "gpio12";
+		};
+	};
+
+	cam_sensor_active_ircam2: cam_sensor_active_ircam2 {
+		mux {
+			pins = "gpio3";
+		};
+	};
+
+	cam_sensor_suspend_ircam2: cam_sensor_suspend_ircam2 {
+		mux {
+			pins = "gpio3";
+		};
+	};
+};
+
+&vd6281 {
+	vio-supply = <&max77826_ldo13>;
+	vdd-supply = <&max77826_ldo15>;
+};
+
+&lm36011_flood {
+	sx9320_vdd-supply = <&max77826_ldo14>;
+	sx9320_sid = <0x2c>;
+	hw-version = <1>;
+};
+
+&lm36011_dot {
+	sx9320_vdd-supply = <&max77826_ldo14>;
+	sx9320_sid = <0x2c>;
+	hw-version = <1>;
+};
+
+&cam_cci0 {
+	qcom,cam-sensor@2 {
+		cam_vana-supply = <&max77826_ldo8>;
+		hw-version = <1>;
+	};
+
+	qcom,cam-sensor@3 {
+		pinctrl-0 = <&cam_sensor_mclk1_active
+				&cam_sensor_active_ircam1>;
+		pinctrl-1 = <&cam_sensor_mclk1_suspend
+				&cam_sensor_suspend_ircam1>;
+		gpios = <&tlmm 14 0>,
+			<&pm8150l_gpios 12 0>;
+		gpio-req-tbl-num = <0 1>;
+		gpio-req-tbl-flags = <1 0>;
+		gpio-req-tbl-label = "CAMIF_MCLK3",
+			"CAM_RESET3";
+		hw-version = <1>;
+	};
+
+	qcom,cam-sensor@4 {
+		gpios = <&tlmm 14 0>,
+			<&pm8150l_gpios 3 0>;
+		cci-device = <0>;
+		cci-master = <1>;
+		hw-version = <1>;
+	};
+};
+
+&cam_cci1 {
+	qcom,eeprom@0 {
+		cam_vio-supply = <&max77826_ldo13>;
+		cam_vana-supply = <&max77826_ldo4>;
+		cam_v_custom1-supply = <&max77826_ldo9>;
+	};
+
+	qcom,eeprom@1 {
+		cam_vio-supply = <&max77826_ldo13>;
+		cam_vana-supply = <&max77826_ldo5>;
+	};
+
+	qcom,cam-sensor@0 {
+		cam_vio-supply = <&max77826_ldo13>;
+		cam_vana-supply = <&max77826_ldo4>;
+		cam_v_custom1-supply = <&max77826_ldo9>;
+		hw-version = <1>;
+	};
+
+	qcom,cam-sensor@1 {
+		cam_vio-supply  = <&max77826_ldo13>;
+		cam_vana-supply = <&max77826_ldo5>;
+		hw-version = <1>;
+	};
+};

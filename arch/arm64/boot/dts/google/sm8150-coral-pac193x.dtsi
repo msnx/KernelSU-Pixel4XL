@@ -1,0 +1,97 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&qupv3_se9_i2c {
+	status = "ok";
+	// see -qup.dtsi for clk-freq-out setting
+	pac193x@10 {
+		compatible = "microchip,pac1934";
+		reg = <0x10>;
+		samp-rate = <8>;
+		status = "okay";
+
+		// pm8150_l17 is always on in AOP
+		// avdd-supply = <&pm8150_l17>;
+		// pac193x,regulator_avdd = "avdd";
+
+		ch1: channel@0 {
+		     uohms-shunt-res = <10000>;
+		     rail-name = "PPVAR_VPH_PWR_OLED";
+		     subsys-name = "display";
+		     channel_enabled;
+		};
+
+		ch2: channel@1 {
+		     uohms-shunt-res = <10000>;
+		     rail-name = "PPVAR_VPH_PWR_WIFI";
+		     subsys-name = "wifi";
+		     channel_enabled;
+		};
+
+		ch3: channel@2 {
+		     uohms-shunt-res = <10000>;
+		     rail-name = "PP3300_L11C_WIFI";
+		     subsys-name = "wifi";
+		     channel_enabled;
+		};
+
+		ch4: channel@3 {
+		     uohms-shunt-res = <10000>;
+		     rail-name = "PP3300_L10C_WIFI";
+		     subsys-name = "wifi";
+		     channel_enabled;
+		};
+	};
+};
+
+&qupv3_se7_i2c {
+	status = "ok";
+	// see -qup.dtsi for clk-freq-out setting
+	pac193x@11 {
+		compatible = "microchip,pac1934";
+		reg = <0x11>;
+		samp-rate = <8>;
+		status = "okay";
+
+		// pm8150_l17 is always on in AOP
+		// avdd-supply = <&pm8150_l17>;
+		// pac193x,regulator_avdd = "avdd";		
+
+		ch5: channel@0 {
+		     uohms-shunt-res = <10000>;
+		     rail-name = "PPVAR_VPH_PWR_RF";
+		     subsys-name = "cellular";
+		     channel_enabled;
+		};
+
+		ch6: channel@1 {
+		     uohms-shunt-res = <10000>;
+		     rail-name = "PP1700_L15A_MODEM";
+		     subsys-name = "cellular";
+		     channel_enabled;
+		};
+
+		ch7: channel@2 {
+		     uohms-shunt-res = <10000>;
+		     rail-name = "PP800_L11A_MODEM";
+		     subsys-name = "cellular";
+		     channel_enabled;
+		};
+
+		ch8: channel@3 {
+		     uohms-shunt-res = <10000>;
+		     rail-name = "PP1200_L6A_MODEM";
+		     subsys-name = "cellular";
+		     channel_enabled;
+		};
+	};
+};

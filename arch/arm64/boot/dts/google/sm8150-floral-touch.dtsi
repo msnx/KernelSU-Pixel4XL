@@ -1,0 +1,90 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+/* AP Touch SPI CLK is gpio53, CS is gpio54, MISO is gpio51, MOSI is gpio52.
+ * Reset gpio127, interrupt gpio122.
+ * Bus master switch - gpio126.
+ * Display rate - gpio128.
+ */
+
+// Keep interrupt pin active at all times
+&tlmm {
+	ts_mux {
+		ts_active_suspend: ts_active_suspend {
+			mux {
+				pins = "gpio122";
+				function = "gpio";
+			};
+			config {
+				pins = "gpio122";
+				drive-strength = <2>;
+				bias-disable;
+			};
+		};
+	};
+};
+
+&qupv3_se4_i2c {
+	status = "disabled";
+};
+
+&qupv3_se4_spi {
+	status = "ok";
+	floral_spitouch: touchscreen@0 {
+		status = "ok";
+		compatible = "st,fts";
+		spi-max-frequency = <10000000>;
+
+		reg = <0>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <122 IRQ_TYPE_LEVEL_LOW>;
+		vdd-supply = <&pm8150_l14>;
+		avdd-supply = <&pm8150_l17>;
+
+		pinctrl-names = "default", "sleep";
+		pinctrl-0 = <&ts_active_suspend>;
+		pinctrl-1 = <&ts_active_suspend>;
+
+		st,irq-gpio = <&tlmm 122 0>;
+		st,reset-gpio = <&tlmm 127 0>;
+		st,switch_gpio = <&tlmm 126 0>;		// Low: AP, High: SLPI
+		st,disp-rate-gpio = <&tlmm 128 0>;
+		st,regulator_dvdd = "vdd";
+		st,regulator_avdd = "avdd";
+
+		st,panel_map = <&dsi_s6e3hc2_dsc_wqhd_cmd 0>,
+			       <&dsi_nt37280_dsc_fhd_cmd 1>,
+			       <&dsi_nt37280_2a8t_dsc_fhd_cmd 1>,
+			       <&dsi_nt37280_2b8t_dsc_fhd_cmd 1>,
+			       <&dsi_nt37280_7t_dsc_fhd_cmd 1>;
+
+		// Override table format:
+		// panel number, extinfo index, mask, value, firmware index
+		st,extinfo_override_table = <1  1 0xF0 0x00 2>,
+					    <1  1 0xF0 0x10 2>,
+					    <1  1 0xFC 0x24 3>,
+					    <1  1 0xFC 0x28 4>;
+
+		st,firmware_names = "ftm5_fw_c2.ftb",
+				    "ftm5_fw_f2.ftb",
+				    "ftm5_fw_f2_p2.ftb",
+				    "ftm5_fw_f2_evt1.ftb",
+				    "ftm5_fw_f2_evt2.ftb";
+		st,limits_names = "stm_fts_production_limits_c2.csv",
+				  "stm_fts_production_limits_f2.csv",
+				  "stm_fts_production_limits_f2_p2.csv",
+				  "stm_fts_production_limits_f2_evt1.csv",
+				  "stm_fts_production_limits_f2_evt2.csv";
+		st,sensor_inverted = <0>, <1>, <1>, <1>, <1>;
+	};
+};
+

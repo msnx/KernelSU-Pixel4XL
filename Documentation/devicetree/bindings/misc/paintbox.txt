@@ -1,0 +1,16 @@
+* Google Inc. Paintbox Image Processing Unit
+
+Required properties:
+- compatible: Should contain "google,paintbox".
+- reg: Register base for IPU when on AXI bus
+- interrupts: Interrupt line for IPU
+- hardware-id: Hardware ID for IPU
+
+Example:
+	paintbox@0x60000000 {
+		compatible = "google,paintbox";
+		reg = <0x0 0x60000000 0x0 0xFFFF >;
+		interrupts = <GIC_SPI 168 IRQ_TYPE_LEVEL_HIGH>;
+		hardware-id = <0x0 0xb>;
+	};
+};

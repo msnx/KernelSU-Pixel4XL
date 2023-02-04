@@ -1,0 +1,46 @@
+What:		/sys/class/leds/vibrator/device/cp_trigger_index
+Date:		Jan 2018
+KernelVersion:	4.9
+Contact:	David Lin <dtwlin@google.com>
+Description:
+		Sets the Control Port trigger index in the waveform library to
+		be played on the subsequent activate.
+
+What:		/sys/class/leds/vibrator/device/f0_measured
+Date:		Jan 2018
+KernelVersion:	4.9
+Contact:	David Lin <dtwlin@google.com>
+Description:
+		Reading it to obtain the fundamental frequency measured in
+		Q10.14 format.
+
+What:		/sys/class/leds/vibrator/device/f0_stored
+Date:		Jan 2018
+KernelVersion:	4.9
+Contact:	David Lin <dtwlin@google.com>
+Description:
+		Sets the fundamental frequency to be used either PWLE and
+		waveform playback
+
+
+What:		/sys/class/leds/vibrator/device/redc_measured
+Date:		Jan 2018
+KernelVersion:	4.9
+Contact:	David Lin <dtwlin@google.com>
+Description:
+		Reading it to obtain the resistence DC measured in Q7.17
+		format. It must be scaled by 5.687 as shown in the following
+		example:
+
+		$ cat /sys/class/leds/vibrator/device/redc_measured
+
+		ReDC (Ohms) = redc_measured / 2^17 * 5.687
+
+What:		/sys/class/leds/vibrator/device/q_index
+Date:		Sep 2018
+KernelVersion:	4.9
+Contact:	chasewu <chasewu@google.com>
+Description:
+		Stores a calibrated quality factor waveform index for each
+		click behavior.
+

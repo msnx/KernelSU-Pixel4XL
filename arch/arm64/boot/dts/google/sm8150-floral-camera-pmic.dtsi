@@ -1,0 +1,144 @@
+/* Copyright (c) 2018, The Linux Foundation. All rights reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 and
+ * only version 2 as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ */
+
+&tlmm {
+	cam_sensor_pmic_active: cam_sensor_pmic_active {
+		mux {
+			pins = "gpio102";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio102";
+			bias-pull-up; /* PULL UP */
+			output-high;
+			drive-strength = <2>; /* 2 MA */
+		};
+	};
+};
+
+&qupv3_se9_i2c {
+	/* MAX77826 */
+	status = "ok";
+	MAX77826: MAX77826@60 {
+		compatible = "max77826,max77826-regulator";
+		reg = <0x60>;
+		status = "ok";
+		pinctrl-names = "cam_pmic_en";
+		pinctrl-0 = <&cam_sensor_pmic_active>;
+		maxim,enable-gpio = <&tlmm 102 0>;
+
+		regulators {
+			max77826_ldo1: max77826_ldo1 {
+				regulator-name = "max77826_ldo1";
+				regulator-min-microvolt = <600000>;
+				regulator-max-microvolt = <2187500>;
+			};
+
+			max77826_ldo2: max77826_ldo2 {
+				regulator-name = "max77826_ldo2";
+				regulator-min-microvolt = <600000>;
+				regulator-max-microvolt = <2187500>;
+			};
+
+			max77826_ldo3: max77826_ldo3 {
+				regulator-name = "max77826_ldo3";
+				regulator-min-microvolt = <600000>;
+				regulator-max-microvolt = <2187500>;
+			};
+
+			max77826_ldo4: max77826_ldo4 {
+				regulator-name = "max77826_ldo4";
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3975000>;
+			};
+
+			max77826_ldo5: max77826_ldo5 {
+				regulator-name = "max77826_ldo5";
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3975000>;
+			};
+
+			max77826_ldo6: max77826_ldo6 {
+				regulator-name = "max77826_ldo6";
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3975000>;
+			};
+
+			max77826_ldo7: max77826_ldo7 {
+				regulator-name = "max77826_ldo7";
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3975000>;
+			};
+
+			max77826_ldo8: max77826_ldo8 {
+				regulator-name = "max77826_ldo8";
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3975000>;
+			};
+
+			max77826_ldo9: max77826_ldo9 {
+				regulator-name = "max77826_ldo9";
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3975000>;
+			};
+
+			max77826_ldo10: max77826_ldo10 {
+				regulator-name = "max77826_ldo10";
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3975000>;
+			};
+
+			max77826_ldo11: max77826_ldo11 {
+				regulator-name = "max77826_ldo11";
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3975000>;
+			};
+
+			max77826_ldo12: max77826_ldo12 {
+				regulator-name = "max77826_ldo12";
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3975000>;
+			};
+
+			max77826_ldo13: max77826_ldo13 {
+				regulator-name = "max77826_ldo13";
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3975000>;
+			};
+
+			max77826_ldo14: max77826_ldo14 {
+				regulator-name = "max77826_ldo14";
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3975000>;
+			};
+
+			max77826_ldo15: max77826_ldo15 {
+				regulator-name = "max77826_ldo15";
+				regulator-min-microvolt = <800000>;
+				regulator-max-microvolt = <3975000>;
+			};
+
+			max77826_buck1: max77826_buck1 {
+				regulator-name = "max77826_buck1";
+				regulator-min-microvolt = <500000>;
+				regulator-max-microvolt = <1800000>;
+			};
+
+			max77826_buck2: max77826_buck2 {
+				regulator-name = "max77826_buck2";
+				regulator-min-microvolt = <2600000>;
+				regulator-max-microvolt = <4187500>;
+			};
+		};
+	};
+};
