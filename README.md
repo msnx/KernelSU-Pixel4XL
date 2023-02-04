@@ -1,5 +1,5 @@
 # KernelSU-Pixel4XL
-Based on KernelSU  
+Based on KernelSU from weishu:https://github.com/tiann/KernelSU  
 Device name:Pixel 4 XL  
 Android version:13  
 Baseband version:g8150-00123-220708-B-8810441  
