@@ -188,16 +188,16 @@ config HAVE_IOREMAP_PROT
 	bool
 
 config HAVE_KPROBES
-	bool
+	bool y
 
 config HAVE_KRETPROBES
-	bool
+	bool y
 
 config HAVE_OPTPROBES
 	bool
 
 config HAVE_KPROBES_ON_FTRACE
-	bool
+	bool y
 
 config HAVE_NMI
 	bool
