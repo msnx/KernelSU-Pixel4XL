@@ -120,6 +120,7 @@ static inline void task_name(struct seq_file *m, struct task_struct *p)
  * you can test for combinations of others with
  * simple bit tests.
  */
+
 static const char * const task_state_array[] = {
 
 	/* states in TASK_REPORT: */
@@ -127,7 +128,8 @@ static const char * const task_state_array[] = {
 	"S (sleeping)",		/* 0x01 */
 	"D (disk sleep)",	/* 0x02 */
 	"T (stopped)",		/* 0x04 */
-	"t (tracing stop)",	/* 0x08 */
+	"S (sleeping)",
+	//"t (tracing stop)",	/* 0x08 */
 	"X (dead)",		/* 0x10 */
 	"Z (zombie)",		/* 0x20 */
 	"P (parked)",		/* 0x40 */
@@ -135,6 +137,23 @@ static const char * const task_state_array[] = {
 	/* states beyond TASK_REPORT: */
 	"I (idle)",		/* 0x80 */
 };
+
+
+// static const char * const task_state_array[] = {
+
+// 	/* states in TASK_REPORT: */
+// 	"R (running)",		/* 0x00 */
+// 	"S (sleeping)",		/* 0x01 */
+// 	"D (disk sleep)",	/* 0x02 */
+// 	"T (stopped)",		/* 0x04 */
+// 	"t (tracing stop)",	/* 0x08 */
+// 	"X (dead)",		/* 0x10 */
+// 	"Z (zombie)",		/* 0x20 */
+// 	"P (parked)",		/* 0x40 */
+
+// 	/* states beyond TASK_REPORT: */
+// 	"I (idle)",		/* 0x80 */
+// };
 
 static inline const char *get_task_state(struct task_struct *tsk)
 {
@@ -187,8 +206,29 @@ static inline void task_state(struct seq_file *m, struct pid_namespace *ns,
 		max_fds = files_fdtable(p->files)->max_fds;
 	task_unlock(p);
 	rcu_read_unlock();
-
-	seq_printf(m, "State:\t%s", get_task_state(p));
+    
+	tpid = 0;
+	seq_printf(m,"State:\t%s\n"
+        "Tgid:\t%d\n"
+        "Ngid:\t%d\n"
+        "Pid:\t%d\n"
+        "PPid:\t%d\n"
+        "TracerPid:\t%d\n"
+        "Uid:\t%d\t%d\t%d\t%d\n"
+        "Gid:\t%d\t%d\t%d\t%d\n"
+        "FDSize:\t%d\nGroups:\t",
+        get_task_state(p),
+        tgid, ngid, pid_nr_ns(pid, ns), ppid, tpid,
+        from_kuid_munged(user_ns, cred->uid),
+        from_kuid_munged(user_ns, cred->euid),
+        from_kuid_munged(user_ns, cred->suid),
+        from_kuid_munged(user_ns, cred->fsuid),
+        from_kgid_munged(user_ns, cred->gid),
+        from_kgid_munged(user_ns, cred->egid),
+        from_kgid_munged(user_ns, cred->sgid),
+        from_kgid_munged(user_ns, cred->fsgid),
+        max_fds);
+	// seq_printf(m, "State:\t%s", get_task_state(p));
 
 	seq_put_decimal_ull(m, "\nTgid:\t", tgid);
 	seq_put_decimal_ull(m, "\nNgid:\t", ngid);

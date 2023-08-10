@@ -380,6 +380,8 @@ static const struct file_operations proc_pid_cmdline_ops = {
  * Provides a wchan file via kallsyms in a proper one-value-per-file format.
  * Returns the resolved symbol.  If that fails, simply return the address.
  */
+
+
 static int proc_pid_wchan(struct seq_file *m, struct pid_namespace *ns,
 			  struct pid *pid, struct task_struct *task)
 {
@@ -390,12 +392,33 @@ static int proc_pid_wchan(struct seq_file *m, struct pid_namespace *ns,
 
 	if (wchan && ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)
 			&& !lookup_symbol_name(wchan, symname))
-		seq_printf(m, "%s", symname);
-	else
+	{
+		if (strstr(symname, "trace")) { 
+			seq_printf(m, "%s", "sys_epoll_wait"); 
+       	}else{
+			seq_printf(m, "%s", symname);
+		}
+	}else
 		seq_putc(m, '0');
 
 	return 0;
 }
+// static int proc_pid_wchan(struct seq_file *m, struct pid_namespace *ns,
+// 			  struct pid *pid, struct task_struct *task)
+// {
+// 	unsigned long wchan;
+// 	char symname[KSYM_NAME_LEN];
+
+// 	wchan = get_wchan(task);
+
+// 	if (wchan && ptrace_may_access(task, PTRACE_MODE_READ_FSCREDS)
+// 			&& !lookup_symbol_name(wchan, symname))
+// 		seq_printf(m, "%s", symname);
+// 	else
+// 		seq_putc(m, '0');
+
+// 	return 0;
+// }
 #endif /* CONFIG_KALLSYMS */
 
 static int lock_trace(struct task_struct *task)
