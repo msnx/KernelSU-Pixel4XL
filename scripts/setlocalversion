@@ -196,7 +196,8 @@ if test ! "$srctree" -ef .; then
 fi
 
 # CONFIG_LOCALVERSION and LOCALVERSION (if set)
-res="${res}${CONFIG_LOCALVERSION}${LOCALVERSION}"
+# res="${res}${CONFIG_LOCALVERSION}${LOCALVERSION}"
+res="${res}"
 
 # scm version string if not at a tagged commit
 if test "$CONFIG_LOCALVERSION_AUTO" = "y"; then
@@ -209,7 +210,8 @@ else
 	# LOCALVERSION= is not specified
 	if test "${LOCALVERSION+set}" != "set"; then
 		scm=$(scm_version --short)
-		res="$res${scm:++}"
+		# res="$res${scm:++}"
+		res="$res${scm:+}"
 	fi
 fi
 
